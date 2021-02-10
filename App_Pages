@@ -1,5 +1,18 @@
-Main page
-Department page
-Department modification page
-Employee page
-Employee modification page
+    1. Main page
+For navigation. Contains links on department and employee pages. Also contains some facts about company (clickable, lead on other pages with already entered parameters), such as “the largest department”, “longest-serving employee”, “unoccupied positions”.
+
+    2. Departments page
+Contains search form and list of all departments. Search can be made by department name (find fixed department) or by department parameters (to get list of suitable scenarios).
+
+Parameters: employees number; department director.
+
+After getting a resulting list of departments, each department will be clickable to see whole department info. It contains department structure (head department, managed departments). It also contains list of positions and employees on these positions.
+ 
+    3. Department modification page
+Contains department info, if opened from departments page, empty fields, ready for input, else.
+
+    4. Employees page
+Contains search form and list of all employees. Search can be made by employee name or by other parameters (work beginning date etc).
+
+    5. Employee modification page
+Contains employee info, if opened from employees page, empty fields, ready for input, else.
