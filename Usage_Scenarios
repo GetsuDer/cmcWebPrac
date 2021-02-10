@@ -1,0 +1,17 @@
+1.  Department info
+	1.1 Get department structure
+	1.2 Get department employees list
+	1.3 Get department positions list
+		1.3.1 Get department position info
+2. Change of department 
+	2.1 Add or remove department
+	2.2 Change department info
+	2.3 Add or remove employee on a position
+	2.4 Add or remove position
+	2.5 Change position info
+3. Employees info
+	3.1 Get employees list
+	3.2 Get employee info
+4. Change of employee
+	4.1 Add or remove employee
+	4.2 Change employee info	
