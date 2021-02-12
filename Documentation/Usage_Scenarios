@@ -1,17 +1,39 @@
 1.  Department info
 	1.1 Get department structure
+		main → departments → search department → open department structure
 	1.2 Get department employees list
-	1.3 Get department positions list
+		main → departments → search department → open employees list
+	1.3 Get department director
+		main → departments → search department → open director
+	1.4 Get department positions list
 		1.3.1 Get department position info
+			main → departments → search department → open positions list → choose position
 2. Change of department 
-	2.1 Add or remove department
-	2.2 Change department info
-	2.3 Add or remove employee on a position
-	2.4 Add or remove position
-	2.5 Change position info
-3. Employees info
-	3.1 Get employees list
-	3.2 Get employee info
-4. Change of employee
-	4.1 Add or remove employee
-	4.2 Change employee info	
+	2.1 Add department
+		main → departments → add department
+	2.2 Remove department
+		main → departments → search department → remove department
+	2.3 Change department info
+		main → departments → search department → edit department
+	2.4 Add employee on a position
+		main → departments → search department → open positions list → add employee
+	2.5 Remove employee from a position
+		main → departments → search department → open positions list → remove employee		
+	2.6 Add position
+		main → departments → search department → open positions list → add position
+	2.7 Remove position
+		main → departments → search department → open positions list → remove position
+	2.8 Change position info
+		main → departments → search department → open positions list → edit position
+3. Staff info
+	3.1 Get staff members list
+		main → staff → search staff
+	3.2 Get staff member info
+		main → staff → search staff → open staff member info
+4. Change of staff
+	4.1 Add staff member
+		main → staff → add staff member
+	4.2 Remove staff member
+		main → staff → search staff → remove staff member
+	4.3 Change staff member info	
+		main → staff → search staff → edit staff member info
