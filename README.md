@@ -11,5 +11,5 @@ Application pages and user scenarious descriptions are contained in "Documentati
 
 ## Application pages scheme
 
-![alt text](https://github.com/GetsuDer/cmcWebPrac/blob/main/Application_layer1.png)
-![alt text](https://github.com/GetsuDer/cmcWebPrac/blob/main/Application_layer2.png)
+![alt text](https://github.com/GetsuDer/cmcWebPrac/blob/main/Documentation/Application_layer1.png)
+![alt text](https://github.com/GetsuDer/cmcWebPrac/blob/main/Documentation/Application_layer2.png)
