@@ -1,39 +1,41 @@
 1.  Department info
 	1.1 Get department structure
-		main → departments → search department → open department structure
+		From Main page go to Departments page via clicking on corresponding element. On Departments page find department via using search panel and choosing according department. On Department info page the result is placed.
 	1.2 Get department employees list
-		main → departments → search department → open employees list
+		From Main page go to Departments page via clicking on corresponding element. On Departments page find department via using search panel and choosing according department. On Department info page the result is placed.
 	1.3 Get department director
-		main → departments → search department → open director
+		From Main page go to Departments page via clicking on corresponding element. On Departments page find department via using search panel and choosing according department. On Department info page go to Staff member page by clicking on “Director” field .
 	1.4 Get department positions list
-		1.3.1 Get department position info
-			main → departments → search department → open positions list → choose position
+		From Main page go to Departments page via clicking on corresponding element. On Departments page find department via using search panel and choosing according department. On Department info page the result is placed.
+	1.5 Get department position info
+	 	From Main page go to Departments page via clicking on corresponding element. On Departments page find department via using search panel and choosing according department. On Department info page the result is placed.
 2. Change of department 
 	2.1 Add department
-		main → departments → add department
+		From Main page go to Departments page via clicking on corresponding element. From Departments page go to Department edit page by clicking on “Add department” button. After entering department description, return to previous page via clicking on “Confirm” button.
 	2.2 Remove department
-		main → departments → search department → remove department
+		From Main page go to Departments page via clicking on corresponding element. On Departments page find department via using search panel and choosing according department. Return to previous page via pressing “Delete” button.
 	2.3 Change department info
-		main → departments → search department → edit department
-	2.4 Add employee on a position
-		main → departments → search department → open positions list → add employee
+		From Main page go to Departments page via clicking on corresponding element.  On Departments page find department via using search panel and choosing according department. From Department info page go to Department edit page via clicking on “Edit” button. After entering data return to previous page via clicking on “Confirm” button.
+
+	2.4 Add staff member on a position
+		From Main page go to Departments page via clicking on corresponding element.  On Departments page find department via using search panel and choosing according department. Go to Staff member assignment page by clicking on according position, choose staff member and return to previous page via clicking on “Confirm” button.
 	2.5 Remove employee from a position
-		main → departments → search department → open positions list → remove employee		
+		From Main page go to Departments page via clicking on corresponding element.  On Departments page find department via using search panel and choosing according department. Click on button “Fire” on according position to fire a staff member from a position.	
 	2.6 Add position
-		main → departments → search department → open positions list → add position
+		From Main page go to Departments page via clicking on corresponding element.  On Departments page find department via using search panel and choosing according department. From Department info page go to Department edit page via clicking on “Edit” button. Go to Position edit page by clicking on “Add position” button. Enter new data and return to previous page via clicking on “Confirm” button.
 	2.7 Remove position
-		main → departments → search department → open positions list → remove position
+		From Main page go to Departments page via clicking on corresponding element.  On Departments page find department via using search panel and choosing according department. From Department info page go to Department edit page via clicking on “Edit” button. Remove according position via clicking on “Remove” button near with position name.
 	2.8 Change position info
-		main → departments → search department → open positions list → edit position
+		From Main page go to Departments page via clicking on corresponding element.  On Departments page find department via using search panel and choosing according department. From Department info page go to Department edit page via clicking on “Edit” button. Go to Position edit page by clicking on according position. Enter new data and return to previous page via clicking on “Confirm” button.
 3. Staff info
 	3.1 Get staff members list
-		main → staff → search staff
+		From Main page go to Staff page via clicking on corresponding element. On Staff members page find according members via using search panel. 
 	3.2 Get staff member info
-		main → staff → search staff → open staff member info
+		From Main page go to Staff page via clicking on corresponding element. On Staff members page find according members via using search panel.  Go to Staff member info page via clicking on according member name.
 4. Change of staff
 	4.1 Add staff member
-		main → staff → add staff member
+		 From Main page go to Staff page via clicking on corresponding element. Go to Staff edit page via clicking on “Add member” button, enter new data and return to previous page via clicking on “Confirm” button.
 	4.2 Remove staff member
-		main → staff → search staff → remove staff member
+		From Main page go to Staff page via clicking on corresponding element. On Staff members page find according members via using search panel.  Go to Staff member info page via clicking on according member name. Return to previous page via clicking on “Remove” button.
 	4.3 Change staff member info	
-		main → staff → search staff → edit staff member info
+		From Main page go to Staff page via clicking on corresponding element. On Staff members page find according members via using search panel.  Go to Staff member info page via clicking on according member name. Go to Staff member edit page via clicking on “Edit” button, enter new data and return to previous page via clicking on “Confirm” button.
