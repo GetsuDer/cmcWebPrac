@@ -1,0 +1,12 @@
+Main entities are Department, Position, Staff Member, Employee. 
+
+Department has a head department, a director, and a set of positions.
+
+Position belongs to the Department. 
+Position has size, which determines, how many Staff Member can work on this position in each moment of time.
+
+Staff Member may hold several positions even inside one Department. Staff Member may
+not hold any position. The constraint is, that Staff Member can not work twice on one position in the same time. 
+
+To reflect the fact, that Staff Member can hold a position temporarily, exists entity such as Employee.
+It is used to keep information about Staff Member, working on Position for some period of time.
