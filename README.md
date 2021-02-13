@@ -7,7 +7,7 @@ Information about the personnel of the company
 Application pages and user scenarious descriptions are contained in 'Documentation' folder. 
 
 ## Database scheme
-
+![alt text](https://github.com/GetsuDer/cmcWebPrac/blob/main/Documentation/scheme_of_database.png)
 ## Application pages scheme
 
 ![alt text](https://github.com/GetsuDer/cmcWebPrac/blob/main/Documentation/application_scheme_simplified.png)
