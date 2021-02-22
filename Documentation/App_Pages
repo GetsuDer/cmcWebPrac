@@ -2,6 +2,7 @@
 Contains links on pages 2 and 8: Departments and Staff
 
 2. Departments page
+Contains button "main", linked with page 1, Main page.
 Contains button “add department”, linked with page 4, Department edit page. 
 Contains list of all departments. Each department name is linked with page 3, Department info page. 
 Contains search panel, which, after using, changed departments list in accordance with the imposed restrictions. Search parameters: Department name, department size.
@@ -41,6 +42,7 @@ Contains search panel, which, after using, changed departments list in accordanc
 Contains “Return” button, connected with page 4, Department edit page.
 
 8. Staff page
+Contains button "main", linked with page 1, Main page.
 Contains button “add staff member”, linked with page 10, Staff member edit page. 
 Contains list of all staff members. Each staff member name is linked with page 9, Staff member info page. 
 Contains search panel, which, after using, changed staff members list in accordance with the imposed restrictions. Search parameters: Staff member name, date of employment.
