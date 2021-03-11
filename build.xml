@@ -1,6 +1,41 @@
 <?xml version="1.0"?>
-<project name="WebPrac" default="hello">
-    <target name="hello">
-        <echo>Hello, World!</echo>
+<project name="WebPrac" default="run">
+    <target name="path">
+        <property name="srcDir" value="Source" />
+        <property name="dstDir" value="Bin" />
+        <property name="docDir" value="Documentation" />
+        <mkdir dir="${dstDir}"/>
     </target>
+
+    <target name="clean" depends="path">
+        <echo> Delete non-source files </echo>
+        <delete dir="${dstDir}"/>
+    </target>
+
+    <target name="build" depends="path">
+        <echo> Compile java files </echo>
+        <javac srcdir="${srcDir}" 
+            destdir="${dstDir}"
+            includeantruntime="false">      
+        </javac>
+    </target>
+
+    <target name="run" depends="build">
+        <echo> Running application </echo>
+        <java classname="Main" classpath="${dstDir}"/>
+    </target>
+
+    <target name="create-javadoc" depends="path">
+        <mkdir dir="${docDir}" />
+        <javadoc destdir="${docDir}"
+            use="true"
+            private="true"
+            author="Svetlana Derevyanko"
+            doctitle="WebPrac Documentation">
+        <fileset dir="${srcDir}">
+        </fileset>
+        </javadoc>
+
+    </target>
+
 </project>
