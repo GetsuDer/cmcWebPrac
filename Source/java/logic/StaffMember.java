@@ -3,26 +3,35 @@ package logic;
 import java.util.Date;
 
 /**
- *  Entity for table 'Staff_Members'
+ *  Entity for table 'StaffMembers'
  */
-public class Staff_Member {
+@Entity
+@Table(name = "public.StaffMembers")
+public class StaffMember {
     /** staff member identificator */
+    @Id
+    @GeneratedValue
+    @Column(name = "member_id")
     private Long id;
 
     /** staff member name */
+    @Column(name = "member_name")
     private String name;
 
     /** staff member address */
+    @Column(name = "address")
     private String address;
 
     /** staff member word start date */
+    @Column(name = "work_start")
     private Date work_start;
 
     /** staff member education */
+    @Column(name = "education")
     private String education;
     
     /** Default constructor */
-    public Staff_Member() {
+    public StaffMember() {
     }
    
     /** Set staff member identificator

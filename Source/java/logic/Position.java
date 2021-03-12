@@ -3,20 +3,32 @@ package logic;
 /**
  *  Entity for table 'Positions'
  */
+@Entity
+@Table(name = "public.Positions")
 public class Position {
     /** position identificator */
+    @Id
+    @GeneratedValue
+    @Column(name = "position_id")
     private Long id;
     
     /** position name */
+    @Column(name = "position_name")
     private String name;
 
     /** position responsibilities */
+    @Column(name = "responsibilities")
     private String responsibilities;
 
     /** position department id */
-    private Long department;
+    @ManyToOne
+    @JoinColumn(name = "department_id",
+        foreignKey = @ForeignKey())
+    @Column(name = "department")
+    private Department department;
 
     /** position size */
+    @Column(name = "size")
     private Long size;
 
     /** Default constructor */
@@ -47,7 +59,7 @@ public class Position {
     /** Set position department id
      * @param department - department id to be set
      */
-    public void setDepartment(Long department) {
+    public void setDepartment(Department department) {
         this.department = department;
     }
 
@@ -82,7 +94,7 @@ public class Position {
     /** Get department identificator
      * @return Returns department identificator
      */
-    public Long getDepartment() {
+    public Department getDepartment() {
         return department;
     }
 

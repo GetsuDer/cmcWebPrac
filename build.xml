@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project name="WebPrac" default="run">
     <target name="path">
-        <property name="srcDir" value="Source" />
+        <property name="srcDir" value="Source/java" />
         <property name="dstDir" value="Bin" />
         <property name="docDir" value="Documentation" />
         <mkdir dir="${dstDir}"/>

@@ -1,6 +1,6 @@
-CREATE DATABASE Staff_Info;
-use Staff_Info;
-CREATE TABLE Staff_Members (
+CREATE DATABASE StaffInfo;
+use StaffInfo;
+CREATE TABLE StaffMembers (
 	member_id serial PRIMARY KEY,
     member_name text,
     address text,
@@ -12,7 +12,7 @@ CREATE TABLE Departments (
 	department_id serial PRIMARY KEY,
     department_name text,
     head_department int references Departments(department_id),
-    director int references Staff_Members(member_id)
+    director int references StaffMembers(member_id)
 );
 
 CREATE TABLE Positions (
@@ -24,10 +24,10 @@ CREATE TABLE Positions (
 );
     
 CREATE TABLE Employees (
+    employee_id serial PRIMARY KEY,
 	position int references Positions(position_id),
-    staff_member int references Staff_Members(member_id),
+    staff_member int references StaffMembers(member_id),
     start_time date,
     end_time date,
-    PRIMARY KEY (position, staff_member)
 );
     

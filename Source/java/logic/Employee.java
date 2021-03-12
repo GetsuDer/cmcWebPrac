@@ -5,17 +5,36 @@ import java.util.Date;
  * Entity for table 'Employees'
  *
  */
+@Entity
+@Table(name = "public.Employees")
 public class Employee {
+
+    /** Employee id */
+    @Id
+    @GeneratedValue
+    @Column(name = "employee_id")
+    private Long employee_id;
+
     /** Position id */
-    private Long position;
+    @ManyToOne
+    @JoinColumn(name = "position_id",
+        foreignKey = @ForeignKey())
+    @Column(name = "position")
+    private Position position;
 
     /** Staff member id */
-    private Long staff_member;
+    @ManyToOne
+    @JoinColumn(name = "member_id",
+        foreignKey = @ForeignKey())
+    @Column(name = "staff_member")
+    private StaffMember staff_member;
 
     /** Work start time */
+    @Column(name = "start_time")
     private Date start_time;
 
     /** Work end time (may be NULL?) */
+    @Column(name = "end_time")
     private Date end_time;
 
     /** Default constructor */
@@ -25,14 +44,14 @@ public class Employee {
     /** Setting position id 
      *  @param position - position id to be set
      */
-    public void setPosition(Long position) {
+    public void setPosition(Position position) {
         this.position = position;
     }
 
     /** Setting staff member id
      * @param staff_member - staff member id to be set
      */
-    public void setStaff_member(Long staff_member) {
+    public void setStaffMember(StaffMember staff_member) {
         this.staff_member = staff_member;
     }
 
@@ -53,14 +72,14 @@ public class Employee {
     /** Get position id
      * @return Returns position id
      */
-    public Long getPosition() {
+    public Position getPosition() {
         return position;
     }
 
     /** Get staff member id
      * @return Returns staff member id
      */
-    public Long getStaff_member() {
+    public StaffMember getStaffMember() {
         return staff_member;
     }
 
