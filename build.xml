@@ -4,17 +4,21 @@
         <property name="srcDir" value="Source/java" />
         <property name="dstDir" value="Bin" />
         <property name="docDir" value="Documentation" />
+        <property name="testDir" value="Source/test" />
+        <property name="testDstDir" value="TestsRes" />
         <mkdir dir="${dstDir}"/>
+        <mkdir dir="${testDstDir}"/>
     </target>
 
     <target name="clean" depends="path">
         <echo> Delete non-source files </echo>
         <delete dir="${dstDir}"/>
     </target>
+    
 
     <target name="build" depends="path">
         <echo> Compile java files </echo>
-        <javac srcdir="${srcDir}" 
+        <javac srcdir="${srcDir}:${testDir}" 
             destdir="${dstDir}"
             includeantruntime="false">     
             <classpath>
@@ -22,6 +26,9 @@
             </classpath>
             <classpath>
                 <pathelement path="lib/hibernate-core-6.0.0.Alpha6.jar"/>
+            </classpath>
+            <classpath>
+                <pathelement path="lib/testng-7.4.0.jar"/>
             </classpath>
         </javac>
     </target>
@@ -42,6 +49,24 @@
         </fileset>
         </javadoc>
 
+    </target>
+    
+    <taskdef name="testng" classname="org.testng.TestNGAntTask" classpath="lib/testng-7.4.0.jar"/>
+    
+    <target name="test" depends="build">
+        <fileset id="tests" dir="Bin/test">
+            <include name="*"/>
+        </fileset>
+
+        <echo> Running tests </echo>
+        <testng mode="mixed" classfilesetref="tests">
+            <classpath location="Bin"/>
+            <classpath>
+                <fileset dir="lib" includes="*.jar"/>
+                <fileset dir="Bin/" includes="*"/>
+            </classpath>
+            <xmlfileset dir="." includes="testng.xml"/>
+        </testng>
     </target>
 
 </project>
