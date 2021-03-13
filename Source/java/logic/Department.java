@@ -1,4 +1,7 @@
 package logic;
+
+import javax.persistence.*;
+
 /**
  *  Entity for table "Departments"
  *

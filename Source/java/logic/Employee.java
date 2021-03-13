@@ -1,5 +1,6 @@
 package logic;
 
+import javax.persistence.*;
 import java.util.Date;
 /**
  * Entity for table 'Employees'

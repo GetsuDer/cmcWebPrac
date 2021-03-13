@@ -16,7 +16,13 @@
         <echo> Compile java files </echo>
         <javac srcdir="${srcDir}" 
             destdir="${dstDir}"
-            includeantruntime="false">      
+            includeantruntime="false">     
+            <classpath>
+                <pathelement path="lib/javax.persistence-api-2.2.jar"/>
+            </classpath>
+            <classpath>
+                <pathelement path="lib/hibernate-core-6.0.0.Alpha6.jar"/>
+            </classpath>
         </javac>
     </target>
 
