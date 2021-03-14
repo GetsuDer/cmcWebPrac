@@ -1,6 +1,4 @@
-use Staff_Info;
-
-INSERT INTO Staff_Members (member_id, member_name, address, work_start, education)
+INSERT INTO StaffMembers (member_id, member_name, address, work_start, education)
 VALUES
  (1, 'Ivanov Ivan Ivanovich', 'Address1', '2014-11-04', 'MSU'),
  (2, 'Petrov Petr Petrovich', 'Address2', '2015-1-06', 'MSU'),

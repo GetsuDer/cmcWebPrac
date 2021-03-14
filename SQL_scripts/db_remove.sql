@@ -1,4 +1,4 @@
-DROP TABLE Employees;
-DROP TABLE Positions;
-DROP TABLE Departments;
-DROP TABLE Staff_members;
+DROP TABLE IF EXISTS Employees;
+DROP TABLE IF EXISTS Positions;
+DROP TABLE IF EXISTS Departments;
+DROP TABLE IF EXISTS StaffMembers;

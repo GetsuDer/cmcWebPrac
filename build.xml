@@ -68,5 +68,22 @@
             <xmlfileset dir="." includes="testng.xml"/>
         </testng>
     </target>
+    
+    <target name="db_create">
+        <exec executable="/bin/sh" dir="SQL_scripts">
+            <arg value="create"/>
+        </exec>
+    </target>
 
+    <target name="db_remove">
+        <exec executable="/bin/sh" dir="SQL_scripts">
+            <arg value="delete"/>
+        </exec>
+    </target>
+
+    <target name="db_init" depends="db_create">
+        <exec executable="/bin/sh" dir="SQL_scripts">
+            <arg value="fill"/>
+        </exec>
+    </target>
 </project>
