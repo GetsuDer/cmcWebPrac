@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="2" passed="2">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Ant suite" duration-ms="0" started-at="2021-03-14T16:44:37 MSK" finished-at="2021-03-14T16:44:37 MSK">
+    <groups>
+    </groups>
+    <test name="Ant test" duration-ms="0" started-at="2021-03-14T16:44:37 MSK" finished-at="2021-03-14T16:44:37 MSK">
+    </test> <!-- Ant test -->
+  </suite> <!-- Ant suite -->
+  <suite name="Sample Test Suite" duration-ms="209" started-at="2021-03-14T16:44:36 MSK" finished-at="2021-03-14T16:44:37 MSK">
+    <groups>
+    </groups>
+    <test name="Sample Test" duration-ms="209" started-at="2021-03-14T16:44:36 MSK" finished-at="2021-03-14T16:44:37 MSK">
+      <class name="test.FirstTest">
+        <test-method status="PASS" signature="testDepartmentCreationTest()[pri:0, instance:test.FirstTest@c038203]" name="testDepartmentCreationTest" duration-ms="10" started-at="2021-03-14T16:44:37 MSK" finished-at="2021-03-14T16:44:37 MSK">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testDepartmentCreationTest -->
+        <test-method status="PASS" signature="testJustSimpleTest()[pri:0, instance:test.FirstTest@c038203]" name="testJustSimpleTest" duration-ms="0" started-at="2021-03-14T16:44:37 MSK" finished-at="2021-03-14T16:44:37 MSK">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testJustSimpleTest -->
+      </class> <!-- test.FirstTest -->
+    </test> <!-- Sample Test -->
+  </suite> <!-- Sample Test Suite -->
+</testng-results>

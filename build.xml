@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <project name="WebPrac" default="run">
     <target name="path">
-        <property name="srcDir" value="Source/java" />
+        <property name="srcDir" value="src/main/java" />
         <property name="dstDir" value="Bin" />
         <property name="docDir" value="Documentation" />
-        <property name="testDir" value="Source/test" />
+        <property name="testDir" value="src/test" />
         <property name="testDstDir" value="TestsRes" />
         <mkdir dir="${dstDir}"/>
         <mkdir dir="${testDstDir}"/>
@@ -15,27 +15,28 @@
         <delete dir="${dstDir}"/>
     </target>
     
+    <path id="classpath">
+        <fileset dir="lib">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
 
     <target name="build" depends="path">
         <echo> Compile java files </echo>
         <javac srcdir="${srcDir}:${testDir}" 
             destdir="${dstDir}"
-            includeantruntime="false">     
-            <classpath>
-                <pathelement path="lib/javax.persistence-api-2.2.jar"/>
-            </classpath>
-            <classpath>
-                <pathelement path="lib/hibernate-core-6.0.0.Alpha6.jar"/>
-            </classpath>
-            <classpath>
-                <pathelement path="lib/testng-7.4.0.jar"/>
-            </classpath>
+            includeantruntime="false"
+            classpathref="classpath">     
         </javac>
     </target>
 
     <target name="run" depends="build">
         <echo> Running application </echo>
-        <java classname="Main" classpath="${dstDir}"/>
+        <java classname="Main" classpath="${dstDir}" classpathref="classpath">
+            <classpath>
+                <pathelement path="src/main/resources"/>
+            </classpath>
+        </java>
     </target>
 
     <target name="create-javadoc" depends="path">
@@ -54,12 +55,11 @@
     <taskdef name="testng" classname="org.testng.TestNGAntTask" classpath="lib/testng-7.4.0.jar"/>
     
     <target name="test" depends="build">
-        <fileset id="tests" dir="Bin/test">
+        <fileset id="tests" dir="Bin">
             <include name="*"/>
         </fileset>
 
-        <echo> Running tests </echo>
-        <testng mode="mixed" classfilesetref="tests">
+        <testng mode="mixed" classfilesetref="tests" outputdir="${testDstDir}">
             <classpath location="Bin"/>
             <classpath>
                 <fileset dir="lib" includes="*.jar"/>
@@ -68,7 +68,7 @@
             <xmlfileset dir="." includes="testng.xml"/>
         </testng>
     </target>
-    
+
     <target name="db_create">
         <exec executable="/bin/sh" dir="SQL_scripts">
             <arg value="create"/>
