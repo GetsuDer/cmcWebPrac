@@ -64,6 +64,7 @@
             <classpath>
                 <fileset dir="lib" includes="*.jar"/>
                 <fileset dir="Bin/" includes="*"/>
+                <pathelement path="src/main/resources"/>
             </classpath>
             <xmlfileset dir="." includes="testng.xml"/>
         </testng>

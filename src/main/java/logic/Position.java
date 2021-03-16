@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class Position {
     /** position identificator */
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "position_id")
     private Long id;
     
@@ -102,5 +102,18 @@ public class Position {
      */
     public Long getSize() {
         return size;
+    }
+
+    /**
+     * toString method
+     * @return Returns text representation
+     */
+    @Override
+    public String toString() {
+        return "Position:\n" +
+                "Id: " + id + "\n" +
+                "Name: " + name + "\n" +
+                "Responsibilities: " + responsibilities + "\n" +
+                "Department: " + department + "\n";
     }
 }

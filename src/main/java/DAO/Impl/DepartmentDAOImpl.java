@@ -21,7 +21,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
             session.save(department);
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println("Error in addDepartment");
+            System.err.println("Error in addDepartment: " + e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -37,7 +37,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
             session.update(department);
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println("Error in department update");
+            System.err.println("Error in department update: " + e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -53,7 +53,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
             session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
             department = (Department) session.load(Department.class, department_id);
         } catch (Exception e) {
-            System.out.println("Error findByID");
+            System.err.println("Error in findByID: " + e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -72,7 +72,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
             departments = (List<Department>)query.list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println("Error in getAllDepartments " + e);
+            System.err.println("Error in getAllDepartments: " + e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -89,7 +89,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
             session.delete(department);
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println("Error in delete department");
+            System.err.println("Error in delete department: "+ e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -111,6 +111,8 @@ public class DepartmentDAOImpl implements DepartmentDAO {
                     );
             departments = (List<Department>)query.list();
             session.getTransaction().commit();
+        } catch (Exception e) {
+            System.err.println("Error in get Departments by director: " + e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();

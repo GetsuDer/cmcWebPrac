@@ -26,7 +26,7 @@
       <span class="top-banner-title-font">Test results</span>
       <button class="button" id="button">Switch Retro Theme</button> <!-- button -->
       <br/>
-      <span class="top-banner-font-1">2 suites</span>
+      <span class="top-banner-font-1">2 suites, 1 failed test</span>
     </div> <!-- top-banner-root -->
     <div class="navigator-root">
       <div class="navigator-suite-header">
@@ -104,8 +104,8 @@
       <div class="suite">
         <div class="rounded-window">
           <div class="suite-header light-rounded-window-top">
-            <a href="#" class="navigator-link" panel-name="suite-Sample_Test_Suite">
-              <span class="suite-name border-passed">Sample Test Suite</span>
+            <a href="#" class="navigator-link" panel-name="suite-TestNG_Tests">
+              <span class="suite-name border-failed">TestNG Tests</span>
             </a> <!-- navigator-link -->
           </div> <!-- suite-header light-rounded-window-top -->
           <div class="navigator-suite-content">
@@ -115,37 +115,37 @@
             <div class="suite-section-content">
               <ul>
                 <li>
-                  <a href="#" class="navigator-link " panel-name="test-xml-Sample_Test_Suite">
+                  <a href="#" class="navigator-link " panel-name="test-xml-TestNG_Tests">
                     <span>testng.xml</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
-                  <a href="#" class="navigator-link " panel-name="testlist-Sample_Test_Suite">
+                  <a href="#" class="navigator-link " panel-name="testlist-TestNG_Tests">
                     <span class="test-stats">1 test</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
-                  <a href="#" class="navigator-link " panel-name="group-Sample_Test_Suite">
+                  <a href="#" class="navigator-link " panel-name="group-TestNG_Tests">
                     <span>0 groups</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
-                  <a href="#" class="navigator-link " panel-name="times-Sample_Test_Suite">
+                  <a href="#" class="navigator-link " panel-name="times-TestNG_Tests">
                     <span>Times</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
-                  <a href="#" class="navigator-link " panel-name="reporter-Sample_Test_Suite">
+                  <a href="#" class="navigator-link " panel-name="reporter-TestNG_Tests">
                     <span>Reporter output</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
-                  <a href="#" class="navigator-link " panel-name="ignored-methods-Sample_Test_Suite">
+                  <a href="#" class="navigator-link " panel-name="ignored-methods-TestNG_Tests">
                     <span>Ignored methods</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
-                  <a href="#" class="navigator-link " panel-name="chronological-Sample_Test_Suite">
+                  <a href="#" class="navigator-link " panel-name="chronological-TestNG_Tests">
                     <span>Chronological view</span>
                   </a> <!-- navigator-link  -->
                 </li>
@@ -158,26 +158,40 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">2 methods,   2 passed</span>
+                    <span class="method-stats">3 methods, 1 failed,   2 passed</span>
+                  </li>
+                  <li>
+                    <span class="method-list-title failed">Failed methods</span>
+                    <span class="show-or-hide-methods failed">
+                      <a href="#" panel-name="suite-TestNG_Tests" class="hide-methods failed suite-TestNG_Tests"> (hide)</a> <!-- hide-methods failed suite-TestNG_Tests -->
+                      <a href="#" panel-name="suite-TestNG_Tests" class="show-methods failed suite-TestNG_Tests"> (show)</a> <!-- show-methods failed suite-TestNG_Tests -->
+                    </span>
+                    <div class="method-list-content failed suite-TestNG_Tests">
+                      <span>
+                        <img width="3%" src="failed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-TestNG_Tests" title="test.DepartmentTest" hash-for-method="loadDepartmentTest">loadDepartmentTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                    </div> <!-- method-list-content failed suite-TestNG_Tests -->
                   </li>
                   <li>
                     <span class="method-list-title passed">Passed methods</span>
                     <span class="show-or-hide-methods passed">
-                      <a href="#" panel-name="suite-Sample_Test_Suite" class="hide-methods passed suite-Sample_Test_Suite"> (hide)</a> <!-- hide-methods passed suite-Sample_Test_Suite -->
-                      <a href="#" panel-name="suite-Sample_Test_Suite" class="show-methods passed suite-Sample_Test_Suite"> (show)</a> <!-- show-methods passed suite-Sample_Test_Suite -->
+                      <a href="#" panel-name="suite-TestNG_Tests" class="hide-methods passed suite-TestNG_Tests"> (hide)</a> <!-- hide-methods passed suite-TestNG_Tests -->
+                      <a href="#" panel-name="suite-TestNG_Tests" class="show-methods passed suite-TestNG_Tests"> (show)</a> <!-- show-methods passed suite-TestNG_Tests -->
                     </span>
-                    <div class="method-list-content passed suite-Sample_Test_Suite">
+                    <div class="method-list-content passed suite-TestNG_Tests">
                       <span>
                         <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-Sample_Test_Suite" title="test.FirstTest" hash-for-method="testDepartmentCreationTest">testDepartmentCreationTest</a> <!-- method navigator-link -->
+                        <a href="#" class="method navigator-link" panel-name="suite-TestNG_Tests" title="test.DepartmentTest" hash-for-method="changeDepartmentTest">changeDepartmentTest</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                       <span>
                         <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-Sample_Test_Suite" title="test.FirstTest" hash-for-method="testJustSimpleTest">testJustSimpleTest</a> <!-- method navigator-link -->
+                        <a href="#" class="method navigator-link" panel-name="suite-TestNG_Tests" title="test.DepartmentTest" hash-for-method="createDepartmentTest">createDepartmentTest</a> <!-- method navigator-link -->
                       </span>
                       <br/>
-                    </div> <!-- method-list-content passed suite-Sample_Test_Suite -->
+                    </div> <!-- method-list-content passed suite-TestNG_Tests -->
                   </li>
                 </ul>
               </div> <!-- suite-section-content -->
@@ -190,30 +204,55 @@
       <div class="main-panel-root">
         <div panel-name="suite-Ant_suite" class="panel Ant_suite">
         </div> <!-- panel Ant_suite -->
-        <div panel-name="suite-Sample_Test_Suite" class="panel Sample_Test_Suite">
-          <div class="suite-Sample_Test_Suite-class-passed">
+        <div panel-name="suite-TestNG_Tests" class="panel TestNG_Tests">
+          <div class="suite-TestNG_Tests-class-failed">
             <div class="main-panel-header rounded-window-top">
-              <img src="passed.png"/>
-              <span class="class-name">test.FirstTest</span>
+              <img src="failed.png"/>
+              <span class="class-name">test.DepartmentTest</span>
             </div> <!-- main-panel-header rounded-window-top -->
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="testDepartmentCreationTest">
-                  </a> <!-- testDepartmentCreationTest -->
-                  <span class="method-name">testDepartmentCreationTest</span>
+                  <a name="loadDepartmentTest">
+                  </a> <!-- loadDepartmentTest -->
+                  <span class="method-name">loadDepartmentTest</span>
+                  <div class="stack-trace">org.hibernate.LazyInitializationException: could not initialize proxy [logic.Department#1231] - no Session
+	at org.hibernate.proxy.AbstractLazyInitializer.initialize(AbstractLazyInitializer.java:170)
+	at org.hibernate.proxy.AbstractLazyInitializer.getImplementation(AbstractLazyInitializer.java:310)
+	at org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor.intercept(ByteBuddyInterceptor.java:45)
+	at org.hibernate.proxy.ProxyConfiguration$InterceptorDispatcher.intercept(ProxyConfiguration.java:95)
+	at logic.Department$HibernateProxy$Ikil4urG.getName(Unknown Source)
+	at test.DepartmentTest.loadDepartmentTest(Unknown Source)
+	at java.util.ArrayList.forEach(ArrayList.java:1259)
+... Removed 26 stack frames
+</div> <!-- stack-trace -->
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-TestNG_Tests-class-failed -->
+          <div class="suite-TestNG_Tests-class-passed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="passed.png"/>
+              <span class="class-name">test.DepartmentTest</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="changeDepartmentTest">
+                  </a> <!-- changeDepartmentTest -->
+                  <span class="method-name">changeDepartmentTest</span>
                 </div> <!-- method-content -->
               </div> <!-- method -->
               <div class="method">
                 <div class="method-content">
-                  <a name="testJustSimpleTest">
-                  </a> <!-- testJustSimpleTest -->
-                  <span class="method-name">testJustSimpleTest</span>
+                  <a name="createDepartmentTest">
+                  </a> <!-- createDepartmentTest -->
+                  <span class="method-name">createDepartmentTest</span>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
-          </div> <!-- suite-Sample_Test_Suite-class-passed -->
-        </div> <!-- panel Sample_Test_Suite -->
+          </div> <!-- suite-TestNG_Tests-class-passed -->
+        </div> <!-- panel TestNG_Tests -->
         <div panel-name="test-xml-Ant_suite" class="panel">
           <div class="main-panel-header rounded-window-top">
           </div> <!-- main-panel-header rounded-window-top -->
@@ -231,7 +270,7 @@
             </pre>
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
-        <div panel-name="test-xml-Sample_Test_Suite" class="panel">
+        <div panel-name="test-xml-TestNG_Tests" class="panel">
           <div class="main-panel-header rounded-window-top">
             <span class="header-content">/home/getsu/Data/WebPrac/cmcWebPrac/testng.xml</span>
           </div> <!-- main-panel-header rounded-window-top -->
@@ -239,13 +278,13 @@
             <pre>
 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;!DOCTYPE suite SYSTEM &quot;https://testng.org/testng-1.0.dtd&quot;&gt;
-&lt;suite guice-stage=&quot;DEVELOPMENT&quot; name=&quot;Sample Test Suite&quot;&gt;
-  &lt;test thread-count=&quot;5&quot; name=&quot;Sample Test&quot;&gt;
+&lt;suite guice-stage=&quot;DEVELOPMENT&quot; name=&quot;TestNG Tests&quot;&gt;
+  &lt;test thread-count=&quot;5&quot; name=&quot;Department tests&quot;&gt;
     &lt;classes&gt;
-      &lt;class name=&quot;test.FirstTest&quot;/&gt;
+      &lt;class name=&quot;test.DepartmentTest&quot;/&gt;
     &lt;/classes&gt;
-  &lt;/test&gt; &lt;!-- Sample Test --&gt;
-&lt;/suite&gt; &lt;!-- Sample Test Suite --&gt;
+  &lt;/test&gt; &lt;!-- Department tests --&gt;
+&lt;/suite&gt; &lt;!-- TestNG Tests --&gt;
             </pre>
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
@@ -261,14 +300,14 @@
             </ul>
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
-        <div panel-name="testlist-Sample_Test_Suite" class="panel">
+        <div panel-name="testlist-TestNG_Tests" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">Tests for Sample Test Suite</span>
+            <span class="header-content">Tests for TestNG Tests</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <ul>
               <li>
-                <span class="test-name">Sample Test (1 class)</span>
+                <span class="test-name">Department tests (1 class)</span>
               </li>
             </ul>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -280,9 +319,9 @@
           <div class="main-panel-content rounded-window-bottom">
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
-        <div panel-name="group-Sample_Test_Suite" class="panel">
+        <div panel-name="group-TestNG_Tests" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">Groups for Sample Test Suite</span>
+            <span class="header-content">Groups for TestNG Tests</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -312,36 +351,40 @@ return data;
             </div> <!-- times-div -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
-        <div panel-name="times-Sample_Test_Suite" class="panel">
+        <div panel-name="times-TestNG_Tests" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">Times for Sample Test Suite</span>
+            <span class="header-content">Times for TestNG Tests</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="times-div">
               <script type="text/javascript">
-suiteTableInitFunctions.push('tableData_Sample_Test_Suite');
-function tableData_Sample_Test_Suite() {
+suiteTableInitFunctions.push('tableData_TestNG_Tests');
+function tableData_TestNG_Tests() {
 var data = new google.visualization.DataTable();
 data.addColumn('number', 'Number');
 data.addColumn('string', 'Method');
 data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
-data.addRows(2);
+data.addRows(3);
 data.setCell(0, 0, 0)
-data.setCell(0, 1, 'testDepartmentCreationTest')
-data.setCell(0, 2, 'test.FirstTest')
-data.setCell(0, 3, 10);
+data.setCell(0, 1, 'loadDepartmentTest')
+data.setCell(0, 2, 'test.DepartmentTest')
+data.setCell(0, 3, 2629);
 data.setCell(1, 0, 1)
-data.setCell(1, 1, 'testJustSimpleTest')
-data.setCell(1, 2, 'test.FirstTest')
-data.setCell(1, 3, 0);
-window.suiteTableData['Sample_Test_Suite']= { tableData: data, tableDiv: 'times-div-Sample_Test_Suite'}
+data.setCell(1, 1, 'changeDepartmentTest')
+data.setCell(1, 2, 'test.DepartmentTest')
+data.setCell(1, 3, 10);
+data.setCell(2, 0, 2)
+data.setCell(2, 1, 'createDepartmentTest')
+data.setCell(2, 2, 'test.DepartmentTest')
+data.setCell(2, 3, 1);
+window.suiteTableData['TestNG_Tests']= { tableData: data, tableDiv: 'times-div-TestNG_Tests'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 10 ms</span>
-              <div id="times-div-Sample_Test_Suite">
-              </div> <!-- times-div-Sample_Test_Suite -->
+              <span class="suite-total-time">Total running time: 2 seconds</span>
+              <div id="times-div-TestNG_Tests">
+              </div> <!-- times-div-TestNG_Tests -->
             </div> <!-- times-div -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
@@ -352,9 +395,9 @@ return data;
           <div class="main-panel-content rounded-window-bottom">
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
-        <div panel-name="reporter-Sample_Test_Suite" class="panel">
+        <div panel-name="reporter-TestNG_Tests" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">Reporter output for Sample Test Suite</span>
+            <span class="header-content">Reporter output for TestNG Tests</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -366,7 +409,7 @@ return data;
           <div class="main-panel-content rounded-window-bottom">
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
-        <div panel-name="ignored-methods-Sample_Test_Suite" class="panel">
+        <div panel-name="ignored-methods-TestNG_Tests" class="panel">
           <div class="main-panel-header rounded-window-top">
             <span class="header-content">0 ignored methods</span>
           </div> <!-- main-panel-header rounded-window-top -->
@@ -380,19 +423,25 @@ return data;
           <div class="main-panel-content rounded-window-bottom">
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
-        <div panel-name="chronological-Sample_Test_Suite" class="panel">
+        <div panel-name="chronological-TestNG_Tests" class="panel">
           <div class="main-panel-header rounded-window-top">
             <span class="header-content">Methods in chronological order</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="chronological-class">
-              <div class="chronological-class-name">test.FirstTest</div> <!-- chronological-class-name -->
+              <div class="chronological-class-name">test.DepartmentTest</div> <!-- chronological-class-name -->
               <div class="test-method">
-                <span class="method-name">testDepartmentCreationTest</span>
+                <span class="method-name">changeDepartmentTest</span>
                 <span class="method-start">0 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
-                <span class="method-name">testJustSimpleTest</span>
+                <span class="method-name">createDepartmentTest</span>
+                <span class="method-start">12 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <img src="failed.png">
+                </img>
+                <span class="method-name">loadDepartmentTest</span>
                 <span class="method-start">13 ms</span>
               </div> <!-- test-method -->
           </div> <!-- main-panel-content rounded-window-bottom -->

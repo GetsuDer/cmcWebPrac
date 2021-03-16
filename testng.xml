@@ -1,10 +1,9 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
-<suite name="Sample Test Suite">
-    <test name="Sample Test">
+<suite name="TestNG Tests">
+    <test name="Department tests">
         <classes>
-            <class name="test.FirstTest"/>
+            <class name="test.DepartmentTest"/>
         </classes>
     </test>
-
 </suite>

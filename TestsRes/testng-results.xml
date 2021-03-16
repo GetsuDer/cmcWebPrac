@@ -1,27 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="0" total="2" passed="2">
+<testng-results skipped="0" failed="1" ignored="0" total="3" passed="2">
   <reporter-output>
   </reporter-output>
-  <suite name="Ant suite" duration-ms="0" started-at="2021-03-14T16:44:37 MSK" finished-at="2021-03-14T16:44:37 MSK">
+  <suite name="Ant suite" duration-ms="0" started-at="2021-03-16T11:40:15 MSK" finished-at="2021-03-16T11:40:15 MSK">
     <groups>
     </groups>
-    <test name="Ant test" duration-ms="0" started-at="2021-03-14T16:44:37 MSK" finished-at="2021-03-14T16:44:37 MSK">
+    <test name="Ant test" duration-ms="0" started-at="2021-03-16T11:40:15 MSK" finished-at="2021-03-16T11:40:15 MSK">
     </test> <!-- Ant test -->
   </suite> <!-- Ant suite -->
-  <suite name="Sample Test Suite" duration-ms="209" started-at="2021-03-14T16:44:36 MSK" finished-at="2021-03-14T16:44:37 MSK">
+  <suite name="TestNG Tests" duration-ms="2700" started-at="2021-03-16T11:40:12 MSK" finished-at="2021-03-16T11:40:15 MSK">
     <groups>
     </groups>
-    <test name="Sample Test" duration-ms="209" started-at="2021-03-14T16:44:36 MSK" finished-at="2021-03-14T16:44:37 MSK">
-      <class name="test.FirstTest">
-        <test-method status="PASS" signature="testDepartmentCreationTest()[pri:0, instance:test.FirstTest@c038203]" name="testDepartmentCreationTest" duration-ms="10" started-at="2021-03-14T16:44:37 MSK" finished-at="2021-03-14T16:44:37 MSK">
+    <test name="Department tests" duration-ms="2700" started-at="2021-03-16T11:40:12 MSK" finished-at="2021-03-16T11:40:15 MSK">
+      <class name="test.DepartmentTest">
+        <test-method status="PASS" signature="changeDepartmentTest()[pri:0, instance:test.DepartmentTest@c038203]" name="changeDepartmentTest" duration-ms="10" started-at="2021-03-16T11:40:12 MSK" finished-at="2021-03-16T11:40:12 MSK">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testDepartmentCreationTest -->
-        <test-method status="PASS" signature="testJustSimpleTest()[pri:0, instance:test.FirstTest@c038203]" name="testJustSimpleTest" duration-ms="0" started-at="2021-03-14T16:44:37 MSK" finished-at="2021-03-14T16:44:37 MSK">
+        </test-method> <!-- changeDepartmentTest -->
+        <test-method status="PASS" signature="createDepartmentTest()[pri:0, instance:test.DepartmentTest@c038203]" name="createDepartmentTest" duration-ms="1" started-at="2021-03-16T11:40:12 MSK" finished-at="2021-03-16T11:40:12 MSK">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testJustSimpleTest -->
-      </class> <!-- test.FirstTest -->
-    </test> <!-- Sample Test -->
-  </suite> <!-- Sample Test Suite -->
+        </test-method> <!-- createDepartmentTest -->
+        <test-method status="FAIL" signature="loadDepartmentTest()[pri:0, instance:test.DepartmentTest@c038203]" name="loadDepartmentTest" duration-ms="2629" started-at="2021-03-16T11:40:12 MSK" finished-at="2021-03-16T11:40:15 MSK">
+          <exception class="org.hibernate.LazyInitializationException">
+            <message>
+              <![CDATA[could not initialize proxy [logic.Department#1231] - no Session]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.hibernate.LazyInitializationException: could not initialize proxy [logic.Department#1231] - no Session
+at org.hibernate.proxy.AbstractLazyInitializer.initialize(AbstractLazyInitializer.java:170)
+at org.hibernate.proxy.AbstractLazyInitializer.getImplementation(AbstractLazyInitializer.java:310)
+at org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor.intercept(ByteBuddyInterceptor.java:45)
+at org.hibernate.proxy.ProxyConfiguration$InterceptorDispatcher.intercept(ProxyConfiguration.java:95)
+at logic.Department$HibernateProxy$Ikil4urG.getName(Unknown Source)
+at test.DepartmentTest.loadDepartmentTest(Unknown Source)
+at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.lang.reflect.Method.invoke(Method.java:498)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:133)
+at org.testng.internal.TestInvoker.invokeMethod(TestInvoker.java:598)
+at org.testng.internal.TestInvoker.invokeTestMethod(TestInvoker.java:173)
+at org.testng.internal.MethodRunner.runInSequence(MethodRunner.java:46)
+at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:824)
+at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:146)
+at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
+at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
+at java.util.ArrayList.forEach(ArrayList.java:1259)
+at org.testng.TestRunner.privateRun(TestRunner.java:794)
+at org.testng.TestRunner.run(TestRunner.java:596)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:377)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:371)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:332)
+at org.testng.SuiteRunner.run(SuiteRunner.java:276)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1212)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1134)
+at org.testng.TestNG.runSuites(TestNG.java:1063)
+at org.testng.TestNG.run(TestNG.java:1031)
+at org.testng.TestNG.privateMain(TestNG.java:1365)
+at org.testng.TestNG.main(TestNG.java:1329)
+]]>
+            </full-stacktrace>
+          </exception> <!-- org.hibernate.LazyInitializationException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- loadDepartmentTest -->
+      </class> <!-- test.DepartmentTest -->
+    </test> <!-- Department tests -->
+  </suite> <!-- TestNG Tests -->
 </testng-results>

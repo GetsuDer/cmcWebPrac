@@ -11,8 +11,8 @@ import javax.persistence.*;
 public class Department {
     /** Department id */
     @Id
-    @GeneratedValue
     @Column(name = "department_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     /** Department name */
@@ -20,9 +20,8 @@ public class Department {
     private String name;
 
     /** Head department id */
-
     @Column(name = "head_department")
-    private Long head_department;
+    private Long headDepartment;
 
     /** Department director id */
     @Column(name = "director")
@@ -30,6 +29,19 @@ public class Department {
     
     /** Default constructor */
     public Department() {
+    }
+
+    /** Constructor 
+     * @param id Id
+     * @param name Department name
+     * @param head_department Department head department
+     * @param director Department director id
+     */
+    public Department(Long id, String name, Long headDepartment, Long director) {
+        this.id = id;
+        this.name = name;
+        this.headDepartment = headDepartment;
+        this.director = director;
     }
 
     /** Setting department id
@@ -49,8 +61,8 @@ public class Department {
     /** Setting head department identificator
      *  @param head_department - department identificator to be set
      */
-    public void setHead_department(Long head_department) {
-        this.head_department = head_department;
+    public void setHeadDepartment(Long headDepartment) {
+        this.headDepartment = headDepartment;
     }
 
     /** Setting director identificator
@@ -77,8 +89,8 @@ public class Department {
     /** Get head department identificator
      * @return Returns head department identificator
      */
-    public Long getHead_department() {
-        return head_department;
+    public Long getHeadDepartment() {
+        return headDepartment;
     }
     
     /** Get director identificator
@@ -86,6 +98,19 @@ public class Department {
      */
     public Long getDirector() {
         return director;
+    }
+
+    /**
+     * toString method 
+     * @return Returns text repersentation
+     */
+    @Override
+    public String toString() {
+        return "Department:\n" +
+                "Id: " + id +
+                "\nName: " + name + "\n" +
+                "Head department: " + headDepartment + "\n" +
+                "Director: " + director + "\n";
     }
 
 }
