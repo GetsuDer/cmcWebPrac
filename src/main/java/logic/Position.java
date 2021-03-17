@@ -132,9 +132,17 @@ public class Position {
      * @return Returns true, if objects are equal
      */
     public boolean my_equals(Position pos) {
-        if (pos.getId() == this.getId() && pos.getName().equals(this.getName()) 
-                && pos.getResponsibilities().equals(this.getResponsibilities()) && pos.getDepartment() == this.getDepartment()) 
-        {
+        if (pos == null) return false;
+        boolean nameEQ = (pos.getName() == null && this.getName() == null) ||
+            (pos.getName() != null && this.getName() != null && pos.getName().equals(this.getName()));
+        boolean respEQ = (pos.getResponsibilities() == null && this.getResponsibilities() == null) ||
+            (pos.getResponsibilities() != null && this.getResponsibilities() != null && 
+             pos.getResponsibilities().equals(this.getResponsibilities()));
+        boolean depEQ = (pos.getDepartment() == null && this.getDepartment() == null) ||
+            (pos.getDepartment() != null && this.getDepartment() != null &&
+             pos.getDepartment().getId() == this.getDepartment().getId());
+
+        if (pos.getId() == this.getId() && nameEQ && respEQ && depEQ) { 
             return true;
         }
         return false;

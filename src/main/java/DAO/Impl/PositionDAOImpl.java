@@ -1,14 +1,15 @@
 package DAO.Impl;
 
 import DAO.PositionDAO;
-import logic.Position;
-import logic.Department;
-import logic.StaffMember;
+import logic.*;
 
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
+
 import util.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -103,14 +104,10 @@ public class PositionDAOImpl implements PositionDAO {
         try {
             session = HibernateSessionFactoryUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
-            Long department_id = department.getId();
-            Query query = session.createQuery(
-                    "select p"
-                        + " from Position p INNER JOIN p.departments department"
-                        + " where department.id = :departmentId"
-                    );
-           positions = (List<Position>)query.list();
-           session.getTransaction().commit();
+            Query query = session.createQuery("from Position WHERE department = :department_id");
+            query.setParameter("department_id", department);
+            positions = (List<Position>)query.list();
+            session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println("Error in get position by department");
         } finally {
@@ -123,17 +120,23 @@ public class PositionDAOImpl implements PositionDAO {
 
     public Collection getPositionsByStaffMember(StaffMember member) throws SQLException {
         Session session = null;
-        List positions = new ArrayList<Position>();
+        Set positions = new HashSet<Position>();
         try {
             session = HibernateSessionFactoryUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
-            Long member_id = member.getId();
-            Query query = session.createQuery (
-                    "select p"
-                        + " from Position p INNER JOIN p.staff_members member"
-                        + " where member.id = :memberId"
-                    );
-            positions = (List<Position>)query.list();
+            
+            Query query = session.createQuery("from Employee WHERE staff_member = :member_id");
+            query.setParameter("member_id", member);
+            List<Employee> employees = (List<Employee>)query.list();
+            for (Employee emp : employees) {
+                query = session.createQuery("from Position WHERE position_id = :position_ID");
+                query.setParameter("position_ID", emp.getPosition().getId());
+                List<Position> partPositions = (List<Position>)query.list();
+                for (Position pos : partPositions) {
+                    positions.add(pos);
+                }
+            }           
+            
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println("Error in get positions by staff member");
