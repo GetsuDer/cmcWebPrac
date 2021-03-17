@@ -135,13 +135,22 @@ public class Employee {
      * @return Returns true, if objects are equal
      */
     public boolean my_equals(Employee emp) {
-        boolean st_EQ = (Math.abs(emp.getStartTime().getTime() - this.getStartTime().getTime()) < 60 * 60 * 24);
-        boolean et_EQ = (emp.getStartTime() == null && this.getStartTime() == null) || (this.getStartTime() != null && emp.getStartTime() != null && Math.abs(emp.getStartTime().getTime() - this.getStartTime().getTime()) < 60 * 60 * 24);
-        if (emp.getId() == this.getId() && emp.getPosition() == this.getPosition() 
-                && emp.getStaffMember() == this.getStaffMember() && st_EQ && et_EQ) {
+        boolean st_EQ = (emp.getStartTime() == null && this.getStartTime() == null) ||
+            (emp.getStartTime() != null && emp.getEndTime() != null && 
+             Math.abs(emp.getStartTime().getTime() - this.getStartTime().getTime()) < 60 * 60 * 24);
+        boolean et_EQ = (emp.getEndTime() == null && this.getStartTime() == null) ||
+            (emp.getEndTime() != null && this.getEndTime() != null && 
+             Math.abs(emp.getStartTime().getTime() - this.getStartTime().getTime()) < 60 * 60 * 24);
+        boolean posEQ = (emp.getPosition() == null && this.getPosition() == null) ||
+            (emp.getPosition() != null && this.getPosition() != null && 
+             emp.getPosition().getId() == this.getPosition().getId());
+        boolean memEQ = (emp.getStaffMember() == null && this.getStaffMember() == null) ||
+            (emp.getStaffMember() != null && this.getStaffMember() != null && 
+             emp.getStaffMember().getId() == this.getStaffMember().getId());
+
+        if (emp.getId() == this.getId() && posEQ && memEQ && st_EQ && et_EQ) {
             return true;
         }
-        System.out.println(emp.getEndTime().getTime() - this.getEndTime().getTime());
         return false;
     }
 

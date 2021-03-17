@@ -1,6 +1,6 @@
 package DAO;
 
-import logic.Employee;
+import logic.*;
 
 import java.util.Collection;
 import java.sql.SQLException;
@@ -34,4 +34,14 @@ public interface EmployeeDAO {
      * @param employee Current employee
      */
     public void deleteEmployee(Employee employee) throws SQLException;
+
+    /** Get employees with current member
+     * @param member Current member
+     */
+    public Collection getEmployeesByStaffMember(StaffMember member) throws SQLException;
+
+    /** Get employees with current position
+     * @param position Current position
+     */
+    public Collection getEmployeesByPosition(Position position) throws SQLException;
 }

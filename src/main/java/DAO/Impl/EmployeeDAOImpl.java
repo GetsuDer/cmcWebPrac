@@ -1,7 +1,7 @@
 package DAO.Impl;
 
-import logic.Employee;
-import DAO.EmployeeDAO;
+import logic.*;
+import DAO.*;
 import util.HibernateSessionFactoryUtil;
 
 import java.sql.SQLException;
@@ -94,5 +94,45 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                 session.close();
             }
         }
+    }
+
+    public Collection getEmployeesByStaffMember(StaffMember member) throws SQLException {
+        Session session = null;
+        List<Employee> employees = null;
+        try {
+            session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from Employee WHERE staffMember = :member_id");
+            query.setParameter("member_id", member);
+            employees = (List<Employee>)query.list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.err.println("getEmployeesByStaffMember: " + e);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return employees;
+    }
+
+    public Collection getEmployeesByPosition(Position position) throws SQLException {
+        Session session = null;
+        List<Employee> employees = null;
+        try {
+            session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from Employee WHERE position = :position_id");
+            query.setParameter("position_id", position);
+            employees = (List<Employee>)query.list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.err.println("getEmployeesByStaffMember: " + e);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return employees;
     }
 }

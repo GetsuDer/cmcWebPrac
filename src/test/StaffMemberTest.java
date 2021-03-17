@@ -96,6 +96,7 @@ public class StaffMemberTest {
                 employeeDAO.addEmployee(employee);
             }
             Collection loadedMembers = staffMemberDAO.getStaffMembersByDepartment(department);
+            Assert.assertTrue(loadedMembers.size() == members.size());
             for (StaffMember mem : members) {
                 boolean founded = false;
                 for (Object obj : loadedMembers) {
@@ -132,6 +133,7 @@ public class StaffMemberTest {
                 employeeDAO.addEmployee(employee);
             }
             Collection loadedMembers = staffMemberDAO.getStaffMembersByPosition(position);
+            Assert.assertTrue(loadedMembers.size() == members.size());
             for (StaffMember mem : members) {
                 boolean founded = false;
                 for (Object obj : loadedMembers) {

@@ -96,8 +96,10 @@ public class PositionTest {
             for (int i = 0; i < 3; i++) {
                 Position position = new Position(null, null, department, Long.valueOf(1));
                 positionDAO.addPosition(position);
+                positions.add(position);
             }   
             Collection loadedPositions = positionDAO.getPositionsByDepartment(department);
+            Assert.assertTrue(loadedPositions.size() == positions.size());
             for (Position pos : positions) {
                 boolean founded = false;
                 for (Object obj : loadedPositions) {
@@ -145,6 +147,7 @@ public class PositionTest {
             }
 
             Collection loadedPositions = positionDAO.getPositionsByStaffMember(member);
+            Assert.assertTrue(loadedPositions.size() == positions.size());
             for (Position position : positions) {
                 boolean founded = false;
                 for (Object obj : loadedPositions) {

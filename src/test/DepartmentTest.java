@@ -99,9 +99,11 @@ public class DepartmentTest {
                 Department department = new Department();
                 department.setDirector(director);
                 departmentDAO.addDepartment(department);
+                departments.add(department);
             }
 
             Collection loadedDepartments = departmentDAO.getDepartmentsByDirector(director);
+            Assert.assertTrue(loadedDepartments.size() == departments.size());
             for (Department dep : departments) {
                 boolean founded = false;
                 for (Object obj : loadedDepartments) {
