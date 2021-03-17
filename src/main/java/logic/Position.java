@@ -23,8 +23,9 @@ public class Position {
     private String responsibilities;
 
     /** position department id */
-    @Column(name = "department")
-    private Long department;
+    @ManyToOne
+    @JoinColumn(name = "department")
+    private Department department;
 
     /** position size */
     @Column(name = "size")
@@ -32,6 +33,14 @@ public class Position {
 
     /** Default constructor */
     public Position() {
+    }
+
+    /** Constructor */
+    public Position(String name, String responsibilities, Department department, Long size) {
+        this.name = name;
+        this.responsibilities = responsibilities;
+        this.department = department;
+        this.size = size;
     }
 
     /** Set position identificator
@@ -58,7 +67,7 @@ public class Position {
     /** Set position department id
      * @param department - department id to be set
      */
-    public void setDepartment(Long department) {
+    public void setDepartment(Department department) {
         this.department = department;
     }
 
@@ -93,7 +102,7 @@ public class Position {
     /** Get department identificator
      * @return Returns department identificator
      */
-    public Long getDepartment() {
+    public Department getDepartment() {
         return department;
     }
 
@@ -114,6 +123,21 @@ public class Position {
                 "Id: " + id + "\n" +
                 "Name: " + name + "\n" +
                 "Responsibilities: " + responsibilities + "\n" +
-                "Department: " + department + "\n";
+                "Department: " + ((department == null) ? "NONE" : department.getId()) + "\n";
+    } 
+    
+    /**
+     * Equals method
+     * @param obj Another object
+     * @return Returns true, if objects are equal
+     */
+    public boolean my_equals(Position pos) {
+        if (pos.getId() == this.getId() && pos.getName().equals(this.getName()) 
+                && pos.getResponsibilities().equals(this.getResponsibilities()) && pos.getDepartment() == this.getDepartment()) 
+        {
+            return true;
+        }
+        return false;
     }
+
 }

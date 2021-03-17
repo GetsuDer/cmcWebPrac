@@ -17,12 +17,14 @@ public class Employee {
     private Long id;
 
     /** Position id */
-    @Column(name = "position")
-    private Long position;
+    @ManyToOne
+    @JoinColumn(name = "position")
+    private Position position;
 
     /** Staff member id */
-    @Column(name = "staff_member")
-    private Long staffMember;
+    @ManyToOne
+    @JoinColumn(name = "staff_member")
+    private StaffMember staffMember;
 
     /** Work start time */
     @Column(name = "start_time")
@@ -36,6 +38,14 @@ public class Employee {
     public Employee() {
     }
 
+    /** Constructor */
+    public Employee(Position position, StaffMember staffMember, Date startTime, Date endTime) {
+        this.position = position;
+        this.staffMember = staffMember;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
     /** Setting employee id
      * @param id - Employee id to be set
      */
@@ -45,14 +55,14 @@ public class Employee {
     /** Setting position id 
      *  @param position - position id to be set
      */
-    public void setPosition(Long position) {
+    public void setPosition(Position position) {
         this.position = position;
     }
 
     /** Setting staff member id
      * @param staff_member - staff member id to be set
      */
-    public void setStaffMember(Long staffMember) {
+    public void setStaffMember(StaffMember staffMember) {
         this.staffMember = staffMember;
     }
 
@@ -80,14 +90,14 @@ public class Employee {
     /** Get position id
      * @return Returns position id
      */
-    public Long getPosition() {
+    public Position getPosition() {
         return position;
     }
 
     /** Get staff member id
      * @return Returns staff member id
      */
-    public Long getStaffMember() {
+    public StaffMember getStaffMember() {
         return staffMember;
     }
 
@@ -113,10 +123,26 @@ public class Employee {
     public String toString() {
         return "Employee:\n" +
                 "Id: " + id + "\n" +
-                "Position: " + position + "\n" +
-                "Member: " + staffMember + "\n" +
+                "Position: " + ((position == null) ? "NONE" : position.getId()) + "\n" +
+                "Member: " + ((staffMember == null) ? "NONE" : staffMember.getId()) + "\n" +
                 "StartTime: " + startTime + "\n" + 
                 "EndTime: " + endTime + "\n";
+    }
+
+    /**
+     * Equals method
+     * @param obj Another object
+     * @return Returns true, if objects are equal
+     */
+    public boolean my_equals(Employee emp) {
+        boolean st_EQ = (Math.abs(emp.getStartTime().getTime() - this.getStartTime().getTime()) < 60 * 60 * 24);
+        boolean et_EQ = (emp.getStartTime() == null && this.getStartTime() == null) || (this.getStartTime() != null && emp.getStartTime() != null && Math.abs(emp.getStartTime().getTime() - this.getStartTime().getTime()) < 60 * 60 * 24);
+        if (emp.getId() == this.getId() && emp.getPosition() == this.getPosition() 
+                && emp.getStaffMember() == this.getStaffMember() && st_EQ && et_EQ) {
+            return true;
+        }
+        System.out.println(emp.getEndTime().getTime() - this.getEndTime().getTime());
+        return false;
     }
 
 }

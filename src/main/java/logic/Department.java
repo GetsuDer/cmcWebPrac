@@ -1,7 +1,7 @@
 package logic;
 
 import javax.persistence.*;
-
+import java.util.Arrays;
 /**
  *  Entity for table "Departments"
  *
@@ -20,12 +20,14 @@ public class Department {
     private String name;
 
     /** Head department id */
-    @Column(name = "head_department")
-    private Long headDepartment;
+    @ManyToOne
+    @JoinColumn(name = "head_department")
+    private Department headDepartment;
 
     /** Department director id */
-    @Column(name = "director")
-    private Long director;
+    @ManyToOne
+    @JoinColumn(name = "director")
+    private StaffMember director;
     
     /** Default constructor */
     public Department() {
@@ -37,8 +39,7 @@ public class Department {
      * @param head_department Department head department
      * @param director Department director id
      */
-    public Department(Long id, String name, Long headDepartment, Long director) {
-        this.id = id;
+    public Department(String name, Department headDepartment, StaffMember director) {
         this.name = name;
         this.headDepartment = headDepartment;
         this.director = director;
@@ -61,14 +62,14 @@ public class Department {
     /** Setting head department identificator
      *  @param head_department - department identificator to be set
      */
-    public void setHeadDepartment(Long headDepartment) {
+    public void setHeadDepartment(Department headDepartment) {
         this.headDepartment = headDepartment;
     }
 
     /** Setting director identificator
      * @param director - director identificator to be set
      */
-    public void setDirector(Long director) {
+    public void setDirector(StaffMember director) {
         this.director = director;
     }
 
@@ -89,14 +90,14 @@ public class Department {
     /** Get head department identificator
      * @return Returns head department identificator
      */
-    public Long getHeadDepartment() {
+    public Department getHeadDepartment() {
         return headDepartment;
     }
     
     /** Get director identificator
      * @return Returns director identificator
      */
-    public Long getDirector() {
+    public StaffMember getDirector() {
         return director;
     }
 
@@ -109,8 +110,21 @@ public class Department {
         return "Department:\n" +
                 "Id: " + id +
                 "\nName: " + name + "\n" +
-                "Head department: " + headDepartment + "\n" +
-                "Director: " + director + "\n";
+                "Head department: " + ((headDepartment == null) ? "NONE" : headDepartment.getId()) + "\n" +
+                "Director: " + ((director == null) ? "NONE" : director.getId()) + "\n";
     }
 
+    /**
+     * Equals method
+     * @param obj Another object
+     * @return Returns true, if objects are equal
+     */
+    public boolean my_equals(Department dep) {
+        
+        if ((dep.getId() == this.getId()) && (dep.getName().equals(this.getName()))
+                && (dep.getHeadDepartment() == this.getHeadDepartment()) && (dep.getDirector() == this.getDirector())) {
+            return true;
+        }
+        return false;
+    }
 }

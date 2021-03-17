@@ -1,8 +1,6 @@
 package DAO.Impl;
 
-import logic.StaffMember;
-import logic.Position;
-import logic.Department;
+import logic.*;
 import DAO.StaffMemberDAO;
 import util.HibernateSessionFactoryUtil;
 
@@ -10,6 +8,8 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -22,7 +22,7 @@ public class StaffMemberDAOImpl implements StaffMemberDAO {
             session.save(member);
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println("Error in M add");
+            System.err.println("addStaffMember: " + e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -38,7 +38,7 @@ public class StaffMemberDAOImpl implements StaffMemberDAO {
             session.update(member);
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println("Error in M update");
+            System.err.println("updateStaffMember: " + e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -53,7 +53,7 @@ public class StaffMemberDAOImpl implements StaffMemberDAO {
             session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
             member = (StaffMember) session.load(StaffMember.class, member_id);
         } catch (Exception e) {
-            System.out.println("Error in get M");
+            System.err.println("getStaffMemberById: " + e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -64,7 +64,7 @@ public class StaffMemberDAOImpl implements StaffMemberDAO {
 
     public Collection getAllStaffMembers() throws SQLException {
         Session session = null;
-        List members = new ArrayList<StaffMember>();
+        List<StaffMember> members = new ArrayList<StaffMember>();
         try {
             session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
             session.beginTransaction();
@@ -72,7 +72,7 @@ public class StaffMemberDAOImpl implements StaffMemberDAO {
             members = (List<StaffMember>)query.list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println("Error in m get all");
+            System.err.println("getAllStaffMembers: " + e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -89,7 +89,7 @@ public class StaffMemberDAOImpl implements StaffMemberDAO {
             session.delete(member);
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println("Error in M delete");
+            System.err.println("deleteStaffMember: " + e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -99,20 +99,39 @@ public class StaffMemberDAOImpl implements StaffMemberDAO {
 
     public Collection getStaffMembersByDepartment(Department department) throws SQLException {
         Session session = null;
-        List members = new ArrayList<StaffMember>();
+        Set members = new HashSet<StaffMember>();
         try {
             session = HibernateSessionFactoryUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
-            Long department_id = department.getId();
-            Query query = session.createQuery(
-                    "select m"
-                        + " from StaffMembers m INNER JOIN m.departments department"
-                        + " where department.id = :departmentId"
-                    );
-            members = (List<StaffMember>) query.list();
+            
+            // department positions
+            System.out.println("0");
+            Query positionsQuery = session.createQuery("from Position WHERE department = :department_id");
+            System.out.println("1");
+            positionsQuery.setParameter("department_id", department.getId());
+            System.out.println("1,5");
+            List<Position> positions = (List<Position>) positionsQuery.list();
+
+            System.out.println("2");
+            for (Position pos : positions) {
+                // employees for current position
+                Query employeesQuery = session.createQuery("from Employee WHERE position = :position_id");
+                employeesQuery.setParameter("position_id", pos.getId());
+                List<Employee> employees = (List<Employee>) employeesQuery.list();
+                
+                for (Employee emp: employees) {
+                    // members (in fact - member) for current employee
+                    Query membersQuery = session.createQuery("from StaffMember WHERE id = :member_id");
+                    membersQuery.setParameter("member_id", emp.getStaffMember().getId());
+                    List<StaffMember> partMembers = (List<StaffMember>) membersQuery.list();
+                    for (StaffMember mem : partMembers) {
+                        members.add(mem);
+                    }
+                } 
+            }
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println("Error in M get m by d");
+            System.err.println("getStaffMembersByDepartment: " + e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -136,7 +155,7 @@ public class StaffMemberDAOImpl implements StaffMemberDAO {
             members = (List<StaffMember>) query.list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println("Error in get m by position");
+            System.err.println("getStaffMembersByPosition: " + e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();

@@ -55,11 +55,11 @@ function toggleAllBoxes() {
 <body>
 <h2 align='center'>Department tests</h2><table border='1' align="center">
 <tr>
-<td>Tests passed/Failed/Skipped:</td><td>2/1/0</td>
+<td>Tests passed/Failed/Skipped:</td><td>6/1/0</td>
 </tr><tr>
-<td>Started on:</td><td>Tue Mar 16 11:40:12 MSK 2021</td>
+<td>Started on:</td><td>Wed Mar 17 10:52:10 MSK 2021</td>
 </tr>
-<tr><td>Total time:</td><td>2 seconds (2700 ms)</td>
+<tr><td>Total time:</td><td>3 seconds (3200 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -75,23 +75,17 @@ function toggleAllBoxes() {
 <td><b>Instance</b></td>
 </tr>
 <tr>
-<td title='test.DepartmentTest.loadDepartmentTest()'><b>loadDepartmentTest</b><br>Test class: test.DepartmentTest</td>
-<td><div><pre>org.hibernate.LazyInitializationException: could not initialize proxy [logic.Department#1231] - no Session
-	at org.hibernate.proxy.AbstractLazyInitializer.initialize(AbstractLazyInitializer.java:170)
-	at org.hibernate.proxy.AbstractLazyInitializer.getImplementation(AbstractLazyInitializer.java:310)
-	at org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor.intercept(ByteBuddyInterceptor.java:45)
-	at org.hibernate.proxy.ProxyConfiguration$InterceptorDispatcher.intercept(ProxyConfiguration.java:95)
-	at logic.Department$HibernateProxy$Ikil4urG.getName(Unknown Source)
-	at test.DepartmentTest.loadDepartmentTest(Unknown Source)
+<td title='test.StaffMemberTest.getStaffMembersByDepartment()'><b>getStaffMembersByDepartment</b><br>Test class: test.StaffMemberTest</td>
+<td><div><pre>java.lang.AssertionError: expected [true] but found [false]
+	at test.StaffMemberTest.getStaffMembersByDepartment(Unknown Source)
 	at java.util.ArrayList.forEach(ArrayList.java:1259)
-... Removed 26 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace92575452", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace92575452'><pre>org.hibernate.LazyInitializationException: could not initialize proxy [logic.Department#1231] - no Session
-	at org.hibernate.proxy.AbstractLazyInitializer.initialize(AbstractLazyInitializer.java:170)
-	at org.hibernate.proxy.AbstractLazyInitializer.getImplementation(AbstractLazyInitializer.java:310)
-	at org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor.intercept(ByteBuddyInterceptor.java:45)
-	at org.hibernate.proxy.ProxyConfiguration$InterceptorDispatcher.intercept(ProxyConfiguration.java:95)
-	at logic.Department$HibernateProxy$Ikil4urG.getName(Unknown Source)
-	at test.DepartmentTest.loadDepartmentTest(Unknown Source)
+... Removed 30 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace40177529", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace40177529'><pre>java.lang.AssertionError: expected [true] but found [false]
+	at org.testng.Assert.fail(Assert.java:99)
+	at org.testng.Assert.failNotEquals(Assert.java:1037)
+	at org.testng.Assert.assertTrue(Assert.java:45)
+	at org.testng.Assert.assertTrue(Assert.java:55)
+	at test.StaffMemberTest.getStaffMembersByDepartment(Unknown Source)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -120,8 +114,8 @@ function toggleAllBoxes() {
 	at org.testng.TestNG.privateMain(TestNG.java:1365)
 	at org.testng.TestNG.main(TestNG.java:1329)
 </pre></div></td>
-<td>2</td>
-<td>test.DepartmentTest@c038203</td></tr>
+<td>0</td>
+<td>test.StaffMemberTest@d8355a8</td></tr>
 </table><p>
 <table width='100%' border='1' class='invocation-passed'>
 <tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
@@ -131,15 +125,35 @@ function toggleAllBoxes() {
 <td><b>Instance</b></td>
 </tr>
 <tr>
-<td title='test.DepartmentTest.changeDepartmentTest()'><b>changeDepartmentTest</b><br>Test class: test.DepartmentTest</td>
+<td title='test.StaffMemberTest.updateStaffMember()'><b>updateStaffMember</b><br>Test class: test.StaffMemberTest</td>
 <td></td>
 <td>0</td>
-<td>test.DepartmentTest@c038203</td></tr>
+<td>test.StaffMemberTest@d8355a8</td></tr>
 <tr>
-<td title='test.DepartmentTest.createDepartmentTest()'><b>createDepartmentTest</b><br>Test class: test.DepartmentTest</td>
+<td title='test.StaffMemberTest.addStaffMember()'><b>addStaffMember</b><br>Test class: test.StaffMemberTest</td>
 <td></td>
 <td>0</td>
-<td>test.DepartmentTest@c038203</td></tr>
+<td>test.StaffMemberTest@d8355a8</td></tr>
+<tr>
+<td title='test.StaffMemberTest.deleteStaffMember()'><b>deleteStaffMember</b><br>Test class: test.StaffMemberTest</td>
+<td></td>
+<td>0</td>
+<td>test.StaffMemberTest@d8355a8</td></tr>
+<tr>
+<td title='test.EmployeeTest.loadEmployee()'><b>loadEmployee</b><br>Test class: test.EmployeeTest</td>
+<td></td>
+<td>0</td>
+<td>test.EmployeeTest@28d25987</td></tr>
+<tr>
+<td title='test.DepartmentTest.loadDepartmentTest()'><b>loadDepartmentTest</b><br>Test class: test.DepartmentTest</td>
+<td></td>
+<td>2</td>
+<td>test.DepartmentTest@8bd1b6a</td></tr>
+<tr>
+<td title='test.PositionTest.loadPosition()'><b>loadPosition</b><br>Test class: test.PositionTest</td>
+<td></td>
+<td>0</td>
+<td>test.PositionTest@59fa1d9b</td></tr>
 </table><p>
 </body>
 </html>

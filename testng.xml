@@ -4,6 +4,9 @@
     <test name="Department tests">
         <classes>
             <class name="test.DepartmentTest"/>
+            <class name="test.StaffMemberTest"/>
+            <class name="test.PositionTest"/>
+            <class name="test.EmployeeTest"/>
         </classes>
     </test>
 </suite>

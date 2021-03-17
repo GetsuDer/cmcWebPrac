@@ -2,7 +2,6 @@ package logic;
 
 import javax.persistence.*;
 import java.util.Date;
-
 /**
  *  Entity for table 'StaffMembers'
  */
@@ -34,7 +33,15 @@ public class StaffMember {
     /** Default constructor */
     public StaffMember() {
     }
-   
+    
+    /** Constructor */
+    public StaffMember(String name, String address, Date workStart, String education) {
+        this.name = name;
+        this.address = address;
+        this.workStart = workStart;
+        this.education = education;
+    }
+
     /** Set staff member identificator
      * @param id - identificator to be set
      */
@@ -66,7 +73,7 @@ public class StaffMember {
     /** Set staff member education
      * @param education - education to be set
      */
-    private void setEducation(String education) {
+    public void setEducation(String education) {
         this.education = education;
     }
 
@@ -116,6 +123,19 @@ public class StaffMember {
                 "Name: " + name + "\n" +
                 "Address: " + address + "\n" +
                 "StartWork: " + workStart + "\n";
+    }
+
+    /**
+     * Equals method
+     * @param obj Another object
+     * @return Returns true, if objects are equal
+     */
+    public boolean my_equals(StaffMember mem) {
+        if (mem.getId() == this.getId() && mem.getName().equals(this.getName())
+                && mem.getAddress().equals(this.getAddress()) && (Math.abs(mem.getWorkStart().getTime() - this.getWorkStart().getTime()) < 60 * 60 * 24)) {
+            return true;
+        }
+        return false;
     }
 
 }

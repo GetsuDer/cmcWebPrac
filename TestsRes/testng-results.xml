@@ -1,39 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="1" ignored="0" total="3" passed="2">
+<testng-results skipped="0" failed="1" ignored="0" total="7" passed="6">
   <reporter-output>
   </reporter-output>
-  <suite name="Ant suite" duration-ms="0" started-at="2021-03-16T11:40:15 MSK" finished-at="2021-03-16T11:40:15 MSK">
+  <suite name="Ant suite" duration-ms="0" started-at="2021-03-17T10:52:13 MSK" finished-at="2021-03-17T10:52:13 MSK">
     <groups>
     </groups>
-    <test name="Ant test" duration-ms="0" started-at="2021-03-16T11:40:15 MSK" finished-at="2021-03-16T11:40:15 MSK">
+    <test name="Ant test" duration-ms="0" started-at="2021-03-17T10:52:13 MSK" finished-at="2021-03-17T10:52:13 MSK">
     </test> <!-- Ant test -->
   </suite> <!-- Ant suite -->
-  <suite name="TestNG Tests" duration-ms="2700" started-at="2021-03-16T11:40:12 MSK" finished-at="2021-03-16T11:40:15 MSK">
+  <suite name="TestNG Tests" duration-ms="3200" started-at="2021-03-17T10:52:10 MSK" finished-at="2021-03-17T10:52:13 MSK">
     <groups>
     </groups>
-    <test name="Department tests" duration-ms="2700" started-at="2021-03-16T11:40:12 MSK" finished-at="2021-03-16T11:40:15 MSK">
-      <class name="test.DepartmentTest">
-        <test-method status="PASS" signature="changeDepartmentTest()[pri:0, instance:test.DepartmentTest@c038203]" name="changeDepartmentTest" duration-ms="10" started-at="2021-03-16T11:40:12 MSK" finished-at="2021-03-16T11:40:12 MSK">
+    <test name="Department tests" duration-ms="3200" started-at="2021-03-17T10:52:10 MSK" finished-at="2021-03-17T10:52:13 MSK">
+      <class name="test.PositionTest">
+        <test-method status="PASS" signature="loadPosition()[pri:0, instance:test.PositionTest@59fa1d9b]" name="loadPosition" duration-ms="15" started-at="2021-03-17T10:52:13 MSK" finished-at="2021-03-17T10:52:13 MSK">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- changeDepartmentTest -->
-        <test-method status="PASS" signature="createDepartmentTest()[pri:0, instance:test.DepartmentTest@c038203]" name="createDepartmentTest" duration-ms="1" started-at="2021-03-16T11:40:12 MSK" finished-at="2021-03-16T11:40:12 MSK">
+        </test-method> <!-- loadPosition -->
+      </class> <!-- test.PositionTest -->
+      <class name="test.StaffMemberTest">
+        <test-method status="PASS" signature="addStaffMember()[pri:0, instance:test.StaffMemberTest@d8355a8]" name="addStaffMember" duration-ms="16" started-at="2021-03-17T10:52:12 MSK" finished-at="2021-03-17T10:52:12 MSK">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- createDepartmentTest -->
-        <test-method status="FAIL" signature="loadDepartmentTest()[pri:0, instance:test.DepartmentTest@c038203]" name="loadDepartmentTest" duration-ms="2629" started-at="2021-03-16T11:40:12 MSK" finished-at="2021-03-16T11:40:15 MSK">
-          <exception class="org.hibernate.LazyInitializationException">
+        </test-method> <!-- addStaffMember -->
+        <test-method status="PASS" signature="deleteStaffMember()[pri:0, instance:test.StaffMemberTest@d8355a8]" name="deleteStaffMember" duration-ms="293" started-at="2021-03-17T10:52:12 MSK" finished-at="2021-03-17T10:52:13 MSK">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- deleteStaffMember -->
+        <test-method status="FAIL" signature="getStaffMembersByDepartment()[pri:0, instance:test.StaffMemberTest@d8355a8]" name="getStaffMembersByDepartment" duration-ms="116" started-at="2021-03-17T10:52:13 MSK" finished-at="2021-03-17T10:52:13 MSK">
+          <exception class="java.lang.AssertionError">
             <message>
-              <![CDATA[could not initialize proxy [logic.Department#1231] - no Session]]>
+              <![CDATA[expected [true] but found [false]]]>
             </message>
             <full-stacktrace>
-              <![CDATA[org.hibernate.LazyInitializationException: could not initialize proxy [logic.Department#1231] - no Session
-at org.hibernate.proxy.AbstractLazyInitializer.initialize(AbstractLazyInitializer.java:170)
-at org.hibernate.proxy.AbstractLazyInitializer.getImplementation(AbstractLazyInitializer.java:310)
-at org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor.intercept(ByteBuddyInterceptor.java:45)
-at org.hibernate.proxy.ProxyConfiguration$InterceptorDispatcher.intercept(ProxyConfiguration.java:95)
-at logic.Department$HibernateProxy$Ikil4urG.getName(Unknown Source)
-at test.DepartmentTest.loadDepartmentTest(Unknown Source)
+              <![CDATA[java.lang.AssertionError: expected [true] but found [false]
+at org.testng.Assert.fail(Assert.java:99)
+at org.testng.Assert.failNotEquals(Assert.java:1037)
+at org.testng.Assert.assertTrue(Assert.java:45)
+at org.testng.Assert.assertTrue(Assert.java:55)
+at test.StaffMemberTest.getStaffMembersByDepartment(Unknown Source)
 at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -63,7 +68,23 @@ at org.testng.TestNG.privateMain(TestNG.java:1365)
 at org.testng.TestNG.main(TestNG.java:1329)
 ]]>
             </full-stacktrace>
-          </exception> <!-- org.hibernate.LazyInitializationException -->
+          </exception> <!-- java.lang.AssertionError -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getStaffMembersByDepartment -->
+        <test-method status="PASS" signature="updateStaffMember()[pri:0, instance:test.StaffMemberTest@d8355a8]" name="updateStaffMember" duration-ms="18" started-at="2021-03-17T10:52:13 MSK" finished-at="2021-03-17T10:52:13 MSK">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- updateStaffMember -->
+      </class> <!-- test.StaffMemberTest -->
+      <class name="test.EmployeeTest">
+        <test-method status="PASS" signature="loadEmployee()[pri:0, instance:test.EmployeeTest@28d25987]" name="loadEmployee" duration-ms="17" started-at="2021-03-17T10:52:13 MSK" finished-at="2021-03-17T10:52:13 MSK">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- loadEmployee -->
+      </class> <!-- test.EmployeeTest -->
+      <class name="test.DepartmentTest">
+        <test-method status="PASS" signature="loadDepartmentTest()[pri:0, instance:test.DepartmentTest@8bd1b6a]" name="loadDepartmentTest" duration-ms="2667" started-at="2021-03-17T10:52:10 MSK" finished-at="2021-03-17T10:52:12 MSK">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- loadDepartmentTest -->

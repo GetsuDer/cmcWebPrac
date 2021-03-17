@@ -158,7 +158,7 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">3 methods, 1 failed,   2 passed</span>
+                    <span class="method-stats">7 methods, 1 failed,   6 passed</span>
                   </li>
                   <li>
                     <span class="method-list-title failed">Failed methods</span>
@@ -169,7 +169,7 @@
                     <div class="method-list-content failed suite-TestNG_Tests">
                       <span>
                         <img width="3%" src="failed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-TestNG_Tests" title="test.DepartmentTest" hash-for-method="loadDepartmentTest">loadDepartmentTest</a> <!-- method navigator-link -->
+                        <a href="#" class="method navigator-link" panel-name="suite-TestNG_Tests" title="test.StaffMemberTest" hash-for-method="getStaffMembersByDepartment">getStaffMembersByDepartment</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content failed suite-TestNG_Tests -->
@@ -183,12 +183,32 @@
                     <div class="method-list-content passed suite-TestNG_Tests">
                       <span>
                         <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-TestNG_Tests" title="test.DepartmentTest" hash-for-method="changeDepartmentTest">changeDepartmentTest</a> <!-- method navigator-link -->
+                        <a href="#" class="method navigator-link" panel-name="suite-TestNG_Tests" title="test.StaffMemberTest" hash-for-method="addStaffMember">addStaffMember</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                       <span>
                         <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-TestNG_Tests" title="test.DepartmentTest" hash-for-method="createDepartmentTest">createDepartmentTest</a> <!-- method navigator-link -->
+                        <a href="#" class="method navigator-link" panel-name="suite-TestNG_Tests" title="test.StaffMemberTest" hash-for-method="deleteStaffMember">deleteStaffMember</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-TestNG_Tests" title="test.DepartmentTest" hash-for-method="loadDepartmentTest">loadDepartmentTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-TestNG_Tests" title="test.EmployeeTest" hash-for-method="loadEmployee">loadEmployee</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-TestNG_Tests" title="test.PositionTest" hash-for-method="loadPosition">loadPosition</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-TestNG_Tests" title="test.StaffMemberTest" hash-for-method="updateStaffMember">updateStaffMember</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content passed suite-TestNG_Tests -->
@@ -208,23 +228,18 @@
           <div class="suite-TestNG_Tests-class-failed">
             <div class="main-panel-header rounded-window-top">
               <img src="failed.png"/>
-              <span class="class-name">test.DepartmentTest</span>
+              <span class="class-name">test.StaffMemberTest</span>
             </div> <!-- main-panel-header rounded-window-top -->
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="loadDepartmentTest">
-                  </a> <!-- loadDepartmentTest -->
-                  <span class="method-name">loadDepartmentTest</span>
-                  <div class="stack-trace">org.hibernate.LazyInitializationException: could not initialize proxy [logic.Department#1231] - no Session
-	at org.hibernate.proxy.AbstractLazyInitializer.initialize(AbstractLazyInitializer.java:170)
-	at org.hibernate.proxy.AbstractLazyInitializer.getImplementation(AbstractLazyInitializer.java:310)
-	at org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor.intercept(ByteBuddyInterceptor.java:45)
-	at org.hibernate.proxy.ProxyConfiguration$InterceptorDispatcher.intercept(ProxyConfiguration.java:95)
-	at logic.Department$HibernateProxy$Ikil4urG.getName(Unknown Source)
-	at test.DepartmentTest.loadDepartmentTest(Unknown Source)
+                  <a name="getStaffMembersByDepartment">
+                  </a> <!-- getStaffMembersByDepartment -->
+                  <span class="method-name">getStaffMembersByDepartment</span>
+                  <div class="stack-trace">java.lang.AssertionError: expected [true] but found [false]
+	at test.StaffMemberTest.getStaffMembersByDepartment(Unknown Source)
 	at java.util.ArrayList.forEach(ArrayList.java:1259)
-... Removed 26 stack frames
+... Removed 30 stack frames
 </div> <!-- stack-trace -->
                 </div> <!-- method-content -->
               </div> <!-- method -->
@@ -233,21 +248,73 @@
           <div class="suite-TestNG_Tests-class-passed">
             <div class="main-panel-header rounded-window-top">
               <img src="passed.png"/>
+              <span class="class-name">test.PositionTest</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="loadPosition">
+                  </a> <!-- loadPosition -->
+                  <span class="method-name">loadPosition</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-TestNG_Tests-class-passed -->
+          <div class="suite-TestNG_Tests-class-passed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="passed.png"/>
+              <span class="class-name">test.StaffMemberTest</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="addStaffMember">
+                  </a> <!-- addStaffMember -->
+                  <span class="method-name">addStaffMember</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="deleteStaffMember">
+                  </a> <!-- deleteStaffMember -->
+                  <span class="method-name">deleteStaffMember</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="updateStaffMember">
+                  </a> <!-- updateStaffMember -->
+                  <span class="method-name">updateStaffMember</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-TestNG_Tests-class-passed -->
+          <div class="suite-TestNG_Tests-class-passed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="passed.png"/>
+              <span class="class-name">test.EmployeeTest</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="loadEmployee">
+                  </a> <!-- loadEmployee -->
+                  <span class="method-name">loadEmployee</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-TestNG_Tests-class-passed -->
+          <div class="suite-TestNG_Tests-class-passed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="passed.png"/>
               <span class="class-name">test.DepartmentTest</span>
             </div> <!-- main-panel-header rounded-window-top -->
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="changeDepartmentTest">
-                  </a> <!-- changeDepartmentTest -->
-                  <span class="method-name">changeDepartmentTest</span>
-                </div> <!-- method-content -->
-              </div> <!-- method -->
-              <div class="method">
-                <div class="method-content">
-                  <a name="createDepartmentTest">
-                  </a> <!-- createDepartmentTest -->
-                  <span class="method-name">createDepartmentTest</span>
+                  <a name="loadDepartmentTest">
+                  </a> <!-- loadDepartmentTest -->
+                  <span class="method-name">loadDepartmentTest</span>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
@@ -282,6 +349,9 @@
   &lt;test thread-count=&quot;5&quot; name=&quot;Department tests&quot;&gt;
     &lt;classes&gt;
       &lt;class name=&quot;test.DepartmentTest&quot;/&gt;
+      &lt;class name=&quot;test.StaffMemberTest&quot;/&gt;
+      &lt;class name=&quot;test.PositionTest&quot;/&gt;
+      &lt;class name=&quot;test.EmployeeTest&quot;/&gt;
     &lt;/classes&gt;
   &lt;/test&gt; &lt;!-- Department tests --&gt;
 &lt;/suite&gt; &lt;!-- TestNG Tests --&gt;
@@ -307,7 +377,7 @@
           <div class="main-panel-content rounded-window-bottom">
             <ul>
               <li>
-                <span class="test-name">Department tests (1 class)</span>
+                <span class="test-name">Department tests (4 classes)</span>
               </li>
             </ul>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -365,24 +435,40 @@ data.addColumn('number', 'Number');
 data.addColumn('string', 'Method');
 data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
-data.addRows(3);
+data.addRows(7);
 data.setCell(0, 0, 0)
 data.setCell(0, 1, 'loadDepartmentTest')
 data.setCell(0, 2, 'test.DepartmentTest')
-data.setCell(0, 3, 2629);
+data.setCell(0, 3, 2667);
 data.setCell(1, 0, 1)
-data.setCell(1, 1, 'changeDepartmentTest')
-data.setCell(1, 2, 'test.DepartmentTest')
-data.setCell(1, 3, 10);
+data.setCell(1, 1, 'deleteStaffMember')
+data.setCell(1, 2, 'test.StaffMemberTest')
+data.setCell(1, 3, 293);
 data.setCell(2, 0, 2)
-data.setCell(2, 1, 'createDepartmentTest')
-data.setCell(2, 2, 'test.DepartmentTest')
-data.setCell(2, 3, 1);
+data.setCell(2, 1, 'getStaffMembersByDepartment')
+data.setCell(2, 2, 'test.StaffMemberTest')
+data.setCell(2, 3, 116);
+data.setCell(3, 0, 3)
+data.setCell(3, 1, 'updateStaffMember')
+data.setCell(3, 2, 'test.StaffMemberTest')
+data.setCell(3, 3, 18);
+data.setCell(4, 0, 4)
+data.setCell(4, 1, 'loadEmployee')
+data.setCell(4, 2, 'test.EmployeeTest')
+data.setCell(4, 3, 17);
+data.setCell(5, 0, 5)
+data.setCell(5, 1, 'addStaffMember')
+data.setCell(5, 2, 'test.StaffMemberTest')
+data.setCell(5, 3, 16);
+data.setCell(6, 0, 6)
+data.setCell(6, 1, 'loadPosition')
+data.setCell(6, 2, 'test.PositionTest')
+data.setCell(6, 3, 15);
 window.suiteTableData['TestNG_Tests']= { tableData: data, tableDiv: 'times-div-TestNG_Tests'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 2 seconds</span>
+              <span class="suite-total-time">Total running time: 3 seconds</span>
               <div id="times-div-TestNG_Tests">
               </div> <!-- times-div-TestNG_Tests -->
             </div> <!-- times-div -->
@@ -431,18 +517,43 @@ return data;
             <div class="chronological-class">
               <div class="chronological-class-name">test.DepartmentTest</div> <!-- chronological-class-name -->
               <div class="test-method">
-                <span class="method-name">changeDepartmentTest</span>
+                <span class="method-name">loadDepartmentTest</span>
                 <span class="method-start">0 ms</span>
               </div> <!-- test-method -->
+            </div> <!-- chronological-class -->
+            <div class="chronological-class">
+              <div class="chronological-class-name">test.StaffMemberTest</div> <!-- chronological-class-name -->
               <div class="test-method">
-                <span class="method-name">createDepartmentTest</span>
-                <span class="method-start">12 ms</span>
+                <span class="method-name">addStaffMember</span>
+                <span class="method-start">2674 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">deleteStaffMember</span>
+                <span class="method-start">2690 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <img src="failed.png">
                 </img>
-                <span class="method-name">loadDepartmentTest</span>
-                <span class="method-start">13 ms</span>
+                <span class="method-name">getStaffMembersByDepartment</span>
+                <span class="method-start">2984 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">updateStaffMember</span>
+                <span class="method-start">3101 ms</span>
+              </div> <!-- test-method -->
+            </div> <!-- chronological-class -->
+            <div class="chronological-class">
+              <div class="chronological-class-name">test.PositionTest</div> <!-- chronological-class-name -->
+              <div class="test-method">
+                <span class="method-name">loadPosition</span>
+                <span class="method-start">3120 ms</span>
+              </div> <!-- test-method -->
+            </div> <!-- chronological-class -->
+            <div class="chronological-class">
+              <div class="chronological-class-name">test.EmployeeTest</div> <!-- chronological-class-name -->
+              <div class="test-method">
+                <span class="method-name">loadEmployee</span>
+                <span class="method-start">3136 ms</span>
               </div> <!-- test-method -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
