@@ -131,8 +131,13 @@ public class StaffMember {
      * @return Returns true, if objects are equal
      */
     public boolean my_equals(StaffMember mem) {
-        if (mem.getId() == this.getId() && mem.getName().equals(this.getName())
-                && mem.getAddress().equals(this.getAddress()) && (Math.abs(mem.getWorkStart().getTime() - this.getWorkStart().getTime()) < 60 * 60 * 24)) {
+        boolean nameEQ = (mem.getName() == null && this.getName() == null) ||
+            (mem.getName() != null && this.getName() != null && mem.getName().equals(this.getName()));
+        boolean addressEQ = (mem.getAddress() == null && this.getAddress() == null) ||
+            (mem.getAddress() != null && this.getAddress() != null && mem.getAddress().equals(this.getAddress()));
+        boolean workStartEQ = (mem.getWorkStart() == null && this.getWorkStart() == null) ||
+        (mem.getWorkStart() != null && this.getWorkStart() != null && Math.abs(mem.getWorkStart().getTime() - this.getWorkStart().getTime()) < 60 * 60 * 24);
+        if (mem.getId() == this.getId() && nameEQ && addressEQ && workStartEQ) {
             return true;
         }
         return false;

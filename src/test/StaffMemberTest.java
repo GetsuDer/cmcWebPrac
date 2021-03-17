@@ -29,7 +29,9 @@ public class StaffMemberTest {
             memberDAO.addStaffMember(member);
             StaffMember loadedMember = memberDAO.getStaffMemberById(member.getId());
             Assert.assertTrue(member.my_equals(loadedMember));
+        
         } catch (SQLException e) {
+            System.err.println(e);
             Assert.assertTrue(false);
         }
     }
@@ -52,6 +54,7 @@ public class StaffMemberTest {
             StaffMember loadedMember = memberDAO.getStaffMemberById(member.getId());
             Assert.assertTrue(newMember.my_equals(loadedMember));
         } catch (SQLException e) {
+            System.err.println(e);
             Assert.assertTrue(false);
         }
     }
@@ -69,6 +72,7 @@ public class StaffMemberTest {
                 Assert.assertFalse(member.my_equals(listMember));
             }
         } catch (SQLException e) {
+            System.err.println(e);
             Assert.assertTrue(false);
         }
     }
@@ -102,8 +106,46 @@ public class StaffMemberTest {
                     }
                 }
                 Assert.assertTrue(founded);
+                
             }
         } catch (SQLException e) {
+            System.err.println(e);
+            Assert.assertTrue(false);
+        }
+    }
+
+    @Test
+    public void getStaffMembersByPosition() {
+        Department department = new Department();
+        ArrayList<StaffMember> members = new ArrayList<StaffMember>();
+        DepartmentDAO departmentDAO = Factory.getInstance().getDepartmentDAO();
+        StaffMemberDAO staffMemberDAO = Factory.getInstance().getStaffMemberDAO();
+        PositionDAO positionDAO = Factory.getInstance().getPositionDAO();
+        EmployeeDAO employeeDAO = Factory.getInstance().getEmployeeDAO();
+        try {
+            departmentDAO.addDepartment(department);
+            Position position = new Position(null, null, department, Long.valueOf(3));
+            positionDAO.addPosition(position);
+            for (int i = 0; i < 3; i++) {
+                StaffMember member = new StaffMember();
+                staffMemberDAO.addStaffMember(member);
+                members.add(member);
+                Employee employee = new Employee(position, member, null, null);
+                employeeDAO.addEmployee(employee);
+            }
+            Collection loadedMembers = staffMemberDAO.getStaffMembersByPosition(position);
+            for (StaffMember mem : members) {
+                boolean founded = false;
+                for (Object obj : loadedMembers) {
+                    StaffMember loadedMem = (StaffMember) obj;
+                    if (loadedMem.my_equals(mem)) {
+                        founded = true;
+                    }
+                }
+                Assert.assertTrue(founded);
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
             Assert.assertTrue(false);
         }
     }

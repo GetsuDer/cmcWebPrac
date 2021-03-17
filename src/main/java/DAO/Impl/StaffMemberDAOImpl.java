@@ -105,18 +105,13 @@ public class StaffMemberDAOImpl implements StaffMemberDAO {
             session.beginTransaction();
             
             // department positions
-            System.out.println("0");
             Query positionsQuery = session.createQuery("from Position WHERE department = :department_id");
-            System.out.println("1");
-            positionsQuery.setParameter("department_id", department.getId());
-            System.out.println("1,5");
+            positionsQuery.setParameter("department_id", department);
             List<Position> positions = (List<Position>) positionsQuery.list();
-
-            System.out.println("2");
             for (Position pos : positions) {
                 // employees for current position
                 Query employeesQuery = session.createQuery("from Employee WHERE position = :position_id");
-                employeesQuery.setParameter("position_id", pos.getId());
+                employeesQuery.setParameter("position_id", pos);
                 List<Employee> employees = (List<Employee>) employeesQuery.list();
                 
                 for (Employee emp: employees) {
@@ -124,6 +119,7 @@ public class StaffMemberDAOImpl implements StaffMemberDAO {
                     Query membersQuery = session.createQuery("from StaffMember WHERE id = :member_id");
                     membersQuery.setParameter("member_id", emp.getStaffMember().getId());
                     List<StaffMember> partMembers = (List<StaffMember>) membersQuery.list();
+                    
                     for (StaffMember mem : partMembers) {
                         members.add(mem);
                     }
@@ -142,17 +138,22 @@ public class StaffMemberDAOImpl implements StaffMemberDAO {
 
     public Collection getStaffMembersByPosition(Position position) {
         Session session = null;
-        List members = new ArrayList<StaffMember>();
+        Set members = new HashSet<StaffMember>();
         try {
             session = HibernateSessionFactoryUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
-            Long position_id = position.getId();
-            Query query = session.createQuery(
-                    "select m "
-                        + " from StaffMembers m INER JOIN m.positions position"
-                        + " where position.id = :positionId"
-                    );
-            members = (List<StaffMember>) query.list();
+
+            Query employeesQuery = session.createQuery("from Employee WHERE position = :position_id");
+            employeesQuery.setParameter("position_id", position);
+            List<Employee> employees = (List<Employee>) employeesQuery.list();
+            for (Employee emp : employees) {
+                    Query membersQuery = session.createQuery("from StaffMember WHERE id = :member_id");
+                    membersQuery.setParameter("member_id", emp.getStaffMember().getId());
+                    List<StaffMember> partMembers = (List<StaffMember>) membersQuery.list();
+                    for (StaffMember mem : partMembers) {
+                        members.add(mem);
+                    }
+            }
             session.getTransaction().commit();
         } catch (Exception e) {
             System.err.println("getStaffMembersByPosition: " + e);

@@ -5,7 +5,8 @@
     <classes>
       <class name="test.StaffMemberTest">
         <methods>
-          <include name="getStaffMembersByDepartment"/>
+          <include name="updateStaffMember"/>
+          <include name="addStaffMember"/>
         </methods>
       </class> <!-- test.StaffMemberTest -->
     </classes>
