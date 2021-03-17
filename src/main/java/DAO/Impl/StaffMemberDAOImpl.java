@@ -30,7 +30,7 @@ public class StaffMemberDAOImpl implements StaffMemberDAO {
         }
     }
     
-    public void updateStaffMember(Long member_id, StaffMember member) throws SQLException {
+    public void updateStaffMember(StaffMember member) throws SQLException {
         Session session = null;
         try {
             session = HibernateSessionFactoryUtil.getSessionFactory().openSession();

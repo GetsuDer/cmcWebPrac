@@ -29,7 +29,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
         }
     }
 
-    public void updateDepartment(Long department_id, Department department) throws SQLException {
+    public void updateDepartment(Department department) throws SQLException {
         Session session = null;
         try {
             session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
@@ -103,12 +103,9 @@ public class DepartmentDAOImpl implements DepartmentDAO {
         try {
             session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            Long director_id = director.getId();
-            Query query = session.createQuery(
-                    "select d "
-                        + " from Director d INNER JOIN d.departments department"
-                        + " where department.id = :directorId "
-                    );
+
+            Query query = session.createQuery("from Department WHERE director = :director_id");
+            query.setParameter("director_id", director);
             departments = (List<Department>)query.list();
             session.getTransaction().commit();
         } catch (Exception e) {

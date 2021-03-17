@@ -17,10 +17,9 @@ public interface PositionDAO {
     public void addPosition(Position position) throws SQLException;
     
     /** Update position into table
-     * @param position_id Old position id
      * @param position New Position
      */
-    public void updatePosition(Long position_id, Position position) throws SQLException;
+    public void updatePosition(Position position) throws SQLException;
     
     /** Get position
      * @param position_id Position_id

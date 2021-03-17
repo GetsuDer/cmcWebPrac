@@ -29,7 +29,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         }
     }
 
-    public void updateEmployee(Long employee_id, Employee employee) throws SQLException {
+    public void updateEmployee(Employee employee) throws SQLException {
         Session session = null;
         try {
             session = HibernateSessionFactoryUtil.getSessionFactory().openSession();

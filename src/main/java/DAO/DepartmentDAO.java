@@ -16,10 +16,9 @@ public interface DepartmentDAO {
     public void addDepartment(Department department) throws SQLException;
     
     /** Updating department
-     *  @param department_id Old department identificator
      *  @param department New department
      */
-    public void updateDepartment(Long department_id, Department department) throws SQLException;
+    public void updateDepartment(Department department) throws SQLException;
     
     /** Getter for department
      * @param department_id Department to be get id

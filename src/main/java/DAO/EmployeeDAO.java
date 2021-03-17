@@ -15,10 +15,9 @@ public interface EmployeeDAO {
     public void addEmployee(Employee employee) throws SQLException;
     
     /** Update employee into table
-     * @param employee_id Old employee id
      * @param employee New employee to be updated
      */
-    public void updateEmployee(Long employee_id, Employee employee) throws SQLException;
+    public void updateEmployee(Employee employee) throws SQLException;
     
     /** Get employee
      * @param employee_id Employee id

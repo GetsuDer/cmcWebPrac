@@ -120,9 +120,13 @@ public class Department {
      * @return Returns true, if objects are equal
      */
     public boolean my_equals(Department dep) {
-        
-        if ((dep.getId() == this.getId()) && (dep.getName().equals(this.getName()))
-                && (dep.getHeadDepartment() == this.getHeadDepartment()) && (dep.getDirector() == this.getDirector())) {
+        boolean nameEQ = (dep.getName() == null && this.getName() == null) ||
+           (dep.getName() != null && this.getName() != null && dep.getName().equals(this.getName()));
+        boolean headEQ = (dep.getHeadDepartment() == null && this.getHeadDepartment() == null) ||
+           (dep.getHeadDepartment() != null && this.getHeadDepartment() != null && dep.getHeadDepartment().getId() == this.getHeadDepartment().getId());
+        boolean directorEQ = (dep.getDirector() == null && this.getDirector() == null) ||
+            (dep.getDirector() != null && this.getDirector() != null && dep.getDirector().getId() == this.getDirector().getId());
+        if ((dep.getId() == this.getId()) && nameEQ && headEQ && directorEQ) {
             return true;
         }
         return false;

@@ -29,7 +29,6 @@ public class StaffMemberTest {
             memberDAO.addStaffMember(member);
             StaffMember loadedMember = memberDAO.getStaffMemberById(member.getId());
             Assert.assertTrue(member.my_equals(loadedMember));
-        
         } catch (SQLException e) {
             System.err.println(e);
             Assert.assertTrue(false);
@@ -50,7 +49,7 @@ public class StaffMemberTest {
             memberDAO.addStaffMember(member);
             StaffMember newMember = new StaffMember(name + "2", address + "2", workStart, education + "2");
             newMember.setId(member.getId());
-            memberDAO.updateStaffMember(member.getId(), newMember);
+            memberDAO.updateStaffMember(newMember);
             StaffMember loadedMember = memberDAO.getStaffMemberById(member.getId());
             Assert.assertTrue(newMember.my_equals(loadedMember));
         } catch (SQLException e) {
@@ -106,7 +105,6 @@ public class StaffMemberTest {
                     }
                 }
                 Assert.assertTrue(founded);
-                
             }
         } catch (SQLException e) {
             System.err.println(e);

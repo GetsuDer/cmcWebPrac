@@ -17,10 +17,9 @@ public interface StaffMemberDAO {
     public void addStaffMember(StaffMember member) throws SQLException;
     
     /** Update staff member into table
-     * @param member_id Old member id
      * @param member New member
      */
-    public void updateStaffMember(Long member_id, StaffMember member) throws SQLException;
+    public void updateStaffMember(StaffMember member) throws SQLException;
     
     /** Get staff member
      * @param member_id Member id

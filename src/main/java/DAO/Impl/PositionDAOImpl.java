@@ -30,7 +30,7 @@ public class PositionDAOImpl implements PositionDAO {
         }
     }
 
-    public void updatePosition(Long position_id, Position position) throws SQLException {
+    public void updatePosition(Position position) throws SQLException {
         Session session = null;
         try {
             session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
