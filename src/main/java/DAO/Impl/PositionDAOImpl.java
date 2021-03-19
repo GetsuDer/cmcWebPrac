@@ -88,7 +88,7 @@ public class PositionDAOImpl implements PositionDAO {
         return positions;
     }
 
-    public Collection<Position> getPositionsByStaffMember(StaffMember member) throws SQLException {
+    public Collection<Position> getAllPositionsByStaffMember(StaffMember member) throws SQLException {
         Session session = null;
         Set<Position> positions = new HashSet<Position>();
         session = HibernateSessionFactoryUtil.getSessionFactory().getCurrentSession();
@@ -111,5 +111,59 @@ public class PositionDAOImpl implements PositionDAO {
             session.close();
         }
         return positions;
-    }    
+    }
+
+    public Collection<Position> getCurrentPositionsByStaffMember(StaffMember member) throws SQLException {
+        Session session = null;
+        Set<Position> positions = new HashSet<Position>();
+        session = HibernateSessionFactoryUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Query<Employee> query = session.createQuery("from Employee WHERE staff_member = :member_id", Employee.class);
+        query.setParameter("member_id", member);
+        List<Employee> employees = (List<Employee>)query.list();
+
+        for (Employee emp : employees) {
+            if (emp.getEndTime() != null) {
+                continue;
+            }
+            Query<Position> queryPosition = session.createQuery("from Position WHERE position_id = :position_ID", Position.class);
+            queryPosition.setParameter("position_ID", emp.getPosition().getId());
+            List<Position> partPositions = (List<Position>)queryPosition.list();
+            for (Position pos : partPositions) {
+                positions.add(pos);
+            }
+        }
+        session.getTransaction().commit();
+        if (session != null && session.isOpen()) {
+            session.close();
+        }
+        return positions;
+    }
+
+       public Collection<Position> getPastPositionsByStaffMember(StaffMember member) throws SQLException {
+        Session session = null;
+        Set<Position> positions = new HashSet<Position>();
+        session = HibernateSessionFactoryUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Query<Employee> query = session.createQuery("from Employee WHERE staff_member = :member_id", Employee.class);
+        query.setParameter("member_id", member);
+        List<Employee> employees = (List<Employee>)query.list();
+        for (Employee emp : employees) {
+            if (emp.getEndTime() == null) {
+                continue;
+            }
+            Query<Position> queryPosition = session.createQuery("from Position WHERE position_id = :position_ID", Position.class);
+            queryPosition.setParameter("position_ID", emp.getPosition().getId());
+            List<Position> partPositions = (List<Position>)queryPosition.list();
+            for (Position pos : partPositions) {
+                positions.add(pos);
+            }
+        }
+        session.getTransaction().commit();
+        if (session != null && session.isOpen()) {
+            session.close();
+        }
+        return positions;
+    }
+
 }

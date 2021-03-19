@@ -98,4 +98,29 @@ public class DepartmentTest {
             Assert.assertTrue(founded);
         }
     }
+
+    @Test
+    public void getSubDepartments() throws SQLException {
+        Department headDepartment = new Department();
+        DepartmentDAO departmentDAO = Factory.getInstance().getDepartmentDAO();
+        ArrayList<Department> departments = new ArrayList<Department>();
+        departmentDAO.addDepartment(headDepartment);
+        for (int i = 0; i < 5; i++) {
+            Department dep = new Department();
+            dep.setHeadDepartment(headDepartment);
+            departmentDAO.addDepartment(dep);
+            departments.add(dep);
+        }
+        Collection<Department> loadedDepartments = departmentDAO.getSubDepartments(headDepartment);
+        Assert.assertEquals(departments.size(), loadedDepartments.size());
+        for (Department dep : departments) {
+            boolean founded = false;
+            for (Department loadedDep : loadedDepartments) {
+                if (loadedDep.my_equals(dep)) {
+                    founded = true;
+                }
+            }
+            Assert.assertTrue(founded);
+        }
+    }
 }

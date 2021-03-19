@@ -56,7 +56,7 @@
     
     <taskdef name="testng" classname="org.testng.TestNGAntTask" classpath="lib/testng-7.4.0.jar"/>
     
-    <target name="test" depends="build">
+    <target name="test" depends="build,db_remove,db_create">
         <fileset id="tests" dir="Bin">
             <include name="*"/>
         </fileset>
@@ -89,4 +89,5 @@
             <arg value="fill"/>
         </exec>
     </target>
+
 </project>

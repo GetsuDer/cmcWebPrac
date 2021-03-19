@@ -36,6 +36,9 @@ Application pages and user scenarious descriptions are contained in 'Documentati
 
 ## Database scheme
 ![alt text](https://github.com/GetsuDer/cmcWebPrac/blob/main/Documentation/scheme_of_database.png)
+Constraint: For each employee endTime value must be entered only 
+when position is free from staff member. Before this moment it should be null. Not-null value
+is a signal, that position is not holded my member at the moment.
 
 ## Application pages
 ![alt text](https://github.com/GetsuDer/cmcWebPrac/blob/main/Documentation/application_scheme_simplified.png)
@@ -56,7 +59,7 @@ Contains button “add department”, linked with page 4, Department edit.
 Contains list of all departments. Each department name is linked with page 3, Department info. 
 
 Contains search panel, which, after using, changed departments list in accordance with the imposed restrictions.
-Search parameters: Department name, department size.
+Search parameters: Department name.
 
 ### Department info page (3)
 ![alt text](https://github.com/GetsuDer/cmcWebPrac/blob/main/Documentation/App_Pages_Pictures/page_Department_Info.png)

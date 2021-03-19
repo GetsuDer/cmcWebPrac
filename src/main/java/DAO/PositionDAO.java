@@ -47,5 +47,17 @@ public interface PositionDAO {
      * @param member Staff member to be work with
      * @return Returns collection of staff members positions
      */
-    public Collection<Position> getPositionsByStaffMember(StaffMember member) throws SQLException;
+    public Collection<Position> getAllPositionsByStaffMember(StaffMember member) throws SQLException;
+    
+    /** Get positions taken by staff member at this moment
+     * @param member Staff member
+     * @return Returns collection of staff members positions
+     */
+    public Collection<Position> getCurrentPositionsByStaffMember(StaffMember member) throws SQLException;
+    
+    /** Get positions taken by staff member in the past
+     * @param member Staff Member
+     * @return Returns collection of past staff member positions
+     */
+    public Collection<Position> getPastPositionsByStaffMember(StaffMember member) throws SQLException;
 }
