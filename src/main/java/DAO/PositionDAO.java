@@ -30,7 +30,7 @@ public interface PositionDAO {
     /** Get all positions
      * @return Returns all positions
      */
-    public Collection getAllPositions() throws SQLException;
+    public Collection<Position> getAllPositions() throws SQLException;
     
     /** Deletes position
      * @param position Position to be deleted
@@ -41,11 +41,11 @@ public interface PositionDAO {
      * @param department Department from which to get positions
      * @return Returns collection of positions from department
      */
-    public Collection getPositionsByDepartment(Department department) throws SQLException;
+    public Collection<Position> getPositionsByDepartment(Department department) throws SQLException;
     
     /** Get positions taken by staff member
      * @param member Staff member to be work with
      * @return Returns collection of staff members positions
      */
-    public Collection getPositionsByStaffMember(StaffMember member) throws SQLException;
+    public Collection<Position> getPositionsByStaffMember(StaffMember member) throws SQLException;
 }

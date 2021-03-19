@@ -15,7 +15,7 @@ import org.testng.Assert;
 public class PositionTest {
     
     @Test
-    public void addPosition() {
+    public void addPosition() throws SQLException {
 
         String name = "Test position name";
         String responsibilities = "Test responsibilities";
@@ -25,21 +25,16 @@ public class PositionTest {
         DepartmentDAO departmentDAO = Factory.getInstance().getDepartmentDAO();
         PositionDAO positionDAO = Factory.getInstance().getPositionDAO();
 
-        try {
-            departmentDAO.addDepartment(department);
-            Position position = new Position(name, responsibilities, department, size);
-            positionDAO.addPosition(position);
+        departmentDAO.addDepartment(department);
+        Position position = new Position(name, responsibilities, department, size);
+        positionDAO.addPosition(position);
 
-            Position loadedPosition = positionDAO.getPositionById(position.getId());
-            Assert.assertTrue(position.my_equals(loadedPosition));
-        } catch (SQLException e) {
-            System.err.println(e);
-            Assert.assertTrue(false);
-        }
+        Position loadedPosition = positionDAO.getPositionById(position.getId());
+        Assert.assertTrue(position.my_equals(loadedPosition));
     }
 
     @Test
-    public void updatePosition() {
+    public void updatePosition() throws SQLException {
         String name = "Test position name";
         String responsibilities = "Test responsibilities";
         Long size = Long.valueOf(2);
@@ -48,76 +43,57 @@ public class PositionTest {
         DepartmentDAO departmentDAO = Factory.getInstance().getDepartmentDAO();
         PositionDAO positionDAO = Factory.getInstance().getPositionDAO();
 
-        try {
-            departmentDAO.addDepartment(department);
-            departmentDAO.addDepartment(department2);
-            Position position = new Position(name, responsibilities, department, size);
-            Position newPosition = new Position(name + "2", responsibilities + "2", department2, size + 2);
-
-            positionDAO.addPosition(position);
-            newPosition.setId(position.getId());
-            positionDAO.updatePosition(newPosition);
-
-            Position loadedPosition = positionDAO.getPositionById(position.getId());
-            Assert.assertTrue(loadedPosition.my_equals(newPosition));
-        } catch (SQLException e) {
-            System.err.println(e);
-            Assert.assertTrue(false);
-        }  
+        departmentDAO.addDepartment(department);
+        departmentDAO.addDepartment(department2);
+        Position position = new Position(name, responsibilities, department, size);
+        Position newPosition = new Position(name + "2", responsibilities + "2", department2, size + 2);
+        positionDAO.addPosition(position);
+        newPosition.setId(position.getId());
+        positionDAO.updatePosition(newPosition);
+        Position loadedPosition = positionDAO.getPositionById(position.getId());
+        Assert.assertTrue(loadedPosition.my_equals(newPosition));
     }
 
     @Test
-    public void deletePosition() {
+    public void deletePosition() throws SQLException {
         Position position = new Position();
         PositionDAO positionDAO = Factory.getInstance().getPositionDAO();
-        try {
-            positionDAO.addPosition(position);
-            positionDAO.deletePosition(position);
-            Collection positionsLoaded = positionDAO.getAllPositions();
-            ArrayList<Position> positions = new ArrayList<Position>(positionsLoaded);
-            for (Position pos : positions) {
-                Assert.assertFalse(pos.my_equals(position));
-            }
-        } catch(SQLException e) {
-            System.err.println(e);
-            Assert.assertTrue(false);
+        positionDAO.addPosition(position);
+        positionDAO.deletePosition(position);
+        Collection<Position> positions = positionDAO.getAllPositions();
+        for (Position pos : positions) {
+            Assert.assertFalse(pos.my_equals(position));
         }
     }
 
     @Test
-    public void getPositionsByDepartment() {
+    public void getPositionsByDepartment() throws SQLException {
         Department department = new Department();
         DepartmentDAO departmentDAO = Factory.getInstance().getDepartmentDAO();
         PositionDAO positionDAO = Factory.getInstance().getPositionDAO();
         ArrayList<Position> positions = new ArrayList<Position>();
 
-        try {
-            departmentDAO.addDepartment(department);
-            for (int i = 0; i < 3; i++) {
-                Position position = new Position(null, null, department, Long.valueOf(1));
-                positionDAO.addPosition(position);
-                positions.add(position);
-            }   
-            Collection loadedPositions = positionDAO.getPositionsByDepartment(department);
-            Assert.assertTrue(loadedPositions.size() == positions.size());
-            for (Position pos : positions) {
-                boolean founded = false;
-                for (Object obj : loadedPositions) {
-                    Position loadedPosition = (Position) obj;
-                    if (loadedPosition.my_equals(pos)) {
-                        founded = true;
-                    }
+        departmentDAO.addDepartment(department);
+        for (int i = 0; i < 3; i++) {
+            Position position = new Position(null, null, department, Long.valueOf(1));
+            positionDAO.addPosition(position);
+            positions.add(position);
+        }   
+        Collection<Position> loadedPositions = positionDAO.getPositionsByDepartment(department);
+        Assert.assertTrue(loadedPositions.size() == positions.size());
+        for (Position pos : positions) {
+            boolean founded = false;
+            for (Position loadedPosition : loadedPositions) {
+                if (loadedPosition.my_equals(pos)) {
+                    founded = true;
                 }
-                Assert.assertTrue(founded);
             }
-        } catch (SQLException e) {
-            System.err.println(e);
-            Assert.assertTrue(false);
+            Assert.assertTrue(founded);
         }
     }
 
     @Test
-    public void getPositionsByStaffMember() {
+    public void getPositionsByStaffMember() throws SQLException {
         Department department1 = new Department();
         Department department2 = new Department();
         StaffMember member = new StaffMember();
@@ -128,39 +104,33 @@ public class PositionTest {
         EmployeeDAO employeeDAO = Factory.getInstance().getEmployeeDAO();
         StaffMemberDAO staffMemberDAO = Factory.getInstance().getStaffMemberDAO();
 
-        try {
-            departmentDAO.addDepartment(department1);
-            departmentDAO.addDepartment(department2);
-            staffMemberDAO.addStaffMember(member);
+        departmentDAO.addDepartment(department1);
+        departmentDAO.addDepartment(department2);
+        staffMemberDAO.addStaffMember(member);
 
-            for (int i = 0; i < 3; i++) {
-                Position position1 = new Position(null, null, department1, Long.valueOf(1));
-                Position position2 = new Position(null, null, department2, Long.valueOf(1));
-                positionDAO.addPosition(position1);
-                positionDAO.addPosition(position2);
-                positions.add(position1);
-                positions.add(position2);
-                Employee employee1 = new Employee(position1, member, null, null);
-                Employee employee2 = new Employee(position2, member, null, null);
-                employeeDAO.addEmployee(employee1);
-                employeeDAO.addEmployee(employee2);
-            }
+        for (int i = 0; i < 3; i++) {
+            Position position1 = new Position(null, null, department1, Long.valueOf(1));
+            Position position2 = new Position(null, null, department2, Long.valueOf(1));
+            positionDAO.addPosition(position1);
+            positionDAO.addPosition(position2);
+            positions.add(position1);
+            positions.add(position2);
+            Employee employee1 = new Employee(position1, member, null, null);
+            Employee employee2 = new Employee(position2, member, null, null);
+            employeeDAO.addEmployee(employee1);
+            employeeDAO.addEmployee(employee2);
+        }
 
-            Collection loadedPositions = positionDAO.getPositionsByStaffMember(member);
-            Assert.assertTrue(loadedPositions.size() == positions.size());
-            for (Position position : positions) {
-                boolean founded = false;
-                for (Object obj : loadedPositions) {
-                    Position loadedPosition = (Position) obj;
-                    if (loadedPosition.my_equals(position)) {
-                        founded = true;
-                    }
+        Collection<Position> loadedPositions = positionDAO.getPositionsByStaffMember(member);
+        Assert.assertTrue(loadedPositions.size() == positions.size());
+        for (Position position : positions) {
+            boolean founded = false;
+            for (Position loadedPosition : loadedPositions) {
+                if (loadedPosition.my_equals(position)) {
+                    founded = true;
                 }
-                Assert.assertTrue(founded);
             }
-        } catch (SQLException e) {
-            System.err.println(e);
-            Assert.assertTrue(false);
+            Assert.assertTrue(founded);
         }
     }
 

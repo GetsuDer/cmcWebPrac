@@ -28,7 +28,7 @@ public interface DepartmentDAO {
     /** Get all existing departments
      * @return Returns collection of all departments
      */
-    public Collection getAllDepartments() throws SQLException;
+    public Collection<Department> getAllDepartments() throws SQLException;
     
     /** Delete department
      * @param department Department to be deleted
@@ -39,5 +39,5 @@ public interface DepartmentDAO {
      * @param director Departments director
      * @return Returns departments ruled by director
      */
-    public Collection getDepartmentsByDirector(StaffMember director) throws SQLException;
+    public Collection<Department> getDepartmentsByDirector(StaffMember director) throws SQLException;
 }

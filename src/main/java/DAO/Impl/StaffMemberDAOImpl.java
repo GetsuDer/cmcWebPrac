@@ -16,151 +16,116 @@ import org.hibernate.query.Query;
 public class StaffMemberDAOImpl implements StaffMemberDAO {
     public void addStaffMember(StaffMember member) throws SQLException {
         Session session = null;
-        try {
-            session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.save(member);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            System.err.println("addStaffMember: " + e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
+        session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.save(member);
+        session.getTransaction().commit();
+        if (session != null && session.isOpen()) {
+            session.close();
         }
     }
     
     public void updateStaffMember(StaffMember member) throws SQLException {
         Session session = null;
-        try {
-            session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.update(member);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            System.err.println("updateStaffMember: " + e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
+        session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.update(member);
+        session.getTransaction().commit();
+        if (session != null && session.isOpen()) {
+            session.close();
         }
     }
 
     public StaffMember getStaffMemberById(Long member_id) throws SQLException {
         Session session = null;
         StaffMember member = null;
-        try {
-            session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-            member = (StaffMember) session.load(StaffMember.class, member_id);
-        } catch (Exception e) {
-            System.err.println("getStaffMemberById: " + e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
+        session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        member = (StaffMember) session.load(StaffMember.class, member_id);
+        if (session != null && session.isOpen()) {
+            session.close();
         }
         return member;
     }
 
-    public Collection getAllStaffMembers() throws SQLException {
+    public Collection<StaffMember> getAllStaffMembers() throws SQLException {
         Session session = null;
         List<StaffMember> members = new ArrayList<StaffMember>();
-        try {
-            session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            Query query = session.createQuery("select m from StaffMember m");
-            members = (List<StaffMember>)query.list();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            System.err.println("getAllStaffMembers: " + e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
+        session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query<StaffMember> query = session.createQuery("select m from StaffMember m", StaffMember.class);
+        members = (List<StaffMember>)query.list();
+        session.getTransaction().commit();
+        if (session != null && session.isOpen()) {
+            session.close();
         }
         return members;
     }
 
     public void deleteStaffMember(StaffMember member) throws SQLException {
         Session session = null;
-        try {
-            session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.delete(member);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            System.err.println("deleteStaffMember: " + e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
+        session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.delete(member);
+        session.getTransaction().commit();
+        if (session != null && session.isOpen()) {
+            session.close();
         }
     }
 
-    public Collection getStaffMembersByDepartment(Department department) throws SQLException {
+    public Collection<StaffMember> getStaffMembersByDepartment(Department department) throws SQLException {
         Session session = null;
-        Set members = new HashSet<StaffMember>();
-        try {
-            session = HibernateSessionFactoryUtil.getSessionFactory().getCurrentSession();
-            session.beginTransaction();
+        Set<StaffMember> members = new HashSet<StaffMember>();
+        session = HibernateSessionFactoryUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
             
             // department positions
-            Query positionsQuery = session.createQuery("from Position WHERE department = :department_id");
-            positionsQuery.setParameter("department_id", department);
-            List<Position> positions = (List<Position>) positionsQuery.list();
-            for (Position pos : positions) {
-                // employees for current position
-                Query employeesQuery = session.createQuery("from Employee WHERE position = :position_id");
-                employeesQuery.setParameter("position_id", pos);
-                List<Employee> employees = (List<Employee>) employeesQuery.list();
+        Query<Position> positionsQuery = session.createQuery("from Position WHERE department = :department_id", Position.class);
+        positionsQuery.setParameter("department_id", department);
+        List<Position> positions = (List<Position>) positionsQuery.list();
+        for (Position pos : positions) {
+            // employees for current position
+            Query<Employee> employeesQuery = session.createQuery("from Employee WHERE position = :position_id", Employee.class);
+            employeesQuery.setParameter("position_id", pos);
+            List<Employee> employees = (List<Employee>) employeesQuery.list();
                 
-                for (Employee emp: employees) {
-                    // members (in fact - member) for current employee
-                    Query membersQuery = session.createQuery("from StaffMember WHERE id = :member_id");
-                    membersQuery.setParameter("member_id", emp.getStaffMember().getId());
-                    List<StaffMember> partMembers = (List<StaffMember>) membersQuery.list();
-                    
-                    for (StaffMember mem : partMembers) {
-                        members.add(mem);
-                    }
-                } 
-            }
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            System.err.println("getStaffMembersByDepartment: " + e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
+            for (Employee emp: employees) {
+                // members (in fact - member) for current employee
+                Query<StaffMember> membersQuery = session.createQuery("from StaffMember WHERE id = :member_id", StaffMember.class);
+                membersQuery.setParameter("member_id", emp.getStaffMember().getId());
+                List<StaffMember> partMembers = (List<StaffMember>) membersQuery.list();
+                
+                for (StaffMember mem : partMembers) {
+                    members.add(mem);
+                }
+            } 
+        }
+        session.getTransaction().commit();
+        if (session != null && session.isOpen()) {
+            session.close();
         }
         return members;
     }
 
-    public Collection getStaffMembersByPosition(Position position) {
+    public Collection<StaffMember> getStaffMembersByPosition(Position position) {
         Session session = null;
-        Set members = new HashSet<StaffMember>();
-        try {
-            session = HibernateSessionFactoryUtil.getSessionFactory().getCurrentSession();
-            session.beginTransaction();
+        Set<StaffMember> members = new HashSet<StaffMember>();
+        session = HibernateSessionFactoryUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
 
-            Query employeesQuery = session.createQuery("from Employee WHERE position = :position_id");
-            employeesQuery.setParameter("position_id", position);
-            List<Employee> employees = (List<Employee>) employeesQuery.list();
-            for (Employee emp : employees) {
-                    Query membersQuery = session.createQuery("from StaffMember WHERE id = :member_id");
-                    membersQuery.setParameter("member_id", emp.getStaffMember().getId());
-                    List<StaffMember> partMembers = (List<StaffMember>) membersQuery.list();
-                    for (StaffMember mem : partMembers) {
-                        members.add(mem);
-                    }
-            }
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            System.err.println("getStaffMembersByPosition: " + e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
+        Query<Employee> employeesQuery = session.createQuery("from Employee WHERE position = :position_id", Employee.class);
+        employeesQuery.setParameter("position_id", position);
+        List<Employee> employees = (List<Employee>) employeesQuery.list();
+        for (Employee emp : employees) {
+                Query<StaffMember> membersQuery = session.createQuery("from StaffMember WHERE id = :member_id", StaffMember.class);
+                membersQuery.setParameter("member_id", emp.getStaffMember().getId());
+                List<StaffMember> partMembers = (List<StaffMember>) membersQuery.list();
+                for (StaffMember mem : partMembers) {
+                    members.add(mem);
+                }
+        }
+        session.getTransaction().commit();
+        if (session != null && session.isOpen()) {
+            session.close();
         }
         return members;
     }

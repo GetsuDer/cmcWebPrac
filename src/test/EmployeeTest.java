@@ -16,7 +16,7 @@ import org.testng.Assert;
 public class EmployeeTest {
     
     @Test
-    public void addEmployee() {
+    public void addEmployee() throws SQLException {
         Calendar calendar = Calendar.getInstance();
         calendar.set(2020, 11, 20, 0, 0, 0);
         Date startTime = calendar.getTime();
@@ -25,24 +25,19 @@ public class EmployeeTest {
         PositionDAO positionDAO = Factory.getInstance().getPositionDAO();
         StaffMemberDAO memberDAO = Factory.getInstance().getStaffMemberDAO();
         EmployeeDAO employeeDAO = Factory.getInstance().getEmployeeDAO();
-        try {
-            Position position = new Position();
-            StaffMember member = new StaffMember();
-            positionDAO.addPosition(position);
-            memberDAO.addStaffMember(member);
+        Position position = new Position();
+        StaffMember member = new StaffMember();
+        positionDAO.addPosition(position);
+        memberDAO.addStaffMember(member);
 
-            Employee employee = new Employee(position, member, startTime, endTime);
-            employeeDAO.addEmployee(employee);
-            Employee loadedEmployee = employeeDAO.getEmployeeById(employee.getId());
-            Assert.assertTrue(employee.my_equals(loadedEmployee));
-        } catch (SQLException e) {
-            System.out.println(e);
-            Assert.assertTrue(false);
-        }
+        Employee employee = new Employee(position, member, startTime, endTime);
+        employeeDAO.addEmployee(employee);
+        Employee loadedEmployee = employeeDAO.getEmployeeById(employee.getId());
+        Assert.assertTrue(employee.my_equals(loadedEmployee));
     }
     
     @Test
-    public void updateEmployee() {
+    public void updateEmployee() throws SQLException {
         Calendar calendar = Calendar.getInstance();
         calendar.set(2020, 11, 20, 0, 0, 0);
         Date startTime = calendar.getTime();
@@ -62,101 +57,79 @@ public class EmployeeTest {
         Position position = new Position();
         Position position2 = new Position();
 
-        try {
-            memberDAO.addStaffMember(member);
-            positionDAO.addPosition(position);
-            Employee employee = new Employee(position, member, startTime, endTime);
-            Employee newEmployee = new Employee(position2, member2, startTime2, endTime2);
-            employeeDAO.addEmployee(employee);
-            newEmployee.setId(employee.getId());
-            Employee loadedEmployee = employeeDAO.getEmployeeById(employee.getId());
-            Assert.assertTrue(employee.my_equals(loadedEmployee));
-        } catch (SQLException e) {
-            System.err.println(e);
-            Assert.assertTrue(false);
-        }
+        memberDAO.addStaffMember(member);
+        positionDAO.addPosition(position);
+        Employee employee = new Employee(position, member, startTime, endTime);
+        Employee newEmployee = new Employee(position2, member2, startTime2, endTime2);
+        employeeDAO.addEmployee(employee);
+        newEmployee.setId(employee.getId());
+        Employee loadedEmployee = employeeDAO.getEmployeeById(employee.getId());
+        Assert.assertTrue(employee.my_equals(loadedEmployee));
     }
 
     @Test
-    public void deleteEmployee() {
+    public void deleteEmployee() throws SQLException {
         Employee employee = new Employee();
 
         EmployeeDAO employeeDAO = Factory.getInstance().getEmployeeDAO();
-        try {
-            employeeDAO.addEmployee(employee);
-            employeeDAO.deleteEmployee(employee);
-            ArrayList<Employee> employees = new ArrayList<Employee>(employeeDAO.getAllEmployees());
-            for (Employee emp : employees) {
-                Assert.assertFalse(emp.my_equals(employee));
-            }
-        } catch (SQLException e) {
-            System.err.println(e);
-            Assert.assertTrue(false);
+        employeeDAO.addEmployee(employee);
+        employeeDAO.deleteEmployee(employee);
+        Collection<Employee> employees = employeeDAO.getAllEmployees();
+        for (Employee emp : employees) {
+            Assert.assertFalse(emp.my_equals(employee));
         }
     }
 
     @Test
-    public void getEmployeesByPosition() {
+    public void getEmployeesByPosition() throws SQLException {
         EmployeeDAO employeeDAO = Factory.getInstance().getEmployeeDAO();
         PositionDAO positionDAO = Factory.getInstance().getPositionDAO();
         
         ArrayList<Employee> employees = new ArrayList<Employee>();
         Position position = new Position();
-        try {
-            positionDAO.addPosition(position);
-            for (int i = 0; i < 7; i++) {
-                Employee employee = new Employee(position, null, null, null);
-                employeeDAO.addEmployee(employee);
-                employees.add(employee);
-            }
+        positionDAO.addPosition(position);
+        for (int i = 0; i < 7; i++) {
+            Employee employee = new Employee(position, null, null, null);
+            employeeDAO.addEmployee(employee);
+            employees.add(employee);
+        }
 
-            Collection loadedEmployees = employeeDAO.getEmployeesByPosition(position);
-            Assert.assertTrue(loadedEmployees.size() == employees.size());
-            for (Employee emp : employees) {
-                boolean founded = false;
-                for (Object obj : loadedEmployees) {
-                    Employee loadedEmp = (Employee) obj;
-                    if (loadedEmp.my_equals(emp)) {
-                        founded = true;
-                    }
+        Collection<Employee> loadedEmployees = employeeDAO.getEmployeesByPosition(position);
+        Assert.assertTrue(loadedEmployees.size() == employees.size());
+        for (Employee emp : employees) {
+            boolean founded = false;
+            for (Employee loadedEmp : loadedEmployees) {
+                if (loadedEmp.my_equals(emp)) {
+                    founded = true;
                 }
-                Assert.assertTrue(founded);
             }
-        } catch (SQLException e) {
-            System.err.println(e);
-            Assert.assertTrue(false);
+            Assert.assertTrue(founded);
         }
     }
 
     @Test
-    public void getEmployeesByStaffMember() {
+    public void getEmployeesByStaffMember() throws SQLException {
         EmployeeDAO employeeDAO = Factory.getInstance().getEmployeeDAO();
         StaffMemberDAO memberDAO = Factory.getInstance().getStaffMemberDAO();
         ArrayList<Employee> employees = new ArrayList<Employee>();
 
         StaffMember member = new StaffMember();
-        try {
-            memberDAO.addStaffMember(member);
-            for (int i = 0; i < 7; i++) {
-                Employee employee = new Employee(null, member, null, null);
-                employeeDAO.addEmployee(employee);
-                employees.add(employee);
-            }
-            Collection loadedEmployees = employeeDAO.getEmployeesByStaffMember(member);
-            Assert.assertTrue(loadedEmployees.size() == employees.size());
-            for (Employee emp : employees) {
-                boolean founded = false;
-                for (Object obj : loadedEmployees) {
-                    Employee loadedEmp = (Employee) obj;
-                    if (loadedEmp.my_equals(emp)) {
-                        founded = true;
-                    }
+        memberDAO.addStaffMember(member);
+        for (int i = 0; i < 7; i++) {
+            Employee employee = new Employee(null, member, null, null);
+            employeeDAO.addEmployee(employee);
+            employees.add(employee);
+        }
+        Collection<Employee> loadedEmployees = employeeDAO.getEmployeesByStaffMember(member);
+        Assert.assertTrue(loadedEmployees.size() == employees.size());
+        for (Employee emp : employees) {
+            boolean founded = false;
+            for (Employee loadedEmp : loadedEmployees) {
+                if (loadedEmp.my_equals(emp)) {
+                    founded = true;
                 }
-                Assert.assertTrue(founded);
             }
-        } catch (SQLException e) {
-            System.out.println(e);
-            Assert.assertTrue(false);
+            Assert.assertTrue(founded);
         }
     }
 

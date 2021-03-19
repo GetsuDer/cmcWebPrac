@@ -28,7 +28,7 @@ public interface EmployeeDAO {
     /** Get all existing employees
      * @return Returns all existing employees
      */
-    public Collection getAllEmployees() throws SQLException;
+    public Collection<Employee> getAllEmployees() throws SQLException;
     
     /** Delete current employee
      * @param employee Current employee
@@ -38,10 +38,10 @@ public interface EmployeeDAO {
     /** Get employees with current member
      * @param member Current member
      */
-    public Collection getEmployeesByStaffMember(StaffMember member) throws SQLException;
+    public Collection<Employee> getEmployeesByStaffMember(StaffMember member) throws SQLException;
 
     /** Get employees with current position
      * @param position Current position
      */
-    public Collection getEmployeesByPosition(Position position) throws SQLException;
+    public Collection<Employee> getEmployeesByPosition(Position position) throws SQLException;
 }

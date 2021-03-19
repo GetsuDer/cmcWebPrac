@@ -30,7 +30,7 @@ public interface StaffMemberDAO {
     /** Get all existing members
      * @return Returns collection of all members
      */
-    public Collection getAllStaffMembers() throws SQLException;
+    public Collection<StaffMember> getAllStaffMembers() throws SQLException;
     
     /** Deletes staff member
      * @param member Member to be deleted
@@ -41,11 +41,11 @@ public interface StaffMemberDAO {
      * @param department Current department
      * @return Returns collection of members from department
      */
-    public Collection getStaffMembersByDepartment(Department department) throws SQLException;
+    public Collection<StaffMember> getStaffMembersByDepartment(Department department) throws SQLException;
     
     /** Get members on current position
      * @param position Current position
      * @return Returns collection of members on current position
      */
-    public Collection getStaffMembersByPosition(Position position) throws SQLException;
+    public Collection<StaffMember> getStaffMembersByPosition(Position position) throws SQLException;
 }

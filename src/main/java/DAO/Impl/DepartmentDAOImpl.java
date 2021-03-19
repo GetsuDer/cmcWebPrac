@@ -15,105 +15,73 @@ import org.hibernate.query.Query;
 public class DepartmentDAOImpl implements DepartmentDAO {
     public void addDepartment(Department department) throws SQLException {
         Session session = null;
-        try {
-            session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.save(department);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            System.err.println("Error in addDepartment: " + e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
+        session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.save(department);
+        session.getTransaction().commit();
+        if (session != null && session.isOpen()) {
+            session.close();
         }
     }
 
     public void updateDepartment(Department department) throws SQLException {
         Session session = null;
-        try {
-            session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.update(department);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            System.err.println("Error in department update: " + e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-
-            }
+        session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.update(department);
+        session.getTransaction().commit();
+        if (session != null && session.isOpen()) {
+            session.close();
         }
     }
 
     public Department getDepartmentById(Long department_id) throws SQLException {
         Session session = null;
         Department department = null;
-        try {
-            session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-            department = (Department) session.load(Department.class, department_id);
-        } catch (Exception e) {
-            System.err.println("Error in findByID: " + e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
+        session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        department = (Department) session.load(Department.class, department_id);
+        if (session != null && session.isOpen()) {
+            session.close();
         }
         return department;
     }
 
-    public Collection getAllDepartments() throws SQLException {
+    public Collection<Department> getAllDepartments() throws SQLException {
         Session session = null;
-        List departments = new ArrayList<Department>();
-        try {
-            session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            Query query = session.createQuery("select d from Department d");
-            departments = (List<Department>)query.list();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            System.err.println("Error in getAllDepartments: " + e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
+        List<Department> departments = new ArrayList<Department>();
+        session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query<Department> query = session.createQuery("select d from Department d", Department.class);
+        departments = (List<Department>)query.list();
+        session.getTransaction().commit();
+        if (session != null && session.isOpen()) {
+            session.close();
         }
         return departments;
     }
 
     public void deleteDepartment(Department department) throws SQLException {
         Session session = null;
-        try {
-            session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.delete(department);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            System.err.println("Error in delete department: "+ e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
+        session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.delete(department);
+        session.getTransaction().commit();
+        if (session != null && session.isOpen()) {
+            session.close();
         }
     }
 
-    public Collection getDepartmentsByDirector(StaffMember director) throws SQLException {
+    public Collection<Department> getDepartmentsByDirector(StaffMember director) throws SQLException {
         Session session = null;
-        List departments = new ArrayList<Department>();
-        try {
-            session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-
-            Query query = session.createQuery("from Department WHERE director = :director_id");
-            query.setParameter("director_id", director);
-            departments = (List<Department>)query.list();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            System.err.println("Error in get Departments by director: " + e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
+        List<Department> departments = new ArrayList<Department>();
+        session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query<Department> query = session.createQuery("from Department WHERE director = :director_id", Department.class);
+        query.setParameter("director_id", director);
+        departments = (List<Department>)query.list();
+        session.getTransaction().commit();
+        if (session != null && session.isOpen()) {
+            session.close();
         }
         return departments;
     }
