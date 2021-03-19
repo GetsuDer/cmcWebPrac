@@ -48,4 +48,10 @@ public interface StaffMemberDAO {
      * @return Returns collection of members on current position
      */
     public Collection<StaffMember> getStaffMembersByPosition(Position position) throws SQLException;
+
+    /** Get members by name
+     * @param name Name
+     * @return Returns members
+     */
+    public Collection<StaffMember> getStaffMembersByName(String name) throws SQLException;
 }

@@ -99,5 +99,19 @@ public class DepartmentDAOImpl implements DepartmentDAO {
         }
         return departments;
     }
+
+    public Collection<Department> getDepartmentsByName(String name) throws SQLException {
+        Session session = null;
+        session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query<Department> query = session.createQuery("from Department WHERE name LIKE :dep_name", Department.class);
+        query.setParameter("dep_name", "%" + name.toLowerCase() + "%");
+        List<Department> departments = (List<Department>)query.list();
+        session.getTransaction().commit();
+        if (session != null && session.isOpen()) {
+            session.close();
+        }
+        return departments;
+    }
 }
 

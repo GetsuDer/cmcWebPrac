@@ -142,4 +142,27 @@ public class StaffMemberTest {
         Assert.assertTrue(members.size() == 0);
     }
 
+    @Test
+    public void getStaffMembersyName() throws SQLException {
+        StaffMember memA = new StaffMember();
+        StaffMember memB = new StaffMember();
+        StaffMember memC = new StaffMember();
+
+        memA.setName("A_mem");
+        memB.setName("mem_B");
+        memC.setName("Vasya");
+
+        StaffMemberDAO staffMemberDAO = Factory.getInstance().getStaffMemberDAO();
+        staffMemberDAO.addStaffMember(memA);
+        staffMemberDAO.addStaffMember(memB);
+        staffMemberDAO.addStaffMember(memC);
+
+        Collection<StaffMember> members = staffMemberDAO.getStaffMembersByName("mem");
+        Assert.assertTrue(members.size() >= 2); // there can be more names with mem already
+        for (StaffMember mem : members) {
+            Assert.assertTrue(mem.getName().toLowerCase().contains("mem"));
+        }
+    }
+
+
 }

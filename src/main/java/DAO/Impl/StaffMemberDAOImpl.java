@@ -129,4 +129,18 @@ public class StaffMemberDAOImpl implements StaffMemberDAO {
         }
         return members;
     }
+
+    public Collection<StaffMember> getStaffMembersByName(String name) {
+        Session session = null;
+        session = HibernateSessionFactoryUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Query<StaffMember> membersQuery = session.createQuery("from StaffMember WHERE name LIKE :mem_name", StaffMember.class);
+        membersQuery.setParameter("mem_name", "%" + name + "%");
+        List<StaffMember> members = (List<StaffMember>)membersQuery.list();
+        session.getTransaction().commit();
+        if (session != null && session.isOpen()) {
+            session.close();
+        }
+        return members;
+    }
 }

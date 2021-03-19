@@ -40,9 +40,17 @@ public interface DepartmentDAO {
      * @return Returns departments ruled by director
      */
     public Collection<Department> getDepartmentsByDirector(StaffMember director) throws SQLException;
+    
     /** Get departments where specified department is head
      * @param department Specified department
      * @return Returns SubDepartments
      */
     public Collection<Department> getSubDepartments(Department department) throws SQLException;
+
+    /** Get departments in which name specified string exists
+     * @param name String to find
+     * @return Returns list of these departments
+     */
+    public Collection<Department> getDepartmentsByName(String name) throws SQLException;
+
 }

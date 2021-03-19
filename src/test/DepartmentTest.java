@@ -142,4 +142,25 @@ public class DepartmentTest {
         Collection<Department> subDepartments = departmentDAO.getSubDepartments(department);
         Assert.assertTrue(subDepartments.size() == 0);
     }
+
+    @Test
+    public void getDepartmentsByName() throws SQLException {
+        Department depA = new Department();
+        depA.setName("A_dep");
+        Department depB = new Department();
+        depB.setName("dep_B");
+        Department depC = new Department();
+        depC.setName("StangeName");
+
+        DepartmentDAO departmentDAO = Factory.getInstance().getDepartmentDAO();
+        departmentDAO.addDepartment(depA);
+        departmentDAO.addDepartment(depB);
+        departmentDAO.addDepartment(depC);
+
+        Collection<Department> departments = departmentDAO.getDepartmentsByName("dep");
+        Assert.assertTrue(departments.size() >= 2); // there can be more names with dep already
+        for (Department dep : departments) {
+            Assert.assertTrue(dep.getName().toLowerCase().contains("dep"));
+        }
+    }
 }
