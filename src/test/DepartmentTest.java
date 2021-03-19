@@ -100,6 +100,16 @@ public class DepartmentTest {
     }
 
     @Test
+    public void getDepartmentsByDirectorNone() throws SQLException {
+        StaffMember director = new StaffMember();
+        StaffMemberDAO staffMemberDAO = Factory.getInstance().getStaffMemberDAO();
+        staffMemberDAO.addStaffMember(director);
+        DepartmentDAO departmentDAO = Factory.getInstance().getDepartmentDAO();
+        Collection<Department> deps = departmentDAO.getDepartmentsByDirector(director);
+        Assert.assertTrue(deps.size() == 0);
+    }
+
+    @Test
     public void getSubDepartments() throws SQLException {
         Department headDepartment = new Department();
         DepartmentDAO departmentDAO = Factory.getInstance().getDepartmentDAO();
@@ -122,5 +132,14 @@ public class DepartmentTest {
             }
             Assert.assertTrue(founded);
         }
+    }
+
+    @Test
+    public void getSubDepartmentsNone() throws SQLException {
+        Department department = new Department();
+        DepartmentDAO departmentDAO = Factory.getInstance().getDepartmentDAO();
+        departmentDAO.addDepartment(department);
+        Collection<Department> subDepartments = departmentDAO.getSubDepartments(department);
+        Assert.assertTrue(subDepartments.size() == 0);
     }
 }

@@ -95,6 +95,16 @@ public class PositionTest {
     }
 
     @Test
+    public void getPositionsByDepartmentNone() throws SQLException {
+        DepartmentDAO departmentDAO = Factory.getInstance().getDepartmentDAO();
+        Department department = new Department();
+        departmentDAO.addDepartment(department);
+        PositionDAO positionDAO = Factory.getInstance().getPositionDAO();
+        Collection<Position> positions = positionDAO.getPositionsByDepartment(department);
+        Assert.assertTrue(positions.size() == 0);
+    }
+
+    @Test
     public void getAllPositionsByStaffMember() throws SQLException {
         Department department1 = new Department();
         Department department2 = new Department();

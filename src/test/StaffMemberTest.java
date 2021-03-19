@@ -92,6 +92,16 @@ public class StaffMemberTest {
     }
 
     @Test
+    public void getStaffMembersByDepartmentNone() throws SQLException {
+        Department department = new Department();
+        DepartmentDAO departmentDAO = Factory.getInstance().getDepartmentDAO();
+        departmentDAO.addDepartment(department);
+        StaffMemberDAO memberDAO = Factory.getInstance().getStaffMemberDAO();
+        Collection<StaffMember> members = memberDAO.getStaffMembersByDepartment(department);
+        Assert.assertTrue(members.size() == 0);
+    }
+
+    @Test
     public void getStaffMembersByPosition() throws SQLException {
         Department department = new Department();
         ArrayList<StaffMember> members = new ArrayList<StaffMember>();
@@ -120,6 +130,16 @@ public class StaffMemberTest {
             }
             Assert.assertTrue(founded);
         }
+    }
+
+    @Test
+    public void getStaffMembersByPositionNone() throws SQLException {
+        Position position = new Position();
+        PositionDAO positionDAO = Factory.getInstance().getPositionDAO();
+        positionDAO.addPosition(position);
+        StaffMemberDAO staffMemberDAO = Factory.getInstance().getStaffMemberDAO();
+        Collection<StaffMember> members = staffMemberDAO.getStaffMembersByPosition(position);
+        Assert.assertTrue(members.size() == 0);
     }
 
 }

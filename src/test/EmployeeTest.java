@@ -108,6 +108,16 @@ public class EmployeeTest {
     }
 
     @Test
+    public void getEmployeesByPositionNone() throws SQLException {
+        Position position = new Position();
+        PositionDAO positionDAO = Factory.getInstance().getPositionDAO();
+        positionDAO.addPosition(position);
+        EmployeeDAO employeeDAO = Factory.getInstance().getEmployeeDAO();
+        Collection<Employee> employees = employeeDAO.getEmployeesByPosition(position);
+        Assert.assertTrue(employees.size() == 0);
+    }
+
+    @Test
     public void getEmployeesByStaffMember() throws SQLException {
         EmployeeDAO employeeDAO = Factory.getInstance().getEmployeeDAO();
         StaffMemberDAO memberDAO = Factory.getInstance().getStaffMemberDAO();
@@ -131,6 +141,17 @@ public class EmployeeTest {
             }
             Assert.assertTrue(founded);
         }
+    }
+
+    @Test
+    public void getEmployeesByStaffMemberNone() throws SQLException {
+        StaffMemberDAO staffMemberDAO = Factory.getInstance().getStaffMemberDAO();
+        StaffMember member = new StaffMember();
+        staffMemberDAO.addStaffMember(member);
+
+        EmployeeDAO employeeDAO = Factory.getInstance().getEmployeeDAO();
+        Collection<Employee> employees = employeeDAO.getEmployeesByStaffMember(member);
+        Assert.assertTrue(employees.size() == 0);
     }
 
 }
