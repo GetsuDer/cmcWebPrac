@@ -89,5 +89,17 @@
             <arg value="fill"/>
         </exec>
     </target>
+    <target name="glassfish_start">
+        <exec executable="/bin/sh">
+            <arg value="glassfish5/bin/asadmin" />
+            <arg value="start-domain" />
+        </exec>
+    </target>
 
+    <target name="glassfish_stop">
+        <exec executable="/bin/sh">
+            <arg value="glassfish5/bin/asadmin" />
+            <arg value="stop-domain" />
+        </exec>
+    </target>
 </project>
