@@ -58,13 +58,16 @@ public class EmployeeTest {
         Position position2 = new Position();
 
         memberDAO.addStaffMember(member);
+        memberDAO.addStaffMember(member2);
         positionDAO.addPosition(position);
+        positionDAO.addPosition(position2);
         Employee employee = new Employee(position, member, startTime, endTime);
         Employee newEmployee = new Employee(position2, member2, startTime2, endTime2);
         employeeDAO.addEmployee(employee);
         newEmployee.setId(employee.getId());
-        Employee loadedEmployee = employeeDAO.getEmployeeById(employee.getId());
-        Assert.assertTrue(employee.my_equals(loadedEmployee));
+        employeeDAO.updateEmployee(newEmployee);
+        Employee loadedEmployee = employeeDAO.getEmployeeById(newEmployee.getId());
+        Assert.assertTrue(loadedEmployee.my_equals(newEmployee));
     }
 
     @Test
