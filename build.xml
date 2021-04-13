@@ -41,6 +41,10 @@
         </java>
     </target>
 
+    <target name="pack" depends="build">
+        <jar destfile="lib/app.jar" basedir="${dstDir}"/>
+    </target>
+
     <target name="create-javadoc" depends="path">
         <mkdir dir="${docDir}" />
         <javadoc destdir="${docDir}"
