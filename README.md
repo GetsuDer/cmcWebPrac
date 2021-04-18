@@ -1,6 +1,6 @@
 # Web Practicum, part III
 ## More Ant commands
-"ant pack" - move class files into jar in lib/
+"ant jar" - move class files into jar in lib/
 
 "ant glassfish_start" - start server
 

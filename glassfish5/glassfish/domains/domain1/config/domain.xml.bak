@@ -21,7 +21,14 @@
     </authorization-service>
   </security-configurations>
   <managed-job-config></managed-job-config>
-  <system-applications></system-applications>
+  <system-applications>
+    <application context-root="" object-type="system-admin" name="__admingui" directory-deployed="true" location="${com.sun.aas.installRootURI}/lib/install/applications/__admingui">
+      <module name="__admingui">
+        <engine sniffer="web"></engine>
+        <engine sniffer="security"></engine>
+      </module>
+    </application>
+  </system-applications>
   <resources>
     <jdbc-resource pool-name="__TimerPool" object-type="system-all" jndi-name="jdbc/__TimerPool"></jdbc-resource>
     <jdbc-resource pool-name="DerbyPool" object-type="system-all-req" jndi-name="jdbc/__default"></jdbc-resource>
@@ -39,12 +46,68 @@
     </jdbc-connection-pool>
     <connector-connection-pool resource-adapter-name="jmsra" max-pool-size="250" steady-pool-size="1" name="jms/__defaultConnectionFactory-Connection-Pool" connection-definition-name="javax.jms.ConnectionFactory"></connector-connection-pool>
     <connector-resource pool-name="jms/__defaultConnectionFactory-Connection-Pool" object-type="system-all-req" jndi-name="jms/__defaultConnectionFactory"></connector-resource>
+    <context-service object-type="system-all" jndi-name="concurrent/__defaultContextService"></context-service>
+    <managed-executor-service object-type="system-all" jndi-name="concurrent/__defaultManagedExecutorService"></managed-executor-service>
+    <managed-scheduled-executor-service object-type="system-all" jndi-name="concurrent/__defaultManagedScheduledExecutorService"></managed-scheduled-executor-service>
+    <managed-thread-factory object-type="system-all" jndi-name="concurrent/__defaultManagedThreadFactory"></managed-thread-factory>
+    <jdbc-connection-pool datasource-classname="org.postgresql.ds.PGConnectionPoolDataSource" name="PostgreSQLPool" description="" res-type="javax.sql.ConnectionPoolDataSource">
+      <property name="TargetServerType" value="any"></property>
+      <property name="BinaryTransfer" value="true"></property>
+      <property name="UnknownLength" value="2147483647"></property>
+      <property name="DisableColumnSanitiser" value="false"></property>
+      <property name="UseSpNego" value="false"></property>
+      <property name="SspiServiceClass" value="POSTGRES"></property>
+      <property name="ProtocolVersion" value="0"></property>
+      <property name="SendBufferSize" value="-1"></property>
+      <property name="ReceiveBufferSize" value="-1"></property>
+      <property name="LoadBalanceHosts" value="false"></property>
+      <property name="ReadOnly" value="false"></property>
+      <property name="LogUnclosedConnections" value="false"></property>
+      <property name="DatabaseName" value="staffinfo"></property>
+      <property name="GssEncMode" value="allow"></property>
+      <property name="CleanupSavepoints" value="false"></property>
+      <property name="GssLib" value="auto"></property>
+      <property name="EscapeSyntaxCallMode" value="select"></property>
+      <property name="LogServerErrorDetail" value="true"></property>
+      <property name="CancelSignalTimeout" value="10"></property>
+      <property name="PortNumber" value="3306"></property>
+      <property name="DefaultRowFetchSize" value="0"></property>
+      <property name="User" value="webprac"></property>
+      <property name="DatabaseMetadataCacheFieldsMiB" value="5"></property>
+      <property name="RecvBufferSize" value="-1"></property>
+      <property name="URL" value="jdbc:postgresql://localhost/"></property>
+      <property name="Url" value="jdbc:postgresql://localhost/"></property>
+      <property name="AllowEncodingChanges" value="false"></property>
+      <property name="JaasLogin" value="true"></property>
+      <property name="PrepareThreshold" value="5"></property>
+      <property name="ReWriteBatchedInserts" value="false"></property>
+      <property name="HideUnprivilegedObjects" value="false"></property>
+      <property name="SocketTimeout" value="0"></property>
+      <property name="HostRecheckSeconds" value="10"></property>
+      <property name="Password" value="webprac"></property>
+      <property name="ConnectTimeout" value="10"></property>
+      <property name="ApplicationName" value="PostgreSQL JDBC Driver"></property>
+      <property name="PreparedStatementCacheQueries" value="256"></property>
+      <property name="Ssl" value="false"></property>
+      <property name="PreparedStatementCacheSizeMiB" value="5"></property>
+      <property name="ReadOnlyMode" value="transaction"></property>
+      <property name="LoginTimeout" value="0"></property>
+      <property name="ServerName" value="localhost"></property>
+      <property name="DatabaseMetadataCacheFields" value="65536"></property>
+      <property name="TcpKeepAlive" value="false"></property>
+    </jdbc-connection-pool>
+    <jdbc-resource pool-name="PostgreSQLPool" jndi-name="jdbc/staffinfo"></jdbc-resource>
   </resources>
   <servers>
     <server config-ref="server-config" name="server">
+      <application-ref ref="__admingui" virtual-servers="__asadmin"></application-ref>
       <resource-ref ref="jdbc/__TimerPool"></resource-ref>
       <resource-ref ref="jdbc/__default"></resource-ref>
       <resource-ref ref="jms/__defaultConnectionFactory"></resource-ref>
+      <resource-ref ref="concurrent/__defaultContextService"></resource-ref>
+      <resource-ref ref="concurrent/__defaultManagedExecutorService"></resource-ref>
+      <resource-ref ref="concurrent/__defaultManagedScheduledExecutorService"></resource-ref>
+      <resource-ref ref="concurrent/__defaultManagedThreadFactory"></resource-ref>
     </server>
   </servers>
   <nodes>
@@ -81,6 +144,19 @@
       <jms-service default-jms-host="default_JMS_host" type="EMBEDDED">
         <jms-host port="${JMS_PROVIDER_PORT}" name="default_JMS_host" host="localhost"></jms-host>
       </jms-service>
+      <ejb-container>
+        <ejb-timer-service></ejb-timer-service>
+      </ejb-container>
+      <rest-config></rest-config>
+      <web-container>
+        <session-config>
+          <session-manager>
+            <store-properties></store-properties>
+            <manager-properties></manager-properties>
+          </session-manager>
+          <session-properties></session-properties>
+        </session-config>
+      </web-container>
       <diagnostic-service></diagnostic-service>
       <security-service>
         <auth-realm classname="com.sun.enterprise.security.auth.realm.file.FileRealm" name="admin-realm">

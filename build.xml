@@ -41,8 +41,16 @@
         </java>
     </target>
 
-    <target name="pack" depends="build">
+    <target name="jar" depends="build">
         <jar destfile="lib/app.jar" basedir="${dstDir}"/>
+    </target>
+
+    <target name="war" depends="build">
+        <war destfile="app.war" webxml="web.xml">
+            <fileset dir="WebContent"/>
+            <lib dir="lib"/>
+            <classes dir="Bin"/>
+        </war>
     </target>
 
     <target name="create-javadoc" depends="path">
