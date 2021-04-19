@@ -1,4 +1,4 @@
-@Controller
+/*@Controller
 @RequestMapping("/hello")
 public class MainController { 
    @RequestMapping(method = RequestMethod.GET)
@@ -6,4 +6,4 @@ public class MainController {
       model.addAttribute("message", "Hello Spring MVC Framework!");
       return "hello";
    }
-}
+}*/

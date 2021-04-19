@@ -2,7 +2,7 @@
 <project name="WebPrac" default="run">
     <target name="path">
         <property name="srcDir" value="src/main/java" />
-        <property name="dstDir" value="Bin" />
+        <property name="dstDir" value="war/WEB-INF/classes" />
         <property name="docDir" value="Documentation" />
         <property name="testDir" value="src/test" />
         <property name="testDstDir" value="TestsRes" />
@@ -21,7 +21,7 @@
         </fileset>
     </path>
 
-    <target name="build" depends="path">
+    <target name="build" depends="path,copy-resources">
         <echo> Compile java files </echo>
         <javac srcdir="${srcDir}:${testDir}" 
             destdir="${dstDir}"
@@ -41,16 +41,13 @@
         </java>
     </target>
 
-    <target name="jar" depends="build">
-        <jar destfile="lib/app.jar" basedir="${dstDir}"/>
-    </target>
-
-    <target name="war" depends="build">
-        <war destfile="app.war" webxml="web.xml">
-            <fileset dir="WebContent"/>
-            <lib dir="lib"/>
-            <classes dir="Bin"/>
-        </war>
+    <target name="copy-resources">
+        <copy todir="${dstDir}">
+            <fileset dir="src/main/resources">
+                <include name="**/*.xml" />
+                <include name="**/*.properties" />
+            </fileset>
+        </copy>
     </target>
 
     <target name="create-javadoc" depends="path">
@@ -69,18 +66,18 @@
     <taskdef name="testng" classname="org.testng.TestNGAntTask" classpath="lib/testng-7.4.0.jar"/>
     
     <target name="test" depends="build,db_remove,db_create">
-        <fileset id="tests" dir="Bin">
-            <include name="*"/>
+        <fileset id="tests" dir="${dstDir}">
+            <include name="*.class"/>
         </fileset>
 
         <testng mode="mixed" classfilesetref="tests" outputdir="${testDstDir}">
-            <classpath location="Bin"/>
+            <classpath location="${dstDir}"/>
             <classpath>
                 <fileset dir="lib" includes="*.jar"/>
-                <fileset dir="Bin/" includes="*"/>
+                <fileset dir="${dstDir}/" includes="*"/>
                 <pathelement path="src/main/resources"/>
             </classpath>
-            <xmlfileset dir="." includes="testng.xml"/>
+            <xmlfileset dir="${dstDir}" includes="testng.xml"/>
         </testng>
     </target>
 
