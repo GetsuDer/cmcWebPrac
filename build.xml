@@ -3,16 +3,19 @@
     <target name="path">
         <property name="srcDir" value="src/main/java" />
         <property name="dstDir" value="war/WEB-INF/classes" />
+        <property name="dstLib" value="war/WEB-INF/lib" />
         <property name="docDir" value="Documentation" />
         <property name="testDir" value="src/test" />
         <property name="testDstDir" value="TestsRes" />
         <mkdir dir="${dstDir}"/>
+        <mkdir dir="${dstLib}"/>
         <mkdir dir="${testDstDir}"/>
     </target>
 
     <target name="clean" depends="path">
         <echo> Delete non-source files </echo>
         <delete dir="${dstDir}"/>
+        <delete dir="${dstLib}"/>
     </target>
     
     <path id="classpath">
@@ -40,12 +43,26 @@
             </classpath>
         </java>
     </target>
+    
+    <target name="war" depends="build">
+        <war destfile="target/res.war" webxml="war/WEB-INF/web.xml">
+            <fileset dir="war"/>
+            <lib dir="${dstLib}"/>
+            <classes dir="${dstDir}"/>
+        </war>
+    </target>
+
 
     <target name="copy-resources">
         <copy todir="${dstDir}">
             <fileset dir="src/main/resources">
                 <include name="**/*.xml" />
                 <include name="**/*.properties" />
+            </fileset>
+        </copy>
+        <copy todir="${dstLib}" flatten="true">
+            <fileset dir="lib">
+                <include name="*.jar" />
             </fileset>
         </copy>
     </target>
@@ -98,6 +115,7 @@
             <arg value="fill"/>
         </exec>
     </target>
+
     <target name="glassfish_start">
         <exec executable="/bin/sh">
             <arg value="glassfish5/bin/asadmin" />
@@ -109,6 +127,22 @@
         <exec executable="/bin/sh">
             <arg value="glassfish5/bin/asadmin" />
             <arg value="stop-domain" />
+        </exec>
+    </target>
+
+    <target name="deploy">
+        <exec executable="/bin/sh">
+            <arg value="glassfish5/bin/asadmin" />
+            <arg value="deploy"/>
+            <arg value="target/res.war"/>
+        </exec>
+    </target>
+
+    <target name="undeploy">
+        <exec executable="/bin/sh">
+            <arg value="glassfish5/bin/asadmin" />
+            <arg value="undeploy"/>
+            <arg value="res"/>
         </exec>
     </target>
 </project>

@@ -5,7 +5,7 @@
     </head>
 
     <body>
-        <p> <a href="main">Main</a> </p>
+        <p> <a href="index">Main</a> </p>
         <p> <a href="staff_edit">Add staff member</a> </p>
         <form method="get" action="/find">
             <input type="text" name="name">

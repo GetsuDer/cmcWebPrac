@@ -1,11 +1,10 @@
 import java.io.*;
+
 import logic.*;
 import DAO.*;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Iterator;
-
-import web.ServingWebContentApplication;
 
 public class Main {
     public static void main(String args[]) throws SQLException {
@@ -40,6 +39,6 @@ public class Main {
             Employee employee = (Employee) iterator.next();
             System.out.println(employee);
         }*/
-        ServingWebContentApplication.main(args);
+       // ServingWebContentApplication.main(args);
     }
 }
