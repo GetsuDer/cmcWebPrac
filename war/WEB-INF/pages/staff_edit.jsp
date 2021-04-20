@@ -7,10 +7,18 @@
     <body>
         <p> <a href="staff">Staff members</a> </p>
         <form method="get" action="confirm">
-            <input type="text" name="name">
-            <input type="text" name="address">
-            <input type="text" name="education">
-            <input type="text" name="date of employment">
+            Name: <br>
+            <input type="text" name="name" value="${name}"> <br>
+            
+            Address: <br> 
+            <input type="text" name="address" value="${address}"> <br>
+            
+            Education: <br>
+            <input type="text" name="education" value="${education}"> <br>
+            
+            Date of employment: <br> 
+            <input type="text" name="date of employment" value="${employment_date}"> <br>
+            
             <input type="submit" name="Confirm staff member">
 
         </form>

@@ -802,3 +802,273 @@ java.lang.NullPointerException
 [2021-04-20T08:56:50.681+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.web] [tid: _ThreadID=50 _ThreadName=admin-listener(5)] [timeMillis: 1618898210681] [levelValue: 800] [[
   WebModule[/res] ServletContext.log():Closing Spring root WebApplicationContext]]
 
+[2021-04-20T09:37:02.586+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=48 _ThreadName=admin-listener(3)] [timeMillis: 1618900622586] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2021-04-20T09:37:03.247+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.web] [tid: _ThreadID=48 _ThreadName=admin-listener(3)] [timeMillis: 1618900623247] [levelValue: 800] [[
+  WebModule[/res] ServletContext.log():No Spring WebApplicationInitializer types detected on classpath]]
+
+[2021-04-20T09:37:03.252+0300] [glassfish 5.0] [INFO] [jsf.config.listener.version] [javax.enterprise.resource.webcontainer.jsf.config] [tid: _ThreadID=48 _ThreadName=admin-listener(3)] [timeMillis: 1618900623252] [levelValue: 800] [[
+  Initializing Mojarra 2.3.2 ( 20170627-2139 e63598abf2ed2bb1a24674f308a734e0dce18a72) for context '/res']]
+
+[2021-04-20T09:37:03.493+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.web] [tid: _ThreadID=48 _ThreadName=admin-listener(3)] [timeMillis: 1618900623493] [levelValue: 800] [[
+  WebModule[/res] ServletContext.log():Initializing Spring root WebApplicationContext]]
+
+[2021-04-20T09:37:03.502+0300] [glassfish 5.0] [INFO] [] [org.springframework.web.context.ContextLoader] [tid: _ThreadID=48 _ThreadName=admin-listener(3)] [timeMillis: 1618900623502] [levelValue: 800] [[
+  Root WebApplicationContext: initialization started]]
+
+[2021-04-20T09:37:04.217+0300] [glassfish 5.0] [INFO] [] [org.springframework.web.context.ContextLoader] [tid: _ThreadID=48 _ThreadName=admin-listener(3)] [timeMillis: 1618900624217] [levelValue: 800] [[
+  Root WebApplicationContext initialized in 714 ms]]
+
+[2021-04-20T09:37:04.243+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.web] [tid: _ThreadID=48 _ThreadName=admin-listener(3)] [timeMillis: 1618900624243] [levelValue: 800] [[
+  WebModule[/res] ServletContext.log():Initializing Spring DispatcherServlet &#x27;HelloWeb&#x27;]]
+
+[2021-04-20T09:37:04.243+0300] [glassfish 5.0] [INFO] [] [org.springframework.web.servlet.DispatcherServlet] [tid: _ThreadID=48 _ThreadName=admin-listener(3)] [timeMillis: 1618900624243] [levelValue: 800] [[
+  Initializing Servlet 'HelloWeb']]
+
+[2021-04-20T09:37:04.765+0300] [glassfish 5.0] [INFO] [] [org.springframework.web.servlet.DispatcherServlet] [tid: _ThreadID=48 _ThreadName=admin-listener(3)] [timeMillis: 1618900624765] [levelValue: 800] [[
+  Completed initialization in 522 ms]]
+
+[2021-04-20T09:37:04.767+0300] [glassfish 5.0] [INFO] [AS-WEB-GLUE-00172] [javax.enterprise.web] [tid: _ThreadID=48 _ThreadName=admin-listener(3)] [timeMillis: 1618900624767] [levelValue: 800] [[
+  Loading application [res] at [/res]]]
+
+[2021-04-20T09:37:04.967+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.system.core] [tid: _ThreadID=48 _ThreadName=admin-listener(3)] [timeMillis: 1618900624967] [levelValue: 800] [[
+  res was successfully deployed in 3,617 milliseconds.]]
+
+[2021-04-20T09:37:16.235+0300] [glassfish 5.0] [INFO] [] [org.hibernate.Version] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900636235] [levelValue: 800] [[
+  HHH000412: Hibernate ORM core version 5.4.29.Final]]
+
+[2021-04-20T09:37:16.728+0300] [glassfish 5.0] [INFO] [] [org.hibernate.annotations.common.Version] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900636728] [levelValue: 800] [[
+  HCANN000001: Hibernate Commons Annotations {5.1.2.Final}]]
+
+[2021-04-20T09:37:16.996+0300] [glassfish 5.0] [WARN] [] [org.hibernate.orm.connections.pooling] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900636996] [levelValue: 900] [[
+  HHH10001002: Using Hibernate built-in connection pool (not for production use!)]]
+
+[2021-04-20T09:37:16.998+0300] [glassfish 5.0] [INFO] [] [org.hibernate.orm.connections.pooling] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900636998] [levelValue: 800] [[
+  HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/staffinfo]]]
+
+[2021-04-20T09:37:16.999+0300] [glassfish 5.0] [INFO] [] [org.hibernate.orm.connections.pooling] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900636999] [levelValue: 800] [[
+  HHH10001001: Connection properties: {user=webprac, password=****}]]
+
+[2021-04-20T09:37:17.000+0300] [glassfish 5.0] [INFO] [] [org.hibernate.orm.connections.pooling] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900637000] [levelValue: 800] [[
+  HHH10001003: Autocommit mode: false]]
+
+[2021-04-20T09:37:17.006+0300] [glassfish 5.0] [INFO] [] [org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900637006] [levelValue: 800] [[
+  HHH000115: Hibernate connection pool size: 20 (min=1)]]
+
+[2021-04-20T09:37:17.084+0300] [glassfish 5.0] [INFO] [] [org.hibernate.dialect.Dialect] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900637084] [levelValue: 800] [[
+  HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL9Dialect]]
+
+[2021-04-20T09:37:17.640+0300] [glassfish 5.0] [INFO] [] [org.hibernate.orm.beans] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900637640] [levelValue: 800] [[
+  HHH10005002: No explicit CDI BeanManager reference was passed to Hibernate, but CDI is available on the Hibernate ClassLoader.]]
+
+[2021-04-20T09:37:36.368+0300] [glassfish 5.0] [WARNING] [] [org.springframework.web.servlet.PageNotFound] [tid: _ThreadID=36 _ThreadName=http-listener-1(5)] [timeMillis: 1618900656368] [levelValue: 900] [[
+  No mapping for GET /res/add_staff%22]]
+
+[2021-04-20T09:39:59.865+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.web] [tid: _ThreadID=50 _ThreadName=admin-listener(5)] [timeMillis: 1618900799865] [levelValue: 800] [[
+  WebModule[/res] ServletContext.log():Destroying Spring FrameworkServlet &#x27;HelloWeb&#x27;]]
+
+[2021-04-20T09:39:59.874+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.web] [tid: _ThreadID=50 _ThreadName=admin-listener(5)] [timeMillis: 1618900799874] [levelValue: 800] [[
+  WebModule[/res] ServletContext.log():Closing Spring root WebApplicationContext]]
+
+[2021-04-20T09:40:01.779+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=46 _ThreadName=admin-listener(1)] [timeMillis: 1618900801779] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2021-04-20T09:40:02.312+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.web] [tid: _ThreadID=46 _ThreadName=admin-listener(1)] [timeMillis: 1618900802312] [levelValue: 800] [[
+  WebModule[/res] ServletContext.log():No Spring WebApplicationInitializer types detected on classpath]]
+
+[2021-04-20T09:40:02.316+0300] [glassfish 5.0] [INFO] [jsf.config.listener.version] [javax.enterprise.resource.webcontainer.jsf.config] [tid: _ThreadID=46 _ThreadName=admin-listener(1)] [timeMillis: 1618900802316] [levelValue: 800] [[
+  Initializing Mojarra 2.3.2 ( 20170627-2139 e63598abf2ed2bb1a24674f308a734e0dce18a72) for context '/res']]
+
+[2021-04-20T09:40:02.533+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.web] [tid: _ThreadID=46 _ThreadName=admin-listener(1)] [timeMillis: 1618900802533] [levelValue: 800] [[
+  WebModule[/res] ServletContext.log():Initializing Spring root WebApplicationContext]]
+
+[2021-04-20T09:40:02.542+0300] [glassfish 5.0] [INFO] [] [org.springframework.web.context.ContextLoader] [tid: _ThreadID=46 _ThreadName=admin-listener(1)] [timeMillis: 1618900802542] [levelValue: 800] [[
+  Root WebApplicationContext: initialization started]]
+
+[2021-04-20T09:40:03.259+0300] [glassfish 5.0] [INFO] [] [org.springframework.web.context.ContextLoader] [tid: _ThreadID=46 _ThreadName=admin-listener(1)] [timeMillis: 1618900803259] [levelValue: 800] [[
+  Root WebApplicationContext initialized in 715 ms]]
+
+[2021-04-20T09:40:03.284+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.web] [tid: _ThreadID=46 _ThreadName=admin-listener(1)] [timeMillis: 1618900803284] [levelValue: 800] [[
+  WebModule[/res] ServletContext.log():Initializing Spring DispatcherServlet &#x27;HelloWeb&#x27;]]
+
+[2021-04-20T09:40:03.284+0300] [glassfish 5.0] [INFO] [] [org.springframework.web.servlet.DispatcherServlet] [tid: _ThreadID=46 _ThreadName=admin-listener(1)] [timeMillis: 1618900803284] [levelValue: 800] [[
+  Initializing Servlet 'HelloWeb']]
+
+[2021-04-20T09:40:03.686+0300] [glassfish 5.0] [INFO] [] [org.springframework.web.servlet.DispatcherServlet] [tid: _ThreadID=46 _ThreadName=admin-listener(1)] [timeMillis: 1618900803686] [levelValue: 800] [[
+  Completed initialization in 401 ms]]
+
+[2021-04-20T09:40:03.688+0300] [glassfish 5.0] [INFO] [AS-WEB-GLUE-00172] [javax.enterprise.web] [tid: _ThreadID=46 _ThreadName=admin-listener(1)] [timeMillis: 1618900803688] [levelValue: 800] [[
+  Loading application [res] at [/res]]]
+
+[2021-04-20T09:40:03.820+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.system.core] [tid: _ThreadID=46 _ThreadName=admin-listener(1)] [timeMillis: 1618900803820] [levelValue: 800] [[
+  res was successfully deployed in 3,278 milliseconds.]]
+
+[2021-04-20T09:40:11.547+0300] [glassfish 5.0] [WARNING] [] [org.springframework.web.servlet.PageNotFound] [tid: _ThreadID=36 _ThreadName=http-listener-1(5)] [timeMillis: 1618900811547] [levelValue: 900] [[
+  No mapping for GET /res/add_staff%22]]
+
+[2021-04-20T09:40:16.881+0300] [glassfish 5.0] [INFO] [] [org.hibernate.Version] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900816881] [levelValue: 800] [[
+  HHH000412: Hibernate ORM core version 5.4.29.Final]]
+
+[2021-04-20T09:40:17.319+0300] [glassfish 5.0] [INFO] [] [org.hibernate.annotations.common.Version] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900817319] [levelValue: 800] [[
+  HCANN000001: Hibernate Commons Annotations {5.1.2.Final}]]
+
+[2021-04-20T09:40:17.594+0300] [glassfish 5.0] [WARN] [] [org.hibernate.orm.connections.pooling] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900817594] [levelValue: 900] [[
+  HHH10001002: Using Hibernate built-in connection pool (not for production use!)]]
+
+[2021-04-20T09:40:17.596+0300] [glassfish 5.0] [INFO] [] [org.hibernate.orm.connections.pooling] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900817596] [levelValue: 800] [[
+  HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/staffinfo]]]
+
+[2021-04-20T09:40:17.597+0300] [glassfish 5.0] [INFO] [] [org.hibernate.orm.connections.pooling] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900817597] [levelValue: 800] [[
+  HHH10001001: Connection properties: {user=webprac, password=****}]]
+
+[2021-04-20T09:40:17.598+0300] [glassfish 5.0] [INFO] [] [org.hibernate.orm.connections.pooling] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900817598] [levelValue: 800] [[
+  HHH10001003: Autocommit mode: false]]
+
+[2021-04-20T09:40:17.605+0300] [glassfish 5.0] [INFO] [] [org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900817605] [levelValue: 800] [[
+  HHH000115: Hibernate connection pool size: 20 (min=1)]]
+
+[2021-04-20T09:40:17.683+0300] [glassfish 5.0] [INFO] [] [org.hibernate.dialect.Dialect] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900817683] [levelValue: 800] [[
+  HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL9Dialect]]
+
+[2021-04-20T09:40:18.252+0300] [glassfish 5.0] [INFO] [] [org.hibernate.orm.beans] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900818252] [levelValue: 800] [[
+  HHH10005002: No explicit CDI BeanManager reference was passed to Hibernate, but CDI is available on the Hibernate ClassLoader.]]
+
+[2021-04-20T09:40:51.142+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.web] [tid: _ThreadID=47 _ThreadName=admin-listener(2)] [timeMillis: 1618900851142] [levelValue: 800] [[
+  WebModule[/res] ServletContext.log():Destroying Spring FrameworkServlet &#x27;HelloWeb&#x27;]]
+
+[2021-04-20T09:40:51.156+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.web] [tid: _ThreadID=47 _ThreadName=admin-listener(2)] [timeMillis: 1618900851156] [levelValue: 800] [[
+  WebModule[/res] ServletContext.log():Closing Spring root WebApplicationContext]]
+
+[2021-04-20T09:40:53.920+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=49 _ThreadName=admin-listener(4)] [timeMillis: 1618900853920] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2021-04-20T09:40:54.516+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.web] [tid: _ThreadID=49 _ThreadName=admin-listener(4)] [timeMillis: 1618900854516] [levelValue: 800] [[
+  WebModule[/res] ServletContext.log():No Spring WebApplicationInitializer types detected on classpath]]
+
+[2021-04-20T09:40:54.520+0300] [glassfish 5.0] [INFO] [jsf.config.listener.version] [javax.enterprise.resource.webcontainer.jsf.config] [tid: _ThreadID=49 _ThreadName=admin-listener(4)] [timeMillis: 1618900854520] [levelValue: 800] [[
+  Initializing Mojarra 2.3.2 ( 20170627-2139 e63598abf2ed2bb1a24674f308a734e0dce18a72) for context '/res']]
+
+[2021-04-20T09:40:54.755+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.web] [tid: _ThreadID=49 _ThreadName=admin-listener(4)] [timeMillis: 1618900854755] [levelValue: 800] [[
+  WebModule[/res] ServletContext.log():Initializing Spring root WebApplicationContext]]
+
+[2021-04-20T09:40:54.765+0300] [glassfish 5.0] [INFO] [] [org.springframework.web.context.ContextLoader] [tid: _ThreadID=49 _ThreadName=admin-listener(4)] [timeMillis: 1618900854765] [levelValue: 800] [[
+  Root WebApplicationContext: initialization started]]
+
+[2021-04-20T09:40:55.528+0300] [glassfish 5.0] [INFO] [] [org.springframework.web.context.ContextLoader] [tid: _ThreadID=49 _ThreadName=admin-listener(4)] [timeMillis: 1618900855528] [levelValue: 800] [[
+  Root WebApplicationContext initialized in 762 ms]]
+
+[2021-04-20T09:40:55.550+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.web] [tid: _ThreadID=49 _ThreadName=admin-listener(4)] [timeMillis: 1618900855550] [levelValue: 800] [[
+  WebModule[/res] ServletContext.log():Initializing Spring DispatcherServlet &#x27;HelloWeb&#x27;]]
+
+[2021-04-20T09:40:55.550+0300] [glassfish 5.0] [INFO] [] [org.springframework.web.servlet.DispatcherServlet] [tid: _ThreadID=49 _ThreadName=admin-listener(4)] [timeMillis: 1618900855550] [levelValue: 800] [[
+  Initializing Servlet 'HelloWeb']]
+
+[2021-04-20T09:40:55.956+0300] [glassfish 5.0] [INFO] [] [org.springframework.web.servlet.DispatcherServlet] [tid: _ThreadID=49 _ThreadName=admin-listener(4)] [timeMillis: 1618900855956] [levelValue: 800] [[
+  Completed initialization in 405 ms]]
+
+[2021-04-20T09:40:55.958+0300] [glassfish 5.0] [INFO] [AS-WEB-GLUE-00172] [javax.enterprise.web] [tid: _ThreadID=49 _ThreadName=admin-listener(4)] [timeMillis: 1618900855958] [levelValue: 800] [[
+  Loading application [res] at [/res]]]
+
+[2021-04-20T09:40:56.146+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.system.core] [tid: _ThreadID=49 _ThreadName=admin-listener(4)] [timeMillis: 1618900856146] [levelValue: 800] [[
+  res was successfully deployed in 4,298 milliseconds.]]
+
+[2021-04-20T09:42:38.027+0300] [glassfish 5.0] [INFO] [] [org.hibernate.Version] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900958027] [levelValue: 800] [[
+  HHH000412: Hibernate ORM core version 5.4.29.Final]]
+
+[2021-04-20T09:42:38.502+0300] [glassfish 5.0] [INFO] [] [org.hibernate.annotations.common.Version] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900958502] [levelValue: 800] [[
+  HCANN000001: Hibernate Commons Annotations {5.1.2.Final}]]
+
+[2021-04-20T09:42:38.793+0300] [glassfish 5.0] [WARN] [] [org.hibernate.orm.connections.pooling] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900958793] [levelValue: 900] [[
+  HHH10001002: Using Hibernate built-in connection pool (not for production use!)]]
+
+[2021-04-20T09:42:38.796+0300] [glassfish 5.0] [INFO] [] [org.hibernate.orm.connections.pooling] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900958796] [levelValue: 800] [[
+  HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/staffinfo]]]
+
+[2021-04-20T09:42:38.796+0300] [glassfish 5.0] [INFO] [] [org.hibernate.orm.connections.pooling] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900958796] [levelValue: 800] [[
+  HHH10001001: Connection properties: {user=webprac, password=****}]]
+
+[2021-04-20T09:42:38.797+0300] [glassfish 5.0] [INFO] [] [org.hibernate.orm.connections.pooling] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900958797] [levelValue: 800] [[
+  HHH10001003: Autocommit mode: false]]
+
+[2021-04-20T09:42:38.803+0300] [glassfish 5.0] [INFO] [] [org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900958803] [levelValue: 800] [[
+  HHH000115: Hibernate connection pool size: 20 (min=1)]]
+
+[2021-04-20T09:42:38.862+0300] [glassfish 5.0] [INFO] [] [org.hibernate.dialect.Dialect] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900958862] [levelValue: 800] [[
+  HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL9Dialect]]
+
+[2021-04-20T09:42:39.414+0300] [glassfish 5.0] [INFO] [] [org.hibernate.orm.beans] [tid: _ThreadID=34 _ThreadName=http-listener-1(3)] [timeMillis: 1618900959414] [levelValue: 800] [[
+  HHH10005002: No explicit CDI BeanManager reference was passed to Hibernate, but CDI is available on the Hibernate ClassLoader.]]
+
+[2021-04-20T09:45:46.174+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.web] [tid: _ThreadID=48 _ThreadName=admin-listener(3)] [timeMillis: 1618901146174] [levelValue: 800] [[
+  WebModule[/res] ServletContext.log():Destroying Spring FrameworkServlet &#x27;HelloWeb&#x27;]]
+
+[2021-04-20T09:45:46.183+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.web] [tid: _ThreadID=48 _ThreadName=admin-listener(3)] [timeMillis: 1618901146183] [levelValue: 800] [[
+  WebModule[/res] ServletContext.log():Closing Spring root WebApplicationContext]]
+
+[2021-04-20T09:45:48.042+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=50 _ThreadName=admin-listener(5)] [timeMillis: 1618901148042] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2021-04-20T09:45:48.615+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.web] [tid: _ThreadID=50 _ThreadName=admin-listener(5)] [timeMillis: 1618901148615] [levelValue: 800] [[
+  WebModule[/res] ServletContext.log():No Spring WebApplicationInitializer types detected on classpath]]
+
+[2021-04-20T09:45:48.649+0300] [glassfish 5.0] [INFO] [jsf.config.listener.version] [javax.enterprise.resource.webcontainer.jsf.config] [tid: _ThreadID=50 _ThreadName=admin-listener(5)] [timeMillis: 1618901148649] [levelValue: 800] [[
+  Initializing Mojarra 2.3.2 ( 20170627-2139 e63598abf2ed2bb1a24674f308a734e0dce18a72) for context '/res']]
+
+[2021-04-20T09:45:48.890+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.web] [tid: _ThreadID=50 _ThreadName=admin-listener(5)] [timeMillis: 1618901148890] [levelValue: 800] [[
+  WebModule[/res] ServletContext.log():Initializing Spring root WebApplicationContext]]
+
+[2021-04-20T09:45:48.902+0300] [glassfish 5.0] [INFO] [] [org.springframework.web.context.ContextLoader] [tid: _ThreadID=50 _ThreadName=admin-listener(5)] [timeMillis: 1618901148902] [levelValue: 800] [[
+  Root WebApplicationContext: initialization started]]
+
+[2021-04-20T09:45:49.628+0300] [glassfish 5.0] [INFO] [] [org.springframework.web.context.ContextLoader] [tid: _ThreadID=50 _ThreadName=admin-listener(5)] [timeMillis: 1618901149628] [levelValue: 800] [[
+  Root WebApplicationContext initialized in 725 ms]]
+
+[2021-04-20T09:45:49.650+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.web] [tid: _ThreadID=50 _ThreadName=admin-listener(5)] [timeMillis: 1618901149650] [levelValue: 800] [[
+  WebModule[/res] ServletContext.log():Initializing Spring DispatcherServlet &#x27;HelloWeb&#x27;]]
+
+[2021-04-20T09:45:49.650+0300] [glassfish 5.0] [INFO] [] [org.springframework.web.servlet.DispatcherServlet] [tid: _ThreadID=50 _ThreadName=admin-listener(5)] [timeMillis: 1618901149650] [levelValue: 800] [[
+  Initializing Servlet 'HelloWeb']]
+
+[2021-04-20T09:45:50.088+0300] [glassfish 5.0] [INFO] [] [org.springframework.web.servlet.DispatcherServlet] [tid: _ThreadID=50 _ThreadName=admin-listener(5)] [timeMillis: 1618901150088] [levelValue: 800] [[
+  Completed initialization in 437 ms]]
+
+[2021-04-20T09:45:50.090+0300] [glassfish 5.0] [INFO] [AS-WEB-GLUE-00172] [javax.enterprise.web] [tid: _ThreadID=50 _ThreadName=admin-listener(5)] [timeMillis: 1618901150090] [levelValue: 800] [[
+  Loading application [res] at [/res]]]
+
+[2021-04-20T09:45:50.206+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.system.core] [tid: _ThreadID=50 _ThreadName=admin-listener(5)] [timeMillis: 1618901150206] [levelValue: 800] [[
+  res was successfully deployed in 3,387 milliseconds.]]
+
+[2021-04-20T09:48:24.310+0300] [glassfish 5.0] [INFO] [] [org.hibernate.Version] [tid: _ThreadID=35 _ThreadName=http-listener-1(4)] [timeMillis: 1618901304310] [levelValue: 800] [[
+  HHH000412: Hibernate ORM core version 5.4.29.Final]]
+
+[2021-04-20T09:48:24.804+0300] [glassfish 5.0] [INFO] [] [org.hibernate.annotations.common.Version] [tid: _ThreadID=35 _ThreadName=http-listener-1(4)] [timeMillis: 1618901304804] [levelValue: 800] [[
+  HCANN000001: Hibernate Commons Annotations {5.1.2.Final}]]
+
+[2021-04-20T09:48:25.098+0300] [glassfish 5.0] [WARN] [] [org.hibernate.orm.connections.pooling] [tid: _ThreadID=35 _ThreadName=http-listener-1(4)] [timeMillis: 1618901305098] [levelValue: 900] [[
+  HHH10001002: Using Hibernate built-in connection pool (not for production use!)]]
+
+[2021-04-20T09:48:25.101+0300] [glassfish 5.0] [INFO] [] [org.hibernate.orm.connections.pooling] [tid: _ThreadID=35 _ThreadName=http-listener-1(4)] [timeMillis: 1618901305101] [levelValue: 800] [[
+  HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/staffinfo]]]
+
+[2021-04-20T09:48:25.102+0300] [glassfish 5.0] [INFO] [] [org.hibernate.orm.connections.pooling] [tid: _ThreadID=35 _ThreadName=http-listener-1(4)] [timeMillis: 1618901305102] [levelValue: 800] [[
+  HHH10001001: Connection properties: {user=webprac, password=****}]]
+
+[2021-04-20T09:48:25.102+0300] [glassfish 5.0] [INFO] [] [org.hibernate.orm.connections.pooling] [tid: _ThreadID=35 _ThreadName=http-listener-1(4)] [timeMillis: 1618901305102] [levelValue: 800] [[
+  HHH10001003: Autocommit mode: false]]
+
+[2021-04-20T09:48:25.108+0300] [glassfish 5.0] [INFO] [] [org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl] [tid: _ThreadID=35 _ThreadName=http-listener-1(4)] [timeMillis: 1618901305108] [levelValue: 800] [[
+  HHH000115: Hibernate connection pool size: 20 (min=1)]]
+
+[2021-04-20T09:48:25.171+0300] [glassfish 5.0] [INFO] [] [org.hibernate.dialect.Dialect] [tid: _ThreadID=35 _ThreadName=http-listener-1(4)] [timeMillis: 1618901305171] [levelValue: 800] [[
+  HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL9Dialect]]
+
+[2021-04-20T09:48:25.716+0300] [glassfish 5.0] [INFO] [] [org.hibernate.orm.beans] [tid: _ThreadID=35 _ThreadName=http-listener-1(4)] [timeMillis: 1618901305716] [levelValue: 800] [[
+  HHH10005002: No explicit CDI BeanManager reference was passed to Hibernate, but CDI is available on the Hibernate ClassLoader.]]
+
+[2021-04-20T09:49:10.206+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.web] [tid: _ThreadID=46 _ThreadName=admin-listener(1)] [timeMillis: 1618901350206] [levelValue: 800] [[
+  WebModule[/res] ServletContext.log():Destroying Spring FrameworkServlet &#x27;HelloWeb&#x27;]]
+
+[2021-04-20T09:49:10.228+0300] [glassfish 5.0] [INFO] [] [javax.enterprise.web] [tid: _ThreadID=46 _ThreadName=admin-listener(1)] [timeMillis: 1618901350228] [levelValue: 800] [[
+  WebModule[/res] ServletContext.log():Closing Spring root WebApplicationContext]]
+
