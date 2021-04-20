@@ -6,23 +6,14 @@
     </head>
 
     <body>
-        <% 
-            DepartmentDAO departmentDAO = Factory.getInstance().getDepartmentDAO();
-            Department department = departmentDAO.getDepartmentById(request.getParameter("id"));
-            System.out.println(department);
-            Collection<Department> subDeps = departmentDAO.getSubDepartments(department);
-            for (Department dep : subDeps) {
-                System.out.println(dep);
-            }
-            Collection<Position> positions = Factory.getInstance().getPositionDAO().getPositionsByDepartment(department);
-            for (Position pos : positions) {
-                System.out.println(pos);
-            }
-        %>
-        <p><a href="departments">Return</a></p>
-        <p><a href="department_edit">Edit</a></p>
-        <form method="get" action="delete">
-            <input type="submit" name="Delete">
+        Name: "${name}" <br>
+        Director: "${director}" <br>
+        Head department: "${headDepartment}" <br>
+
+        <p><a href="/res/departments">Return</a>
+        <p><a href="/res/department_edit">Edit</a>
+        <form method="get" action="/delete_department">
+            <input type="submit" value="Delete department">
         </form>
     </body>
 </html>

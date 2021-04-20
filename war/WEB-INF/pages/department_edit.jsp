@@ -26,7 +26,7 @@
                 Position position = (Position) iterator.next();
                 out.println(position);*/
             %>
-            <input type="submit" name="Confirm department">
+            <input type="submit" value="Confirm department">
 
         </form>
     </body>
