@@ -32,6 +32,7 @@
             classpathref="classpath">     
             <compilerarg value="-Xlint:deprecation"/>
             <compilerarg value="-Xlint:unchecked"/>
+            <compilerarg value="-Xdiags:verbose"/>
         </javac>
     </target>
 
@@ -130,7 +131,7 @@
         </exec>
     </target>
 
-    <target name="deploy">
+    <target name="deploy" depends="war,undeploy">
         <exec executable="/bin/sh">
             <arg value="glassfish5/bin/asadmin" />
             <arg value="deploy"/>

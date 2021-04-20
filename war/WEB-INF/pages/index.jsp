@@ -5,8 +5,7 @@
     </head>
 
     <body>
-        <h2>${message}</h2>
-        <p> <a href="/departments">Departments</a> </p>
-        <p> <a href="/staff">Staff Members</a> </p>
+        <p> <a href="departments">Departments</a> </p>
+        <p> <a href="staff">Staff Members</a> </p>
     </body>
 </html>
