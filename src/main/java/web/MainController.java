@@ -35,14 +35,34 @@ public class MainController {
    }
    
    @RequestMapping(value="/department_edit", method = RequestMethod.GET)
-   public String departmentEdit(ModelMap model) {
+   public String departmentEdit(@RequestParam(name="id") String id, ModelMap model) throws SQLException {
+       Department dep = Factory.getInstance().getDepartmentDAO().getDepartmentById(Long.parseLong(id));
+       model.addAttribute("id", id);
+       model.addAttribute("name", dep.getName());
+       model.addAttribute("director", dep.getDirector().getId());
+       model.addAttribute("headDepartment", dep.getHeadDepartment().getId());
        return "department_edit";
    }
    
+   @RequestMapping(value="/confirm_department", method = RequestMethod.GET)
+   public String changeDepartment(@RequestParam(name="id") String id, @RequestParam(name="name") String name, @RequestParam(name="director") String director, @RequestParam(name="headDepartment") String headDepartment, ModelMap model) throws SQLException {
+       DepartmentDAO departmentDAO = Factory.getInstance().getDepartmentDAO();
+       StaffMemberDAO memberDAO = Factory.getInstance().getStaffMemberDAO();
+       Department dep = departmentDAO.getDepartmentById(Long.parseLong(id));
+       Department head = departmentDAO.getDepartmentById(Long.parseLong(headDepartment));
+       StaffMember mem = memberDAO.getStaffMemberById(Long.parseLong(director));
+       dep.setName(name);
+       dep.setDirector(mem);
+       dep.setHeadDepartment(head);
+       departmentDAO.updateDepartment(dep);
+       return "departments";   
+   }
+
    @RequestMapping(value="/department_info", method = RequestMethod.GET)
    public String departmentInfo(@RequestParam(name="id", required=true) String id, ModelMap model) throws SQLException {
         DepartmentDAO departmentDAO = Factory.getInstance().getDepartmentDAO();
         Department department = departmentDAO.getDepartmentById(Long.parseLong(id));
+        model.addAttribute("id", id);
         model.addAttribute("name", department.getName());
         model.addAttribute("director", department.getDirector().getId());
         model.addAttribute("headDepartment", department.getHeadDepartment().getId());

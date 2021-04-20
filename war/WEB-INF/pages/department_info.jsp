@@ -11,7 +11,7 @@
         Head department: "${headDepartment}" <br>
 
         <p><a href="/res/departments">Return</a>
-        <p><a href="/res/department_edit">Edit</a>
+        <p><a href="/res/department_edit?id=${id}">Edit</a>
         <form method="get" action="/delete_department">
             <input type="submit" value="Delete department">
         </form>

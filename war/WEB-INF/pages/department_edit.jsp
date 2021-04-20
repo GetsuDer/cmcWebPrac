@@ -7,7 +7,8 @@
     <body>
         <p> <a href="departments">Departments</a> </p>
 
-        <form method="get" action="confirm">
+        <form method="get" action="/res/confirm_department">
+            <input type="hidden" name="id" value="${id}">
             Name: <br>
             <input type="text" name="name" value="${name}"> <br>
             
@@ -15,7 +16,7 @@
             <input type="text" name="director" value="${director}"> <br>
             
             Head department: <br>
-            <input type="text" name="head department" value="${headDepartment}"> <br>
+            <input type="text" name="headDepartment" value="${headDepartment}"> <br>
             
             <a href="position_edit">Add position</a>
             
