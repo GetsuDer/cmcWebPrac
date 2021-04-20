@@ -67,6 +67,20 @@ public class MainController {
    public String staffEdit(ModelMap model) {
        return "staff_edit";
    }
+   @RequestMapping(value="/staff_info", method = RequestMethod.GET)
+   public String staffInfo(@RequestParam(name="id", required=true) String id, ModelMap model) throws SQLException {
+       StaffMemberDAO staffMemberDAO = Factory.getInstance().getStaffMemberDAO();
+       StaffMember mem = staffMemberDAO.getStaffMemberById(Long.parseLong(id));
+       model.addAttribute("name", mem.getName());
+       model.addAttribute("address", mem.getAddress());
+       model.addAttribute("education", mem.getEducation());
+       model.addAttribute("workStart", mem.getWorkStart().toString());
+       Collection<Position> positions = Factory.getInstance().getPositionDAO().getAllPositionsByStaffMember(mem); 
+       for (Position pos : positions) {
+           System.out.println(pos);
+       }
+       return "staff_info";
+   }
 
    @RequestMapping(value="/add_staff", method = RequestMethod.GET)
    public String gotoStaffEdit(ModelMap model) {

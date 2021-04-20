@@ -20,7 +20,8 @@
             Iterator iterator = departments.iterator();
             while (iterator.hasNext()) {
                 Department department = (Department) iterator.next();
-                out.println("<br>" + department);
+                out.println("<br>" + department + "<a href=/res/department_info?id=" + department.getId() + ">info</a>");
+                
             }
         %>
     </body>

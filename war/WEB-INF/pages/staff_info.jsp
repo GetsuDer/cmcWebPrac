@@ -6,19 +6,15 @@
     </head>
 
     <body>
-        <% 
-            StaffMemberDAO staffMemberDAO = Factory.getInstance().getStaffMemberDAO();
-            StaffMember mem = staffMemberDAO.getStaffMemberById(request.getParameter("id"));
-            System.out.println(mem);
-            Collection<Position> positions = Factory.getInstance().getPositionDAO().getPositionsByStaffMember(mem); 
-            for (Position pos : positions) {
-                System.out.println(pos);
-            }
-        %>
-        <p><a href="staff">Return</a></p>
-        <p><a href="staff_edit">Edit</a></p>
+        Name: "${name}" <br>
+        Address: "${address}" <br>
+        Education: "${edication} <br>
+        WorkStart: "${workStart}" <br>
+
+        <a href="/res/staff">Return</a>
+        <a href="/res/staff_edit">Edit</a>
         <form method="get" action="delete">
-            <input type="submit" name="Delete">
+            <input type="submit" value="Delete">
         </form>
     </body>
 </html>

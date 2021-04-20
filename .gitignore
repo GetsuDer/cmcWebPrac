@@ -2,3 +2,4 @@
 Bin/*
 TestsRes/
 war/WEB-INF/classes/*
+glassfish5/glassfish/domains/domain1/logs/*
