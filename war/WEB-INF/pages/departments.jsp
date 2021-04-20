@@ -5,7 +5,7 @@
     </head>
 
     <body>
-        <p> <a href="/res/">Main</a> </p>
+        <p> <h1> <center> <a href="/res/">Main</a> </p>
         <p> 
         <form method="get" action="/res/add_department">
             <input type="submit" value="Add department">
@@ -15,12 +15,13 @@
             Name:<input type="text" name="name">
             <input type="submit" value="Filter">
         </form>
+        </h1>
         <%
             Collection departments = Factory.getInstance().getDepartmentDAO().getAllDepartments();
             Iterator iterator = departments.iterator();
             while (iterator.hasNext()) {
                 Department department = (Department) iterator.next();
-                out.println("<br>" + department + "<a href=/res/department_info?id=" + department.getId() + ">info</a>");
+                out.println("<br>" + department + "<a href=/res/department_info?id=" + department.getId() + ">edit</a>");
                 
             }
         %>

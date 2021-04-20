@@ -5,7 +5,7 @@
     </head>
 
     <body>
-        <p> <a href="departments">Departments</a> </p>
-        <p> <a href="staff">Staff Members</a> </p>
+        <p> <center> <h1> <a href="/res/departments">Departments</a> </h1> </center> </p>
+        <p> <center> <h1> <a href="/res/staff">Staff Members</a> </h1> </center> </p>
     </body>
 </html>

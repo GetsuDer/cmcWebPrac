@@ -5,6 +5,8 @@ Now available:
     list of departments and staff members
     part of info of departments
     partial department change
+    part of info of staff member
+    partial department change
 
 ## How to see the results
     ant glassfish_start

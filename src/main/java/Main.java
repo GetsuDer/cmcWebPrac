@@ -8,7 +8,7 @@ import java.util.Iterator;
 
 public class Main {
     public static void main(String args[]) throws SQLException {
-   /*     System.out.println("======= Departments ===========");
+        /*     System.out.println("======= Departments ===========");
         Collection departments = Factory.getInstance().getDepartmentDAO().getAllDepartments();
         Iterator iterator = departments.iterator();
         while (iterator.hasNext()) {
