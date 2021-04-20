@@ -1,6 +1,22 @@
 # Web Practicum, part III
+## What is done
+Now available:
+    main page
+    list of departments and staff members
+    part of info of departments
+    partial department change
+
+## How to see the results
+    ant glassfish_start
+    ant deploy
+    see localhost:8080/res/
+
 ## More Ant commands
-"ant jar" - move class files into jar in lib/
+"ant deploy" - deploy war
+
+"ant undeploy" - undeploy war
+
+"ant war" - create war file
 
 "ant glassfish_start" - start server
 
