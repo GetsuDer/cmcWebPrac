@@ -12,7 +12,8 @@
 
         <p><a href="/res/departments">Return</a>
         <p><a href="/res/department_edit?id=${id}">Edit</a>
-        <form method="get" action="/delete_department">
+        <form method="get" action="/res/delete_department">
+            <input type="hidden" name="id" value="${id}">
             <input type="submit" value="Delete department">
         </form>
     </body>

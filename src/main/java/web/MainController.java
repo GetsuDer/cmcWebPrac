@@ -78,6 +78,14 @@ public class MainController {
        return "department_info";   
    }
 
+   @RequestMapping(value="/delete_department", method = RequestMethod.GET)
+   public String deleteDepartment(@RequestParam(name="id") String id, ModelMap model) throws SQLException {
+       DepartmentDAO departmentDAO = Factory.getInstance().getDepartmentDAO();
+       Department dep = departmentDAO.getDepartmentById(Long.parseLong(id));
+       departmentDAO.deleteDepartment(dep);
+       return "departments";
+   }
+
    @RequestMapping(value="/staff", method = RequestMethod.GET)
    public String printStaff(ModelMap model) {
        return "staff";
