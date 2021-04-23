@@ -108,7 +108,7 @@ public class Department {
     @Override
     public String toString() {
         return "Id: " + id +
-                "\nName: " + name + "\n" +
+                "\nName: " + ((name == null) ? "NONE" : name) + "\n" +
                 "Head department: " + ((headDepartment == null) ? "NONE" : headDepartment.getId()) + "\n" +
                 "Director: " + ((director == null) ? "NONE" : director.getId()) + "\n";
     }

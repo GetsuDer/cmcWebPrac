@@ -13,7 +13,8 @@
 
         <a href="/res/staff">Return</a>
         <a href="/res/staff_edit">Edit</a>
-        <form method="get" action="delete">
+        <form method="get" action="/res/delete_staff">
+            <input type="hidden" name="id" value="${id}">
             <input type="submit" value="Delete">
         </form>
     </body>

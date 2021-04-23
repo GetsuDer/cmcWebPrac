@@ -112,6 +112,14 @@ public class MainController {
    public String printStaff(ModelMap model) {
        return "staff";
    }
+    
+   @RequestMapping(value="/delete_staff", method = RequestMethod.GET)
+   public String deleteStaff(@RequestParam(name="id") String id, ModelMap model) throws SQLException {
+       StaffMemberDAO dao = Factory.getInstance().getStaffMemberDAO();
+       StaffMember mem = dao.getStaffMemberById(Long.parseLong(id));
+       dao.deleteStaffMember(mem);
+       return "staff";
+   }
 
    @RequestMapping(value="/add_staff", method = RequestMethod.GET)
    public String gotoStaffEdit(ModelMap model) {
@@ -130,6 +138,8 @@ public class MainController {
        if (Long.parseLong(id) != -1) {
            mem = memberDAO.getStaffMemberById(Long.parseLong(id));
        }
+       if (address.equals("")) address = null;
+       if (education.equals("")) education = null;
        mem.setAddress(address);
        mem.setEducation(education);
        DateFormat format = new SimpleDateFormat("MMMM d, yyyy");
@@ -157,10 +167,10 @@ public class MainController {
             model.addAttribute("workStart", "");
        } else {
             mem = Factory.getInstance().getStaffMemberDAO().getStaffMemberById(Long.parseLong(id));
-            model.addAttribute("name", mem.getName());
-            model.addAttribute("address", mem.getAddress());
-            model.addAttribute("education", mem.getEducation());
-            model.addAttribute("workStart", mem.getWorkStart());
+            model.addAttribute("name", (mem.getName() == null) ? "NONE" : mem.getName());
+            model.addAttribute("address", (mem.getAddress() == null) ? "NONE" : mem.getAddress());
+            model.addAttribute("education", (mem.getEducation() == null) ? "NONE" : mem.getEducation());
+            model.addAttribute("workStart", (mem.getWorkStart() == null) ? "NONE" : mem.getWorkStart().toString());
        }
        return "staff_edit";
    }
@@ -168,10 +178,11 @@ public class MainController {
    public String staffInfo(@RequestParam(name="id", required=true) String id, ModelMap model) throws SQLException {
        StaffMemberDAO staffMemberDAO = Factory.getInstance().getStaffMemberDAO();
        StaffMember mem = staffMemberDAO.getStaffMemberById(Long.parseLong(id));
-       model.addAttribute("name", mem.getName());
-       model.addAttribute("address", mem.getAddress());
-       model.addAttribute("education", mem.getEducation());
-       model.addAttribute("workStart", mem.getWorkStart().toString());
+       model.addAttribute("id", mem.getId());
+       model.addAttribute("name", (mem.getName() == null) ? "NONE" : mem.getName());
+       model.addAttribute("address", (mem.getAddress() == null) ? "NONE" : mem.getAddress());
+       model.addAttribute("education", (mem.getEducation() == null) ? "NONE" : mem.getEducation());
+       model.addAttribute("workStart", (mem.getWorkStart() == null) ? "NONE" : mem.getWorkStart().toString());
        Collection<Position> positions = Factory.getInstance().getPositionDAO().getAllPositionsByStaffMember(mem); 
        for (Position pos : positions) {
            System.out.println(pos);
