@@ -50,8 +50,6 @@ public class Main {
     
             Department dep1 = new Department("dep1", null, member1);
             departmentDAO.addDepartment(dep1);
-            dep1.setHeadDepartment(dep1);
-            departmentDAO.updateDepartment(dep1);
             Department dep2 = new Department("dep2", dep1, member2);
             departmentDAO.addDepartment(dep2);
             Department dep3 = new Department("dep3", dep1, member3);

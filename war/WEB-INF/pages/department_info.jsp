@@ -8,14 +8,20 @@
     <body>
         Name: ${name} <br>
         Director: ${director} <br>
-        Head department: ${headDepartment} <br>
-
+        Head department: ${headDepartment}
+        <%
+            if (!request.getAttribute("headDepartment").equals("")) {
+                out.println("<a href=/res/department_info?id=" + request.getAttribute("headDepartment") + ">see</a>");
+            }
+        %>
+        <br>
         SubDepartments: <br>
         <%
             ArrayList<String> subs = (ArrayList<String>)request.getAttribute("subs");
             for (String sub : subs) {
-                out.println(sub + "<br>");
-                }
+                out.println(sub + "<a href=/res/department_info?id=" + sub.split(" ")[1] + ">see</a><br>");
+            
+            }
         %>
         Positions: <br>
         <%

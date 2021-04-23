@@ -43,9 +43,9 @@ public class MainController {
        if (Long.parseLong(id) != -1) {
            Department dep = Factory.getInstance().getDepartmentDAO().getDepartmentById(Long.parseLong(id));
            model.addAttribute("id", id);
-           model.addAttribute("name", dep.getName());
-           model.addAttribute("director", dep.getDirector().getId());
-           model.addAttribute("headDepartment", dep.getHeadDepartment().getId());
+           model.addAttribute("name", (dep.getName() == null) ? "" : dep.getName());
+           model.addAttribute("director", (dep.getDirector() == null) ? "" : dep.getDirector().getId());
+           model.addAttribute("headDepartment", (dep.getHeadDepartment() == null) ? "" : dep.getHeadDepartment().getId());
        } else {
            model.addAttribute("id", "-1");
            model.addAttribute("name", "");
@@ -63,8 +63,13 @@ public class MainController {
        if (Long.parseLong(id) != -1) {
            dep = departmentDAO.getDepartmentById(Long.parseLong(id));
        }
-       Department head = departmentDAO.getDepartmentById(Long.parseLong(headDepartment));
-       StaffMember mem = memberDAO.getStaffMemberById(Long.parseLong(director));
+       if (name.equals("")) name = null;
+       if (headDepartment.equals("")) headDepartment = null;
+       if (director.equals("")) director = null;
+
+       Department head = (headDepartment == null) ? null : departmentDAO.getDepartmentById(Long.parseLong(headDepartment));
+       StaffMember mem = (director == null) ? null : memberDAO.getStaffMemberById(Long.parseLong(director));
+       
        dep.setName(name);
        dep.setDirector(mem);
        dep.setHeadDepartment(head);
@@ -81,9 +86,9 @@ public class MainController {
         DepartmentDAO departmentDAO = Factory.getInstance().getDepartmentDAO();
         Department department = departmentDAO.getDepartmentById(Long.parseLong(id));
         model.addAttribute("id", id);
-        model.addAttribute("name", department.getName());
-        model.addAttribute("director", department.getDirector().getId());
-        model.addAttribute("headDepartment", department.getHeadDepartment().getId());
+        model.addAttribute("name", (department.getName() == null) ? "" : department.getName());
+        model.addAttribute("director", (department.getDirector() == null) ? "" : department.getDirector().getId());
+        model.addAttribute("headDepartment", (department.getHeadDepartment() == null) ? "" : department.getHeadDepartment().getId());
         Collection<Department> subDeps = departmentDAO.getSubDepartments(department);
         ArrayList<String> subs = new ArrayList<String>();
         for (Department dep : subDeps) {
@@ -132,7 +137,7 @@ public class MainController {
    }
 
    @RequestMapping(value="/confirm_staff", method=RequestMethod.GET)
-   public String confirmStaff(@RequestParam(name="id") String id, @RequestParam(name="address") String address, @RequestParam(name="education") String education, @RequestParam(name="workStart") String workStart, ModelMap model) throws SQLException {
+   public String confirmStaff(@RequestParam(name="id") String id, @RequestParam(name="name") String name, @RequestParam(name="address") String address, @RequestParam(name="education") String education, @RequestParam(name="workStart") String workStart, ModelMap model) throws SQLException {
        StaffMemberDAO memberDAO = Factory.getInstance().getStaffMemberDAO();
        StaffMember mem = new StaffMember();
        if (Long.parseLong(id) != -1) {
@@ -140,13 +145,19 @@ public class MainController {
        }
        if (address.equals("")) address = null;
        if (education.equals("")) education = null;
+       if (name.equals("")) name = null;
+       if (workStart.equals("")) workStart = null;
+       mem.setName(name);
        mem.setAddress(address);
        mem.setEducation(education);
        DateFormat format = new SimpleDateFormat("MMMM d, yyyy");
-       try {
-           mem.setWorkStart(format.parse(workStart));
-       } catch (ParseException e) {
-           
+       if (workStart == null) {
+           mem.setWorkStart(null);
+       } else {
+           try {
+               mem.setWorkStart(format.parse(workStart));
+           } catch (ParseException e) {
+           }
        }
        if (Long.parseLong(id) == -1) {
            memberDAO.addStaffMember(mem);
@@ -167,10 +178,10 @@ public class MainController {
             model.addAttribute("workStart", "");
        } else {
             mem = Factory.getInstance().getStaffMemberDAO().getStaffMemberById(Long.parseLong(id));
-            model.addAttribute("name", (mem.getName() == null) ? "NONE" : mem.getName());
-            model.addAttribute("address", (mem.getAddress() == null) ? "NONE" : mem.getAddress());
-            model.addAttribute("education", (mem.getEducation() == null) ? "NONE" : mem.getEducation());
-            model.addAttribute("workStart", (mem.getWorkStart() == null) ? "NONE" : mem.getWorkStart().toString());
+            model.addAttribute("name", (mem.getName() == null) ? "" : mem.getName());
+            model.addAttribute("address", (mem.getAddress() == null) ? "" : mem.getAddress());
+            model.addAttribute("education", (mem.getEducation() == null) ? "" : mem.getEducation());
+            model.addAttribute("workStart", (mem.getWorkStart() == null) ? "" : mem.getWorkStart().toString());
        }
        return "staff_edit";
    }
@@ -179,14 +190,16 @@ public class MainController {
        StaffMemberDAO staffMemberDAO = Factory.getInstance().getStaffMemberDAO();
        StaffMember mem = staffMemberDAO.getStaffMemberById(Long.parseLong(id));
        model.addAttribute("id", mem.getId());
-       model.addAttribute("name", (mem.getName() == null) ? "NONE" : mem.getName());
-       model.addAttribute("address", (mem.getAddress() == null) ? "NONE" : mem.getAddress());
-       model.addAttribute("education", (mem.getEducation() == null) ? "NONE" : mem.getEducation());
-       model.addAttribute("workStart", (mem.getWorkStart() == null) ? "NONE" : mem.getWorkStart().toString());
+       model.addAttribute("name", (mem.getName() == null) ? "" : mem.getName());
+       model.addAttribute("address", (mem.getAddress() == null) ? "" : mem.getAddress());
+       model.addAttribute("education", (mem.getEducation() == null) ? "" : mem.getEducation());
+       model.addAttribute("workStart", (mem.getWorkStart() == null) ? "" : mem.getWorkStart().toString());
        Collection<Position> positions = Factory.getInstance().getPositionDAO().getAllPositionsByStaffMember(mem); 
+       ArrayList<String> poss = new ArrayList<String>();
        for (Position pos : positions) {
-           System.out.println(pos);
+           poss.add(pos.toString());
        }
+       model.addAttribute("poss", poss);
        return "staff_info";
    }
 

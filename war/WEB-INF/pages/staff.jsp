@@ -24,7 +24,7 @@
         <%
             Collection<StaffMember> members = Factory.getInstance().getStaffMemberDAO().getAllStaffMembers();
             for (StaffMember mem : members) {
-                out.println(mem + "<a href=/res/staff_info?id=" + mem.getId() + ">info</a><br>");
+                out.println(mem + "<a href=/res/staff_info?id=" + mem.getId() + ">more</a><br>");
             }
         %>
     </body>
