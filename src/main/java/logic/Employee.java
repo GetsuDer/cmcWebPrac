@@ -121,8 +121,7 @@ public class Employee {
      */
     @Override
     public String toString() {
-        return "Employee:\n" +
-                "Id: " + id + "\n" +
+        return "Id: " + id + "\n" +
                 "Position: " + ((position == null) ? "NONE" : position.getId()) + "\n" +
                 "Member: " + ((staffMember == null) ? "NONE" : staffMember.getId()) + "\n" +
                 "StartTime: " + startTime + "\n" + 

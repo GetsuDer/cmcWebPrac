@@ -6,10 +6,10 @@
     </head>
 
     <body>
-        Name: "${name}" <br>
-        Address: "${address}" <br>
-        Education: "${edication} <br>
-        WorkStart: "${workStart}" <br>
+        Name: ${name} <br>
+        Address: ${address} <br>
+        Education: ${education} <br>
+        WorkStart: ${workStart} <br>
 
         <a href="/res/staff">Return</a>
         <a href="/res/staff_edit">Edit</a>

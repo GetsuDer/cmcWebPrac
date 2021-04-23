@@ -118,11 +118,11 @@ public class StaffMember {
      */
     @Override
     public String toString() {
-        return "StaffMember:\n" +
-                "Id: " + id + "\n" +
+        return "Id: " + id + "\n" +
                 "Name: " + name + "\n" +
                 "Address: " + address + "\n" +
-                "StartWork: " + workStart + "\n";
+                "StartWork: " + workStart + "\n" + 
+                "Education: " + education + "\n";
     }
 
     /**

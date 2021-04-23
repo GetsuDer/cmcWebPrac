@@ -101,7 +101,6 @@
   <servers>
     <server config-ref="server-config" name="server">
       <application-ref ref="__admingui" virtual-servers="__asadmin"></application-ref>
-      <application-ref ref="res" virtual-servers="server"></application-ref>
       <resource-ref ref="jdbc/__TimerPool"></resource-ref>
       <resource-ref ref="jdbc/__default"></resource-ref>
       <resource-ref ref="jms/__defaultConnectionFactory"></resource-ref>
@@ -502,15 +501,5 @@
     <secure-admin-principal dn="CN=localhost-instance,OU=GlassFish,O=Oracle Corporation,L=Santa Clara,ST=California,C=US"></secure-admin-principal>
   </secure-admin>
   <clusters></clusters>
-  <applications>
-    <application context-root="/res" object-type="user" name="res" location="${com.sun.aas.instanceRootURI}/applications/res/">
-      <property name="appLocation" value="${com.sun.aas.instanceRootURI}/applications/__internal/res/res.war"></property>
-      <property name="archiveType" value="war"></property>
-      <property name="defaultAppName" value="res"></property>
-      <module name="res">
-        <engine sniffer="security"></engine>
-        <engine sniffer="web"></engine>
-      </module>
-    </application>
-  </applications>
+  <applications></applications>
 </domain>

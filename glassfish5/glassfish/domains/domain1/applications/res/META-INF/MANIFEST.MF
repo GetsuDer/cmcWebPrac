@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Ant-Version: Apache Ant 1.10.7
-Created-By: 1.8.0_282-8u282-b08-0ubuntu1~20.04-b08 (Private Build)
-

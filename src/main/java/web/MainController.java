@@ -6,6 +6,7 @@ import DAO.Factory;
 
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -84,13 +85,17 @@ public class MainController {
         model.addAttribute("director", department.getDirector().getId());
         model.addAttribute("headDepartment", department.getHeadDepartment().getId());
         Collection<Department> subDeps = departmentDAO.getSubDepartments(department);
+        ArrayList<String> subs = new ArrayList<String>();
         for (Department dep : subDeps) {
-            System.out.println(dep);
+            subs.add(dep.toString());
         }
+        model.addAttribute("subs", subs);
         Collection<Position> positions = Factory.getInstance().getPositionDAO().getPositionsByDepartment(department);
+        ArrayList<String> poss = new ArrayList<String>();
         for (Position pos : positions) {
-            System.out.println(pos);
+            poss.add(pos.toString());
         }
+        model.addAttribute("poss", poss);
 
        return "department_info";   
    }

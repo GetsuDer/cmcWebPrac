@@ -119,8 +119,7 @@ public class Position {
      */
     @Override
     public String toString() {
-        return "Position:\n" +
-                "Id: " + id + "\n" +
+        return "Id: " + id + "\n" +
                 "Name: " + name + "\n" +
                 "Responsibilities: " + responsibilities + "\n" +
                 "Department: " + ((department == null) ? "NONE" : department.getId()) + "\n";
