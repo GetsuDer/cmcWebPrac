@@ -37,7 +37,6 @@
     </target>
 
     <target name="run" depends="build">
-        <echo> Running application </echo>
         <java classname="Main" classpath="${dstDir}" classpathref="classpath">
             <classpath>
                 <pathelement path="src/main/resources"/>
@@ -111,10 +110,13 @@
         </exec>
     </target>
 
-    <target name="db_init" depends="db_create">
-        <exec executable="/bin/sh" dir="SQL_scripts">
-            <arg value="fill"/>
-        </exec>
+    <target name="db_init" depends="db_create, build">
+        <java classname="Main" classpath="${dstDir}" classpathref="classpath">
+            <classpath>
+                <pathelement path="src/main/resources"/>
+            </classpath>
+            <arg value="init"/>
+        </java>
     </target>
 
     <target name="glassfish_start">

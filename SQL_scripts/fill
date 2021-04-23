@@ -1,2 +1,0 @@
-#! /bin/sh
-psql "postgresql://webprac:webprac@127.0.0.1/staffinfo" -f db_init.sql
