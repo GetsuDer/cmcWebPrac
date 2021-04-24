@@ -27,9 +27,15 @@
         <%
             ArrayList<String> positions = (ArrayList<String>)request.getAttribute("poss");
             for (String pos : positions) {
-                out.println(pos + "<br>");
+            out.println(pos + "<a href=/res/position_edit?id=" + pos.split(" ")[1] + ">edit</a><br>");
             }
+        
         %>
+        <p><form method="get" action="/res/position_edit">
+            <input type="hidden" name="id" value="-1">
+            <input type="hidden" name="dep_id" value="${id}">
+            <input type="submit" value="add position">
+        </form>
         <p><a href="/res/departments">Return</a>
         <p><a href="/res/department_edit?id=${id}">Edit</a>
         <form method="get" action="/res/delete_department">

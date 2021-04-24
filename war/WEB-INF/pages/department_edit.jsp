@@ -18,15 +18,6 @@
             Head department: <br>
             <input type="text" name="headDepartment" value="${headDepartment}"> <br>
             
-            <a href="position_edit">Add position</a>
-            
-            <%
-               /* Collection<Position> positions = Factory.getInstance().getPositionDAO().getPositionsByDepartment(request.getParameter("department");
-                iterator = positions.iterator();
-                while (iterator.hasNext()) {
-                Position position = (Position) iterator.next();
-                out.println(position);*/
-            %>
             <input type="submit" value="Confirm department">
 
         </form>

@@ -78,7 +78,7 @@ public class MainController {
        } else {
            departmentDAO.updateDepartment(dep);
        }
-       return "departments";   
+       return "redirect:departments";   
    }
 
    @RequestMapping(value="/department_info", method = RequestMethod.GET)
@@ -111,6 +111,55 @@ public class MainController {
        Department dep = departmentDAO.getDepartmentById(Long.parseLong(id));
        departmentDAO.deleteDepartment(dep);
        return "departments";
+   }
+
+   @RequestMapping(value="/position_edit", method = RequestMethod.GET)
+   public String editPosition(@RequestParam(name="id") String id, @RequestParam(name="dep_id") String dep_id, ModelMap model) throws SQLException {
+       PositionDAO dao = Factory.getInstance().getPositionDAO();
+       Position pos = new Position();
+       if (!id.equals("-1")) {
+            pos = dao.getPositionById(Long.parseLong(id));
+       }
+       model.addAttribute("name", (pos.getName() == null) ? "" : pos.getName());
+       model.addAttribute("dep_id", dep_id);
+       model.addAttribute("id", id);
+       model.addAttribute("size", (pos.getSize() == null) ? "" : pos.getSize());
+       model.addAttribute("duties", (pos.getResponsibilities() == null) ? "" : pos.getResponsibilities());
+       return "position_edit";
+   }
+
+   @RequestMapping(value="/delete_position", method = RequestMethod.GET)
+   public String deletePosition(@RequestParam(name="id") String id, ModelMap model) throws SQLException {
+       PositionDAO dao = Factory.getInstance().getPositionDAO();
+       Position pos = dao.getPositionById(Long.parseLong(id));
+       model.addAttribute("id", pos.getDepartment().getId());
+       dao.deletePosition(pos);
+       return "redirect:department_info";
+   }
+
+   @RequestMapping(value="/confirm_position", method = RequestMethod.GET)
+   public String confirmPosition(@RequestParam(name="id") String id, @RequestParam(name="dep_id") String dep_id, @RequestParam(name="name") String name, @RequestParam(name="size") String size, @RequestParam(name="duties") String duties, ModelMap model) throws SQLException {
+       PositionDAO dao = Factory.getInstance().getPositionDAO();
+       Position pos = new Position();
+       if (!id.equals("-1")) {
+           pos = dao.getPositionById(Long.parseLong(id));
+       }
+       if (name.equals("")) name = null;
+       if (size.equals("")) size = "0";
+       if (duties.equals("")) duties = null;
+       pos.setName(name);
+       pos.setSize(Long.parseLong(size));
+       pos.setResponsibilities(duties);
+       if (pos.getDepartment() == null) {
+           pos.setDepartment(Factory.getInstance().getDepartmentDAO().getDepartmentById(Long.parseLong(dep_id)));
+       }
+       if (id.equals("-1")) {
+           dao.addPosition(pos);
+       } else {
+           dao.updatePosition(pos);
+       }
+       model.addAttribute("id", dep_id);
+       return "redirect:department_info";
    }
 
    @RequestMapping(value="/staff", method = RequestMethod.GET)
@@ -164,7 +213,7 @@ public class MainController {
        } else {
            memberDAO.updateStaffMember(mem);
        }
-       return "staff";
+       return "redirect:staff";
    }
 
    @RequestMapping(value="/staff_edit", method = RequestMethod.GET)
