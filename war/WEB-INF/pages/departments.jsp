@@ -17,12 +17,15 @@
         </form>
         </h1>
         <%
-            Collection departments = Factory.getInstance().getDepartmentDAO().getAllDepartments();
-            Iterator iterator = departments.iterator();
-            while (iterator.hasNext()) {
-                Department department = (Department) iterator.next();
+            Collection<Department> departments = Factory.getInstance().getDepartmentDAO().getAllDepartments();
+            for (Department department : departments) {
                 String dir_id = (department.getDirector() == null) ? "-1" : department.getDirector().getId().toString();
-                out.println("<br>" + department + "<a href=/res/department_info?id=" + department.getId() + "&director_id=" + dir_id + ">more</a>");
+                String name_info = (department.getName() == null) ? "no name" : department.getName();
+                String director_info = (department.getDirector() == null) ? "none" : department.getDirector().getName();
+                String head_info = (department.getHeadDepartment() == null) ? "none" : department.getHeadDepartment().getName();
+                if (head_info == null) head_info = "no name";
+                if (director_info == null) director_info = "no name";
+                out.println("<br>" + "Name: " + name_info + " Director: " + director_info + " Head Department: " + head_info + "<a href=/res/department_info?id=" + department.getId() + "&director_id=" + dir_id + "> more</a>");
                 
             }
         %>
