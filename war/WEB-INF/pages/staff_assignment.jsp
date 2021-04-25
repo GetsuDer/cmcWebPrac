@@ -9,10 +9,10 @@
         <%
             Collection<StaffMember> members = Factory.getInstance().getStaffMemberDAO().getAllStaffMembers();
             for (StaffMember mem : members) {
-            out.println("<a href=department_edit?id=" + request.getAttribute("dep_id") +  "&director_id=" + mem.getId() + ">" + mem + "</a><br>");
-                }
+                out.println("<a href=department_edit?head_id=" + request.getAttribute("head_id") + "&id=" + request.getAttribute("dep_id") +  "&director_id=" + mem.getId() + ">" + mem + "</a><br>");
+            }
         %>
-        <p><a href="department_edit?id=${dep_id}">Return</a></p>
+        <p><a href="department_edit?id=${dep_id}&director_id=${director_id}&head_id=${head_id}">Return</a></p>
 
     </body>
 </html>

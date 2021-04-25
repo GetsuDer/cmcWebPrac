@@ -7,14 +7,25 @@
 
     <body>
         Name: ${name} <br>
-        Director: ${director} <br>
-        Head department: ${headDepartment}
-        <%
-            if (!request.getAttribute("headDepartment").equals("")) {
-                out.println("<a href=/res/department_info?id=" + request.getAttribute("headDepartment") + ">see</a>");
+        Director: ${director} 
+        <% 
+            if (!request.getAttribute("director_id").equals("-1")) {
+                out.println("<a href=/res/staff_info?id=" + request.getAttribute("director_id") + ">see</a>");
             }
         %>
         <br>
+
+        Head department: ${head}
+        <%
+         //   String head_id = request.getAttribute("head_id");
+           // if (!head_id.equals("-1")) {
+           //     Department head = Factory.getInstance().getDepartmentDAO().getDepartmentById(Long.parseLong(head_id));
+                
+               // out.println("<a href=/res/department_info?director_id=" + ((head.getDirector() == null) ? "-1" : head.getDirector().getId().toString()) + "&id=" + request.getAttribute("head_id") + ">see</a>");
+            //}
+        %>
+        <br>
+
         SubDepartments: <br>
         <%
             ArrayList<String> subs = (ArrayList<String>)request.getAttribute("subs");
@@ -37,7 +48,7 @@
             <input type="submit" value="add position">
         </form>
         <a href="/res/departments">Return</a>
-        <a href="/res/department_edit?id=${id}&director_id=${director_id}">Edit</a>
+        <a href="/res/department_edit?id=${id}&director_id=${director_id}&head_id=${head_id}">Edit</a>
         <form method="get" action="/res/delete_department">
             <input type="hidden" name="id" value="${id}">
             <input type="submit" value="Delete department">

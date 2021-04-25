@@ -40,11 +40,17 @@ public class MainController {
    }
    
    @RequestMapping(value="/department_edit", method = RequestMethod.GET)
-   public String departmentEdit(@RequestParam(name="id") String id, @RequestParam(name="director_id") String director_id, ModelMap model) throws SQLException {
+   public String departmentEdit(@RequestParam(name="id") String id, @RequestParam(name="director_id") String director_id, @RequestParam(name="head_id") String head_id, ModelMap model) throws SQLException {
        if (Long.parseLong(id) != -1) {
            Department dep = Factory.getInstance().getDepartmentDAO().getDepartmentById(Long.parseLong(id));
            model.addAttribute("id", id);
+           if (head_id.equals("-1")) {
+               model.addAttribute("head", "");
+           } else {
+               model.addAttribute("head", Factory.getInstance().getDepartmentDAO().getDepartmentById(Long.parseLong(head_id)).getName());
+           }
            model.addAttribute("name", (dep.getName() == null) ? "" : dep.getName());
+           model.addAttribute("head_id", head_id);
            if (director_id.equals("-1")) {
                model.addAttribute("director", "");
                model.addAttribute("director_id", "-1");
@@ -58,7 +64,7 @@ public class MainController {
            model.addAttribute("id", "-1");
            model.addAttribute("name", "");
            model.addAttribute("director", "");
-           model.addAttribute("headDepartment", "");
+           model.addAttribute("head_id", "-1");
        }
        return "department_edit";
    }
@@ -68,8 +74,17 @@ public class MainController {
        model.addAttribute("dep_id", dep_id);
        return "staff_assignment";
    }
+   
+   @RequestMapping(value="/department_assignment", method = RequestMethod.GET)
+   public String departmentAssignment(@RequestParam(name="dep_id") String dep_id, @RequestParam(name="head_id") String head_id, @RequestParam(name="director_id") String director_id, ModelMap model) {
+       model.addAttribute("dep_id", dep_id);
+       model.addAttribute("head_id", head_id);
+       model.addAttribute("director_id", director_id);
+       return "department_assignment";
+   }
+
    @RequestMapping(value="/confirm_department", method = RequestMethod.GET)
-   public String changeDepartment(@RequestParam(name="id") String id, @RequestParam(name="name") String name, @RequestParam(name="director_id") String director_id, @RequestParam(name="headDepartment") String headDepartment, ModelMap model) throws SQLException {
+   public String changeDepartment(@RequestParam(name="id") String id, @RequestParam(name="name") String name, @RequestParam(name="director_id") String director_id, @RequestParam(name="head_id") String head_id, ModelMap model) throws SQLException {
        DepartmentDAO departmentDAO = Factory.getInstance().getDepartmentDAO();
        StaffMemberDAO memberDAO = Factory.getInstance().getStaffMemberDAO();
        Department dep = new Department();
@@ -77,9 +92,9 @@ public class MainController {
            dep = departmentDAO.getDepartmentById(Long.parseLong(id));
        }
        if (name.equals("")) name = null;
-       if (headDepartment.equals("")) headDepartment = null;
+       if (head_id.equals("")) head_id = "-1";
 
-       Department head = (headDepartment == null) ? null : departmentDAO.getDepartmentById(Long.parseLong(headDepartment));
+       Department head = (head_id.equals("-1")) ? null : departmentDAO.getDepartmentById(Long.parseLong(head_id));
        StaffMember mem = memberDAO.getStaffMemberById(Long.parseLong(director_id));
        
        dep.setName(name);
@@ -99,6 +114,8 @@ public class MainController {
         Department department = departmentDAO.getDepartmentById(Long.parseLong(id));
         model.addAttribute("id", id);
         model.addAttribute("name", (department.getName() == null) ? "" : department.getName());
+        model.addAttribute("head_id", (department.getHeadDepartment() == null) ? "-1" : department.getHeadDepartment().getId().toString());
+        model.addAttribute("head", (department.getHeadDepartment() == null) ? "" : department.getHeadDepartment().getName());
         if (director_id.equals("-1")) {
             model.addAttribute("director", "");
             model.addAttribute("director_id", "-1");
