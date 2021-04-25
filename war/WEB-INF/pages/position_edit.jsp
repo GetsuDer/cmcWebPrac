@@ -20,6 +20,7 @@
         </form>
         <form method="get" action="/res/delete_position">
             <input type="hidden" name="id" value="${id}">
+            <input type="hidden" name="dep_id" value="${dep_id}">
             <input type="submit" value="Delete">
         </form>
 

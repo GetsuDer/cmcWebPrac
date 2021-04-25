@@ -36,8 +36,8 @@
             <input type="hidden" name="dep_id" value="${id}">
             <input type="submit" value="add position">
         </form>
-        <p><a href="/res/departments">Return</a>
-        <p><a href="/res/department_edit?id=${id}">Edit</a>
+        <a href="/res/departments">Return</a>
+        <a href="/res/department_edit?id=${id}&director_id=${director_id}">Edit</a>
         <form method="get" action="/res/delete_department">
             <input type="hidden" name="id" value="${id}">
             <input type="submit" value="Delete department">

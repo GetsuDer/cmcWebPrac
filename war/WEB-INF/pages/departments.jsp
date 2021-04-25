@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" import="java.io.*, logic.*, DAO.*, java.util.Collection, java.util.Iterator"%>
 <html>
     <head>
-        <title>Department page</title>
+        <title>Departments page</title>
     </head>
 
     <body>
@@ -21,7 +21,8 @@
             Iterator iterator = departments.iterator();
             while (iterator.hasNext()) {
                 Department department = (Department) iterator.next();
-                out.println("<br>" + department + "<a href=/res/department_info?id=" + department.getId() + ">more</a>");
+                String dir_id = (department.getDirector() == null) ? "-1" : department.getDirector().getId().toString();
+                out.println("<br>" + department + "<a href=/res/department_info?id=" + department.getId() + "&director_id=" + dir_id + ">more</a>");
                 
             }
         %>

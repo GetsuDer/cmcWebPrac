@@ -34,17 +34,25 @@ public class MainController {
        model.addAttribute("id", "-1");
        model.addAttribute("name", "");
        model.addAttribute("director", "");
+       model.addAttribute("director_id", "");
        model.addAttribute("headDepartment", "");
        return "redirect:department_edit";
    }
    
    @RequestMapping(value="/department_edit", method = RequestMethod.GET)
-   public String departmentEdit(@RequestParam(name="id") String id, ModelMap model) throws SQLException {
+   public String departmentEdit(@RequestParam(name="id") String id, @RequestParam(name="director_id") String director_id, ModelMap model) throws SQLException {
        if (Long.parseLong(id) != -1) {
            Department dep = Factory.getInstance().getDepartmentDAO().getDepartmentById(Long.parseLong(id));
            model.addAttribute("id", id);
            model.addAttribute("name", (dep.getName() == null) ? "" : dep.getName());
-           model.addAttribute("director", (dep.getDirector() == null) ? "" : dep.getDirector().getId());
+           if (director_id.equals("-1")) {
+               model.addAttribute("director", "");
+               model.addAttribute("director_id", "-1");
+           } else {
+               StaffMember director = Factory.getInstance().getStaffMemberDAO().getStaffMemberById(Long.parseLong(director_id));
+               model.addAttribute("director_id", director.getId());
+               model.addAttribute("director", director.getName());
+           }
            model.addAttribute("headDepartment", (dep.getHeadDepartment() == null) ? "" : dep.getHeadDepartment().getId());
        } else {
            model.addAttribute("id", "-1");
@@ -55,8 +63,13 @@ public class MainController {
        return "department_edit";
    }
    
+   @RequestMapping(value="/staff_assignment", method = RequestMethod.GET)
+   public String staffAssignment(@RequestParam(name="dep_id") String dep_id, ModelMap model) {
+       model.addAttribute("dep_id", dep_id);
+       return "staff_assignment";
+   }
    @RequestMapping(value="/confirm_department", method = RequestMethod.GET)
-   public String changeDepartment(@RequestParam(name="id") String id, @RequestParam(name="name") String name, @RequestParam(name="director") String director, @RequestParam(name="headDepartment") String headDepartment, ModelMap model) throws SQLException {
+   public String changeDepartment(@RequestParam(name="id") String id, @RequestParam(name="name") String name, @RequestParam(name="director_id") String director_id, @RequestParam(name="headDepartment") String headDepartment, ModelMap model) throws SQLException {
        DepartmentDAO departmentDAO = Factory.getInstance().getDepartmentDAO();
        StaffMemberDAO memberDAO = Factory.getInstance().getStaffMemberDAO();
        Department dep = new Department();
@@ -65,10 +78,9 @@ public class MainController {
        }
        if (name.equals("")) name = null;
        if (headDepartment.equals("")) headDepartment = null;
-       if (director.equals("")) director = null;
 
        Department head = (headDepartment == null) ? null : departmentDAO.getDepartmentById(Long.parseLong(headDepartment));
-       StaffMember mem = (director == null) ? null : memberDAO.getStaffMemberById(Long.parseLong(director));
+       StaffMember mem = memberDAO.getStaffMemberById(Long.parseLong(director_id));
        
        dep.setName(name);
        dep.setDirector(mem);
@@ -82,12 +94,19 @@ public class MainController {
    }
 
    @RequestMapping(value="/department_info", method = RequestMethod.GET)
-   public String departmentInfo(@RequestParam(name="id", required=true) String id, ModelMap model) throws SQLException {
+   public String departmentInfo(@RequestParam(name="id", required=true) String id, @RequestParam(name="director_id") String director_id, ModelMap model) throws SQLException {
         DepartmentDAO departmentDAO = Factory.getInstance().getDepartmentDAO();
         Department department = departmentDAO.getDepartmentById(Long.parseLong(id));
         model.addAttribute("id", id);
         model.addAttribute("name", (department.getName() == null) ? "" : department.getName());
-        model.addAttribute("director", (department.getDirector() == null) ? "" : department.getDirector().getId());
+        if (director_id.equals("-1")) {
+            model.addAttribute("director", "");
+            model.addAttribute("director_id", "-1");
+        } else {
+            StaffMember dir = Factory.getInstance().getStaffMemberDAO().getStaffMemberById(Long.parseLong(director_id));
+            model.addAttribute("director", dir.getName());
+            model.addAttribute("director_id", director_id);
+        }
         model.addAttribute("headDepartment", (department.getHeadDepartment() == null) ? "" : department.getHeadDepartment().getId());
         Collection<Department> subDeps = departmentDAO.getSubDepartments(department);
         ArrayList<String> subs = new ArrayList<String>();
@@ -129,10 +148,14 @@ public class MainController {
    }
 
    @RequestMapping(value="/delete_position", method = RequestMethod.GET)
-   public String deletePosition(@RequestParam(name="id") String id, ModelMap model) throws SQLException {
+   public String deletePosition(@RequestParam(name="id") String id, @RequestParam(name="dep_id") String dep_id, ModelMap model) throws SQLException {
+       if (id.equals("-1")) {
+           model.addAttribute("id", dep_id);
+           return "redirect:department_info";
+       }
        PositionDAO dao = Factory.getInstance().getPositionDAO();
        Position pos = dao.getPositionById(Long.parseLong(id));
-       model.addAttribute("id", pos.getDepartment().getId());
+       model.addAttribute("id", dep_id);
        dao.deletePosition(pos);
        return "redirect:department_info";
    }
