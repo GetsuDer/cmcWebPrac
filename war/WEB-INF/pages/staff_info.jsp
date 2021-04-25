@@ -17,7 +17,14 @@
                 out.println(s + "<br>");
             }
         %>
-        <a href="/res/staff">Return</a>
+        <%
+            if (request.getAttribute("back").equals("staff")) {
+                out.println("<a href=/res/staff>Return</a>");
+            } else {
+                out.println("<a href=/res/department_info?id=" + request.getAttribute("dep_id") + "&director_id=" + request.getAttribute("id") + ">Return</a>");
+            }   
+        %>
+
         <form method="get" action="/res/staff_edit">
             <input type="hidden" name="id" value="${id}">
             <input type="submit" value="Edit">

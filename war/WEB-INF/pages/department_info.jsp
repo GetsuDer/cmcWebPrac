@@ -10,7 +10,7 @@
         Director: ${director} 
         <% 
             if (!request.getAttribute("director_id").equals("-1")) {
-                out.println("<a href=/res/staff_info?id=" + request.getAttribute("director_id") + ">see</a>");
+                out.println("<a href=/res/staff_info?back=dep&dep_id=" + request.getAttribute("id") + "&id=" + request.getAttribute("director_id") + ">see</a>");
             }
         %>
         <br>
