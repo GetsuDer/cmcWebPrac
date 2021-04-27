@@ -6,6 +6,7 @@
     </head>
 
     <body>
+        <center>
         Name: ${name} <br>
         Address: ${address} <br>
         Education: ${education} <br>
@@ -21,7 +22,7 @@
             if (request.getAttribute("back").equals("staff")) {
                 out.println("<a href=/res/staff>Return</a>");
             } else {
-                out.println("<a href=/res/department_info?id=" + request.getAttribute("dep_id") + "&director_id=" + request.getAttribute("id") + ">Return</a>");
+                out.println("<a href=/res/department_info?id=" + request.getAttribute("dep_id") + "&director_id=" + request.getAttribute("director_id") + ">Return</a>");
             }   
         %>
 

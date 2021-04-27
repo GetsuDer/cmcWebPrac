@@ -118,8 +118,8 @@ public class StaffMember {
      */
     @Override
     public String toString() {
-        return "Id: " + id + "\n" +
-                "Name: " + ((name == null) ? "NONE" : name) + "\n" +
+        return "Id: " + id + " \n" +
+                "Name: " + ((name == null) ? "NONE" : name) + " \n" +
                 "Address: " + ((address == null) ? "NONE" : address) + "\n" +
                 "StartWork: " + ((workStart == null) ? "NONE" : workStart) + "\n" + 
                 "Education: " + ((education == null) ? "NONE" : education) + "\n";

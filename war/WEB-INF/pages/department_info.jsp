@@ -6,6 +6,7 @@
     </head>
 
     <body>
+        <center>
         Name: ${name} <br>
         Director: ${director} 
         <% 
@@ -29,7 +30,7 @@
         <%
             ArrayList<String> subs = (ArrayList<String>)request.getAttribute("subs");
             for (String sub : subs) {
-                out.println(sub + "<a href=/res/department_info?id=" + sub.split(" ")[1] + ">see</a><br>");
+                out.println("<a href=/res/department_info?id=" + sub.split(" ")[1] + ">" + sub.split(" ")[3] + "</a><br>");
             
             }
         %>
@@ -37,7 +38,14 @@
         <%
             ArrayList<String> positions = (ArrayList<String>)request.getAttribute("poss");
             for (String pos : positions) {
-            out.println(pos + "<a href=/res/position_edit?id=" + pos.split(" ")[1] + ">edit</a><br>");
+                String pos_id = pos.split(" ")[1];
+                out.println(pos.split(" ")[3] + "<a href=/res/position_edit?id=" + pos_id + ">edit</a><br>");
+                Position position = Factory.getInstance().getPositionDAO().getPositionById(Long.parseLong(pos_id));
+                Collection<StaffMember> workers = Factory.getInstance().getStaffMemberDAO().getStaffMembersByPosition(position);
+                for (StaffMember mem : workers) {
+                    out.println("<a href=/res/staff_info?back=dep&director_id=" + request.getAttribute("director_id") + "&id=" + mem.getId().toString() + "&dep_id=" + request.getAttribute("id") + ">" + mem.getName() + "</a><br>");
+                }
+                out.println("<br>");
             }
         
         %>

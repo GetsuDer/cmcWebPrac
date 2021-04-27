@@ -284,11 +284,12 @@ public class MainController {
        return "staff_edit";
    }
    @RequestMapping(value="/staff_info", method = RequestMethod.GET)
-   public String staffInfo(@RequestParam(name="id", required=true) String id, @RequestParam(name="dep_id") String dep_id,  @RequestParam(name="back") String back, ModelMap model) throws SQLException {
+   public String staffInfo(@RequestParam(name="id", required=true) String id, @RequestParam(name="director_id") String director_id, @RequestParam(name="dep_id") String dep_id,  @RequestParam(name="back") String back, ModelMap model) throws SQLException {
        StaffMemberDAO staffMemberDAO = Factory.getInstance().getStaffMemberDAO();
        StaffMember mem = staffMemberDAO.getStaffMemberById(Long.parseLong(id));
        model.addAttribute("id", mem.getId());
        model.addAttribute("back", back);
+       model.addAttribute("director_id", director_id);
        model.addAttribute("dep_id", dep_id);
        model.addAttribute("name", (mem.getName() == null) ? "" : mem.getName());
        model.addAttribute("address", (mem.getAddress() == null) ? "" : mem.getAddress());
