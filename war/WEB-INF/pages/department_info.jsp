@@ -17,12 +17,11 @@
 
         Head department: ${head}
         <%
-         //   String head_id = request.getAttribute("head_id");
-           // if (!head_id.equals("-1")) {
-           //     Department head = Factory.getInstance().getDepartmentDAO().getDepartmentById(Long.parseLong(head_id));
-                
-               // out.println("<a href=/res/department_info?director_id=" + ((head.getDirector() == null) ? "-1" : head.getDirector().getId().toString()) + "&id=" + request.getAttribute("head_id") + ">see</a>");
-            //}
+             String head_id = request.getAttribute("head_id").toString();
+             if (!head_id.equals("-1")) {
+                 Department head = Factory.getInstance().getDepartmentDAO().getDepartmentById(Long.parseLong(head_id));
+                 out.println("<a href=/res/department_info?director_id=" + ((head.getDirector() == null) ? "-1" : head.getDirector().getId().toString()) + "&id=" + head_id + ">see</a>");
+            }
         %>
         <br>
 

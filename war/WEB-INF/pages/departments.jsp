@@ -25,7 +25,7 @@
                 String head_info = (department.getHeadDepartment() == null) ? "none" : department.getHeadDepartment().getName();
                 if (head_info == null) head_info = "no name";
                 if (director_info == null) director_info = "no name";
-                out.println("<br>" + "Name: " + name_info + " Director: " + director_info + " Head Department: " + head_info + "<a href=/res/department_info?id=" + department.getId() + "&director_id=" + dir_id + "> more</a>");
+                out.println("<br>" + "Name: " + name_info + " Director: " + director_info + " Head Department: " + head_info + "<a href=/res/department_info?back=deps&id=" + department.getId() + "&director_id=" + dir_id + "> more</a>");
                 
             }
         %>

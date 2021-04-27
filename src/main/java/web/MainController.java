@@ -35,7 +35,7 @@ public class MainController {
        model.addAttribute("name", "");
        model.addAttribute("director", "");
        model.addAttribute("director_id", "");
-       model.addAttribute("headDepartment", "");
+       model.addAttribute("head_id", "");
        return "redirect:department_edit";
    }
    
@@ -93,13 +93,16 @@ public class MainController {
        }
        if (name.equals("")) name = null;
        if (head_id.equals("")) head_id = "-1";
+       if (director_id.equals("")) director_id = "-1";
 
        Department head = (head_id.equals("-1")) ? null : departmentDAO.getDepartmentById(Long.parseLong(head_id));
-       StaffMember mem = memberDAO.getStaffMemberById(Long.parseLong(director_id));
+       
+       StaffMember mem = (director_id.equals("-1")) ? null : memberDAO.getStaffMemberById(Long.parseLong(director_id));
        
        dep.setName(name);
        dep.setDirector(mem);
        dep.setHeadDepartment(head);
+
        if (Long.parseLong(id) == -1) {
            departmentDAO.addDepartment(dep);
        } else {
