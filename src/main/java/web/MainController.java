@@ -83,6 +83,12 @@ public class MainController {
        return "department_assignment";
    }
 
+   @RequestMapping(value="/filter_departments", method = RequestMethod.GET)
+   public String filterDepartments(@RequestParam(name="filter_name") String filter_name, ModelMap model) {
+        model.addAttribute("filter_name", filter_name);
+        return "departments";
+   }
+
    @RequestMapping(value="/confirm_department", method = RequestMethod.GET)
    public String changeDepartment(@RequestParam(name="id") String id, @RequestParam(name="name") String name, @RequestParam(name="director_id") String director_id, @RequestParam(name="head_id") String head_id, ModelMap model) throws SQLException {
        DepartmentDAO departmentDAO = Factory.getInstance().getDepartmentDAO();

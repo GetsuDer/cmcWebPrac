@@ -11,16 +11,19 @@
             <input type="submit" value="Add department">
         </form>
         </p>
-        <form method="get" action="/find">
-            Name:<input type="text" name="name">
+        <form method="get" action="/res/filter_departments">
+            Name:<input type="text" name="filter_name" value="${filter_name}">
             <input type="submit" value="Filter">
         </form>
         </h1>
         <%
             Collection<Department> departments = Factory.getInstance().getDepartmentDAO().getAllDepartments();
             for (Department department : departments) {
-                String dir_id = (department.getDirector() == null) ? "-1" : department.getDirector().getId().toString();
                 String name_info = (department.getName() == null) ? "no name" : department.getName();
+                
+                Object filter = request.getAttribute("filter_name");
+                if ((filter != null && !filter.equals("")) && (department.getName() == null || !department.getName().contains(filter.toString()))) continue;
+                String dir_id = (department.getDirector() == null) ? "-1" : department.getDirector().getId().toString();
                 String director_info = (department.getDirector() == null) ? "none" : department.getDirector().getName();
                 String head_info = (department.getHeadDepartment() == null) ? "none" : department.getHeadDepartment().getName();
                 if (head_info == null) head_info = "no name";
