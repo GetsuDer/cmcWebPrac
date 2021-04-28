@@ -15,7 +15,7 @@
             <input type="text" name="name" value="${name}"> <br>
             
             Director: ${director}
-            <a href="staff_assignment?dep_id=${id}">change</a> <br>
+            <a href="staff_assignment?position=director&dep_id=${id}">change</a> <br>
             <input type="hidden" name="director_id" value="${director_id}">
 
             Head department: ${head}

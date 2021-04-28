@@ -11,7 +11,7 @@
         Director: ${director} 
         <% 
             if (!request.getAttribute("director_id").equals("-1")) {
-                out.println("<a href=/res/staff_info?back=dep&dep_id=" + request.getAttribute("id") + "&id=" + request.getAttribute("director_id") + ">see</a>");
+                out.println("<a href=/res/staff_info?back=dep&director_id=" + request.getAttribute("director_id") + "&dep_id=" + request.getAttribute("id") + "&id=" + request.getAttribute("director_id") + ">see</a>");
             }
         %>
         <br>
@@ -26,7 +26,7 @@
         %>
         <br>
 
-        SubDepartments: <br>
+        <br> SubDepartments: <br>
         <%
             ArrayList<String> subs = (ArrayList<String>)request.getAttribute("subs");
             for (String sub : subs) {
@@ -34,16 +34,20 @@
             
             }
         %>
-        Positions: <br>
+        <br> Positions: <br>
         <%
             ArrayList<String> positions = (ArrayList<String>)request.getAttribute("poss");
             for (String pos : positions) {
                 String pos_id = pos.split(" ")[1];
-                out.println(pos.split(" ")[3] + "<a href=/res/position_edit?id=" + pos_id + ">edit</a><br>");
                 Position position = Factory.getInstance().getPositionDAO().getPositionById(Long.parseLong(pos_id));
+                out.println("position: " + (position.getName() == null ? "unnamed" : position.getName()) + "<a href=/res/position_edit?dep_id=" + request.getAttribute("id") + "&id=" + pos_id + "> edit</a><br>");
+                
                 Collection<StaffMember> workers = Factory.getInstance().getStaffMemberDAO().getStaffMembersByPosition(position);
                 for (StaffMember mem : workers) {
                     out.println("<a href=/res/staff_info?back=dep&director_id=" + request.getAttribute("director_id") + "&id=" + mem.getId().toString() + "&dep_id=" + request.getAttribute("id") + ">" + mem.getName() + "</a><br>");
+                }
+                for (int i = 0; i < position.getSize() - workers.size(); i++) {
+                    out.println("<a href=/res/staff_assignment?pos_id=" + pos_id + "&position=worker&dep_id=" + request.getAttribute("id") + ">add worker</a><br>");
                 }
                 out.println("<br>");
             }

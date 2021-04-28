@@ -40,10 +40,13 @@ public class MainController {
    }
    
    @RequestMapping(value="/department_edit", method = RequestMethod.GET)
-   public String departmentEdit(@RequestParam(name="id") String id, @RequestParam(name="director_id") String director_id, @RequestParam(name="head_id") String head_id, ModelMap model) throws SQLException {
+   public String departmentEdit(@RequestParam(name="id") String id, @RequestParam(name="director_id") String director_id, @RequestParam(name="head_id", required=false) String head_id, ModelMap model) throws SQLException {
        if (Long.parseLong(id) != -1) {
            Department dep = Factory.getInstance().getDepartmentDAO().getDepartmentById(Long.parseLong(id));
            model.addAttribute("id", id);
+           if (head_id == null) {
+               head_id = dep.getId().toString();
+           }
            if (head_id.equals("-1")) {
                model.addAttribute("head", "");
            } else {
@@ -70,8 +73,10 @@ public class MainController {
    }
    
    @RequestMapping(value="/staff_assignment", method = RequestMethod.GET)
-   public String staffAssignment(@RequestParam(name="dep_id") String dep_id, ModelMap model) {
+   public String staffAssignment(@RequestParam(name="dep_id") String dep_id, @RequestParam(name="position") String position, @RequestParam(name="pos_id", required=false) String pos_id, ModelMap model) {
        model.addAttribute("dep_id", dep_id);
+       model.addAttribute("position", position);
+       model.addAttribute("pos_id", pos_id);
        return "staff_assignment";
    }
    
@@ -118,20 +123,43 @@ public class MainController {
    }
 
    @RequestMapping(value="/department_info", method = RequestMethod.GET)
-   public String departmentInfo(@RequestParam(name="id", required=true) String id, @RequestParam(name="director_id") String director_id, ModelMap model) throws SQLException {
+   public String departmentInfo(@RequestParam(name="id") String id, @RequestParam(name="director_id", required=false) String director_id, @RequestParam(name="pos_id", required=false) String pos_id, @RequestParam(name="mem_id", required=false) String mem_id,  ModelMap model) throws SQLException {
         DepartmentDAO departmentDAO = Factory.getInstance().getDepartmentDAO();
         Department department = departmentDAO.getDepartmentById(Long.parseLong(id));
+        
+        if (pos_id != null) {
+            Position pos = Factory.getInstance().getPositionDAO().getPositionById(Long.parseLong(pos_id));
+            StaffMember mem = Factory.getInstance().getStaffMemberDAO().getStaffMemberById(Long.parseLong(mem_id));
+            EmployeeDAO dao = Factory.getInstance().getEmployeeDAO();
+            Employee emp = new Employee(pos, mem, null, null);
+            dao.addEmployee(emp);
+        }
+        
         model.addAttribute("id", id);
         model.addAttribute("name", (department.getName() == null) ? "" : department.getName());
         model.addAttribute("head_id", (department.getHeadDepartment() == null) ? "-1" : department.getHeadDepartment().getId().toString());
         model.addAttribute("head", (department.getHeadDepartment() == null) ? "" : department.getHeadDepartment().getName());
-        if (director_id.equals("-1")) {
+        if (director_id != null && director_id.equals("-1")) {
             model.addAttribute("director", "");
             model.addAttribute("director_id", "-1");
         } else {
-            StaffMember dir = Factory.getInstance().getStaffMemberDAO().getStaffMemberById(Long.parseLong(director_id));
-            model.addAttribute("director", dir.getName());
-            model.addAttribute("director_id", director_id);
+            StaffMember dir = new StaffMember();
+            if (director_id == null) {
+                dir = department.getDirector();
+                if (dir == null) {
+                    model.addAttribute("director", "");
+                    model.addAttribute("director_id", "-1");
+                } else {
+                    director_id = dir.getId().toString();
+                    model.addAttribute("director", dir.getName());
+                    model.addAttribute("director_id", director_id);
+                }
+            } else {
+                dir = Factory.getInstance().getStaffMemberDAO().getStaffMemberById(Long.parseLong(director_id));
+            
+                model.addAttribute("director", dir.getName());
+                model.addAttribute("director_id", director_id);
+            }
         }
         model.addAttribute("headDepartment", (department.getHeadDepartment() == null) ? "" : department.getHeadDepartment().getId());
         Collection<Department> subDeps = departmentDAO.getSubDepartments(department);

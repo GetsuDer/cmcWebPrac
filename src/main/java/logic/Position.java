@@ -120,9 +120,9 @@ public class Position {
     @Override
     public String toString() {
         return "Id: " + id + " \n" + 
-                "Name: " + ((name == null) ? "" : name) + "\n" +
-                "Responsibilities: " + ((responsibilities == null) ? "" : responsibilities) + "\n" +
-                "Department: " + ((department == null) ? "" : department.getId()) + "\n";
+                "Name: " + ((name == null) ? "" : name) + " \n" +
+                "Responsibilities: " + ((responsibilities == null) ? "" : responsibilities) + " \n" +
+                "Department: " + ((department == null) ? "" : department.getId()) + " \n";
     } 
     
     /**

@@ -9,7 +9,11 @@
         <%
             Collection<StaffMember> members = Factory.getInstance().getStaffMemberDAO().getAllStaffMembers();
             for (StaffMember mem : members) {
-                out.println("<a href=department_edit?head_id=" + request.getAttribute("head_id") + "&id=" + request.getAttribute("dep_id") +  "&director_id=" + mem.getId() + ">" + mem + "</a><br>");
+                if (request.getAttribute("position").equals("director")) {
+                    out.println("<a href=department_edit?" + (request.getAttribute("head_id") == null ? "" : "head_id=" + request.getAttribute("head_id") + "&") + "id=" + request.getAttribute("dep_id") +  "&director_id=" + mem.getId() + ">" + mem + "</a><br>");
+                } else {
+                    out.println("<a href=department_info?pos_id=" + request.getAttribute("pos_id") + "&mem_id=" + mem.getId() + "&id=" + request.getAttribute("dep_id") + ">" + mem + "</a><br>");
+                }
             }
         %>
         <p><a href="department_edit?id=${dep_id}&director_id=${director_id}&head_id=${head_id}">Return</a></p>
