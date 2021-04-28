@@ -45,6 +45,7 @@
                 Collection<StaffMember> workers = Factory.getInstance().getStaffMemberDAO().getStaffMembersByPosition(position);
                 for (StaffMember mem : workers) {
                     out.println("<a href=/res/staff_info?back=dep&director_id=" + request.getAttribute("director_id") + "&id=" + mem.getId().toString() + "&dep_id=" + request.getAttribute("id") + ">" + mem.getName() + "</a><br>");
+                    out.println("<form method=\"get\" action=\"/res/remove_worker\"> <input type=\"submit\" value=\"remove\"> <input type=\"hidden\" name=\"pos_id\" value=" + pos_id + "> <input type=\"hidden\" name=\"mem_id\" value=" + mem.getId().toString() + "> <input type=\"hidden\" name=\"dep_id\" value=" + request.getAttribute("id") + "></form>");
                 }
                 for (int i = 0; i < position.getSize() - workers.size(); i++) {
                     out.println("<a href=/res/staff_assignment?pos_id=" + pos_id + "&position=worker&dep_id=" + request.getAttribute("id") + ">add worker</a><br>");

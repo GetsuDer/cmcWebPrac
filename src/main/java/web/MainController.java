@@ -80,6 +80,22 @@ public class MainController {
        return "staff_assignment";
    }
    
+   @RequestMapping(value="/remove_worker", method = RequestMethod.GET)
+   public String removeWorker(@RequestParam(name="pos_id") String pos_id, @RequestParam(name="mem_id") String mem_id, @RequestParam(name="dep_id") String dep_id,  ModelMap model) throws SQLException {
+        Position pos = Factory.getInstance().getPositionDAO().getPositionById(Long.parseLong(pos_id));
+        EmployeeDAO dao = Factory.getInstance().getEmployeeDAO();
+        Collection <Employee> emps = dao.getEmployeesByPosition(pos);
+        model.addAttribute("id", dep_id);
+        for (Employee emp : emps) {
+            if (emp.getStaffMember().getId().toString().equals(mem_id)) {
+                dao.deleteEmployee(emp);
+                break;
+            }
+        }
+        return "redirect:department_info";
+
+   }
+
    @RequestMapping(value="/department_assignment", method = RequestMethod.GET)
    public String departmentAssignment(@RequestParam(name="dep_id") String dep_id, @RequestParam(name="head_id") String head_id, @RequestParam(name="director_id") String director_id, ModelMap model) {
        model.addAttribute("dep_id", dep_id);
