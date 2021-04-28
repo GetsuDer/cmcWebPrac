@@ -252,7 +252,7 @@ public class MainController {
        pos.setName(name);
        Collection<StaffMember> workers = Factory.getInstance().getStaffMemberDAO().getStaffMembersByPosition(pos);
        Long new_size = Long.parseLong(size);
-       if (new_size >= workers.size()) pos.setSize(Long.parseLong(size));
+       if (new_size >= workers.size()) pos.setSize(new_size);
        pos.setResponsibilities(duties);
        if (pos.getDepartment() == null) {
            pos.setDepartment(Factory.getInstance().getDepartmentDAO().getDepartmentById(Long.parseLong(dep_id)));
