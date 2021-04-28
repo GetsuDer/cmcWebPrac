@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" import="java.io.*, logic.*, DAO.*, java.util.Collection, java.util.Iterator, java.util.ArrayList"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" import="java.io.*, logic.*, DAO.*, java.util.Collection, java.util.Iterator, java.util.ArrayList, java.text.SimpleDateFormat, java.util.Date"%>
 
 <html>
     <head>
@@ -42,12 +42,20 @@
                 Position position = Factory.getInstance().getPositionDAO().getPositionById(Long.parseLong(pos_id));
                 out.println("position: " + (position.getName() == null ? "unnamed" : position.getName()) + "<a href=/res/position_edit?dep_id=" + request.getAttribute("id") + "&id=" + pos_id + "> edit</a><br>");
                 
-                Collection<StaffMember> workers = Factory.getInstance().getStaffMemberDAO().getStaffMembersByPosition(position);
-                for (StaffMember mem : workers) {
+                Collection<Employee> workers = Factory.getInstance().getEmployeeDAO().getEmployeesByPosition(position);
+                Date cur_date = new Date();
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+                int current_workers = 0;
+                for (Employee emp : workers) {
+                    if (emp.getEndTime() != null) continue;
+                    current_workers++;
+                    StaffMember mem = emp.getStaffMember();
                     out.println("<a href=/res/staff_info?back=dep&director_id=" + request.getAttribute("director_id") + "&id=" + mem.getId().toString() + "&dep_id=" + request.getAttribute("id") + ">" + mem.getName() + "</a><br>");
-                    out.println("<form method=\"get\" action=\"/res/remove_worker\"> <input type=\"submit\" value=\"remove\"> <input type=\"hidden\" name=\"pos_id\" value=" + pos_id + "> <input type=\"hidden\" name=\"mem_id\" value=" + mem.getId().toString() + "> <input type=\"hidden\" name=\"dep_id\" value=" + request.getAttribute("id") + "></form>");
+                    out.println("<form method=\"get\" action=\"/res/setWorkStart\"> <input type=\"hidden\" name=\"pos_id\" value=" + pos_id + "> <input type=\"hidden\" name=\"mem_id\" value=" + mem.getId() + "><input type=\"text\" name=\"workStart\" value=" + (emp.getStartTime() == null ? "" : format.format(emp.getStartTime())) + "> <input type=\"submit\" value=\"set work start\"></form>");
+                    out.println("<form method=\"get\" action=\"/res/remove_worker\"> <input type=\"text\" name=\"workEnd\" value=" + format.format(cur_date) + "> <input type=\"submit\" value=\"remove\"> <input type=\"hidden\" name=\"pos_id\" value=" + pos_id + "> <input type=\"hidden\" name=\"mem_id\" value=" + mem.getId().toString() + "> <input type=\"hidden\" name=\"dep_id\" value=" + request.getAttribute("id") + "></form>");
                 }
-                for (int i = 0; i < position.getSize() - workers.size(); i++) {
+                for (int i = 0; i < position.getSize() - current_workers; i++) {
                     out.println("<a href=/res/staff_assignment?pos_id=" + pos_id + "&position=worker&dep_id=" + request.getAttribute("id") + ">add worker</a><br>");
                 }
                 out.println("<br>");

@@ -20,7 +20,7 @@
                 String dep_id = s.split(" ")[7];
                 if (dep_id != null) {
                     Department dep = Factory.getInstance().getDepartmentDAO().getDepartmentById(Long.parseLong(dep_id));
-                    out.println("Department: " + dep.getName() + "<br>");
+                    out.println("Department:<a href=/res/department_info?id=" + dep.getId() + ">" + dep.getName() + "</a><br>");
                 }
                 out.println("<br>");
             }

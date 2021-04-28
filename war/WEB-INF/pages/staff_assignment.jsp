@@ -31,7 +31,7 @@
                 }
             }
         %>
-        <p><a href="department_edit?id=${dep_id}&director_id=${director_id}&head_id=${head_id}">Return</a></p>
+        <p><a href="department_info?id=${dep_id}&director_id=${director_id}&head_id=${head_id}">Return</a></p>
 
     </body>
 </html>
