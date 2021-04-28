@@ -15,7 +15,14 @@
         <%
             ArrayList<String> poss = (ArrayList<String>)request.getAttribute("poss");
             for (String s : poss) {
-                out.println(s + "<br>");
+                out.println(s.split(" ")[3] + "<br>");
+                out.println("Responsibilities: " + s.split(" ")[5] + "<br>");
+                String dep_id = s.split(" ")[7];
+                if (dep_id != null) {
+                    Department dep = Factory.getInstance().getDepartmentDAO().getDepartmentById(Long.parseLong(dep_id));
+                    out.println("Department: " + dep.getName() + "<br>");
+                }
+                out.println("<br>");
             }
         %>
         <%

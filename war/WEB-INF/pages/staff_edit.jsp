@@ -17,7 +17,7 @@
             Education: <br>
             <input type="text" name="education" value="${education}"> <br>
             
-            Date of employment: <br> 
+            Date of employment: (format: dd/mm/yyyy)<br> 
             <input type="text" name="workStart" value="${workStart}"> <br>
             
             <input type="submit" name="Confirm staff member">

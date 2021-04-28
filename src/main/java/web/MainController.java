@@ -110,6 +110,14 @@ public class MainController {
         return "departments";
    }
 
+   @RequestMapping(value="/filter_staff", method = RequestMethod.GET)
+   public String filterStaff(@RequestParam(name="filter_name") String filter_name, @RequestParam(name="filter_address") String filter_address, @RequestParam(name="filter_workStart") String filter_workStart, ModelMap model) {
+       model.addAttribute("filter_name", filter_name);
+       model.addAttribute("filter_address", filter_address);
+       model.addAttribute("filter_workStart", filter_workStart);
+       return "staff";
+   }
+
    @RequestMapping(value="/confirm_department", method = RequestMethod.GET)
    public String changeDepartment(@RequestParam(name="id") String id, @RequestParam(name="name") String name, @RequestParam(name="director_id", required=false) String director_id, @RequestParam(name="head_id") String head_id, ModelMap model) throws SQLException {
        DepartmentDAO departmentDAO = Factory.getInstance().getDepartmentDAO();
@@ -260,6 +268,9 @@ public class MainController {
 
    @RequestMapping(value="/staff", method = RequestMethod.GET)
    public String printStaff(ModelMap model) {
+       model.addAttribute("filter_name", "");
+       model.addAttribute("filter_address", "");
+       model.addAttribute("filter_workStart", "");
        return "staff";
    }
     
@@ -295,7 +306,7 @@ public class MainController {
        mem.setName(name);
        mem.setAddress(address);
        mem.setEducation(education);
-       DateFormat format = new SimpleDateFormat("MMMM d, yyyy");
+       DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
        if (workStart == null) {
            mem.setWorkStart(null);
        } else {
@@ -326,12 +337,13 @@ public class MainController {
             model.addAttribute("name", (mem.getName() == null) ? "" : mem.getName());
             model.addAttribute("address", (mem.getAddress() == null) ? "" : mem.getAddress());
             model.addAttribute("education", (mem.getEducation() == null) ? "" : mem.getEducation());
-            model.addAttribute("workStart", (mem.getWorkStart() == null) ? "" : mem.getWorkStart().toString());
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            model.addAttribute("workStart", (mem.getWorkStart() == null) ? "" : format.format(mem.getWorkStart()));
        }
        return "staff_edit";
    }
    @RequestMapping(value="/staff_info", method = RequestMethod.GET)
-   public String staffInfo(@RequestParam(name="id", required=true) String id, @RequestParam(name="director_id") String director_id, @RequestParam(name="dep_id") String dep_id,  @RequestParam(name="back") String back, ModelMap model) throws SQLException {
+   public String staffInfo(@RequestParam(name="id", required=true) String id, @RequestParam(name="director_id", required=false) String director_id, @RequestParam(name="dep_id", required=false) String dep_id,  @RequestParam(name="back") String back, ModelMap model) throws SQLException {
        StaffMemberDAO staffMemberDAO = Factory.getInstance().getStaffMemberDAO();
        StaffMember mem = staffMemberDAO.getStaffMemberById(Long.parseLong(id));
        model.addAttribute("id", mem.getId());
@@ -341,7 +353,8 @@ public class MainController {
        model.addAttribute("name", (mem.getName() == null) ? "" : mem.getName());
        model.addAttribute("address", (mem.getAddress() == null) ? "" : mem.getAddress());
        model.addAttribute("education", (mem.getEducation() == null) ? "" : mem.getEducation());
-       model.addAttribute("workStart", (mem.getWorkStart() == null) ? "" : mem.getWorkStart().toString());
+       SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+       model.addAttribute("workStart", (mem.getWorkStart() == null) ? "" : format.format(mem.getWorkStart()));
        Collection<Position> positions = Factory.getInstance().getPositionDAO().getAllPositionsByStaffMember(mem); 
        ArrayList<String> poss = new ArrayList<String>();
        for (Position pos : positions) {
