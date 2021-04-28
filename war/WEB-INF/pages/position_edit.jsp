@@ -12,7 +12,7 @@
             Name: <br>
             <input type="text" name="name" value="${name}"> <br>
             Size: <br>
-            <input type="text" name="size" value="${size}"> <br>
+            <input type="number" name="size" value="${size}"> <br>
             Duties: <br>
             <input type="text" name="duties" value="${duties}"> <br>
 

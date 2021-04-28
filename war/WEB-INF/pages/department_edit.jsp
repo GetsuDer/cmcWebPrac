@@ -14,13 +14,14 @@
             Name: <br>
             <input type="text" name="name" value="${name}"> <br>
             
-            Director: ${director}
-            <a href="staff_assignment?position=director&dep_id=${id}">change</a> <br>
-            <input type="hidden" name="director_id" value="${director_id}">
+            <%
+                if (!request.getAttribute("id").equals("-1")) {
 
-            Head department: ${head}
-            <a href="department_assignment?dep_id=${id}&head_id=${head_id}&director_id=${director_id}">change</a><br>
-            
+                    out.println("Director: " + request.getAttribute("director") + "<a href=\"staff_assignment?position=director&dep_id=" + request.getAttribute("id") + "\">change</a> <br> <input type=\"hidden\" name=\"director_id\" value=" + request.getAttribute("director_id") + "> Head department: " + request.getAttribute("head") + " <a href=\"department_assignment?dep_id=" + request.getAttribute("id") + "&head_id=" + request.getAttribute("head_id") + "&director_id=" + request.getAttribute("director_id") + "\">change</a><br>");
+
+                }
+            %>
+
             <input type="submit" value="Confirm department">
 
         </form>

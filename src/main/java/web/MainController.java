@@ -76,7 +76,7 @@ public class MainController {
    public String staffAssignment(@RequestParam(name="dep_id") String dep_id, @RequestParam(name="position") String position, @RequestParam(name="pos_id", required=false) String pos_id, ModelMap model) {
        model.addAttribute("dep_id", dep_id);
        model.addAttribute("position", position);
-       model.addAttribute("pos_id", pos_id);
+       if (pos_id != null) model.addAttribute("pos_id", pos_id);
        return "staff_assignment";
    }
    
@@ -111,7 +111,7 @@ public class MainController {
    }
 
    @RequestMapping(value="/confirm_department", method = RequestMethod.GET)
-   public String changeDepartment(@RequestParam(name="id") String id, @RequestParam(name="name") String name, @RequestParam(name="director_id") String director_id, @RequestParam(name="head_id") String head_id, ModelMap model) throws SQLException {
+   public String changeDepartment(@RequestParam(name="id") String id, @RequestParam(name="name") String name, @RequestParam(name="director_id", required=false) String director_id, @RequestParam(name="head_id") String head_id, ModelMap model) throws SQLException {
        DepartmentDAO departmentDAO = Factory.getInstance().getDepartmentDAO();
        StaffMemberDAO memberDAO = Factory.getInstance().getStaffMemberDAO();
        Department dep = new Department();
@@ -120,6 +120,7 @@ public class MainController {
        }
        if (name.equals("")) name = null;
        if (head_id.equals("")) head_id = "-1";
+       if (director_id == null) director_id = "-1";
        if (director_id.equals("")) director_id = "-1";
 
        Department head = (head_id.equals("-1")) ? null : departmentDAO.getDepartmentById(Long.parseLong(head_id));
@@ -241,7 +242,9 @@ public class MainController {
        if (size.equals("")) size = "0";
        if (duties.equals("")) duties = null;
        pos.setName(name);
-       pos.setSize(Long.parseLong(size));
+       Collection<StaffMember> workers = Factory.getInstance().getStaffMemberDAO().getStaffMembersByPosition(pos);
+       Long new_size = Long.parseLong(size);
+       if (new_size >= workers.size()) pos.setSize(Long.parseLong(size));
        pos.setResponsibilities(duties);
        if (pos.getDepartment() == null) {
            pos.setDepartment(Factory.getInstance().getDepartmentDAO().getDepartmentById(Long.parseLong(dep_id)));
