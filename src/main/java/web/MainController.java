@@ -382,12 +382,6 @@ public class MainController {
        model.addAttribute("education", (mem.getEducation() == null) ? "" : mem.getEducation());
        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
        model.addAttribute("workStart", (mem.getWorkStart() == null) ? "" : format.format(mem.getWorkStart()));
-       Collection<Position> positions = Factory.getInstance().getPositionDAO().getAllPositionsByStaffMember(mem); 
-       ArrayList<String> poss = new ArrayList<String>();
-       for (Position pos : positions) {
-           poss.add(pos.toString());
-       }
-       model.addAttribute("poss", poss);
        return "staff_info";
    }
 

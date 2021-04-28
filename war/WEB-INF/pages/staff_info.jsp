@@ -11,18 +11,33 @@
         Address: ${address} <br>
         Education: ${education} <br>
         WorkStart: ${workStart} <br>
-        Positions: <br>
+        Current positions: <br>
         <%
-            ArrayList<String> poss = (ArrayList<String>)request.getAttribute("poss");
-            for (String s : poss) {
-                out.println(s.split(" ")[3] + "<br>");
-                out.println("Responsibilities: " + s.split(" ")[5] + "<br>");
-                String dep_id = s.split(" ")[7];
-                if (dep_id != null) {
-                    Department dep = Factory.getInstance().getDepartmentDAO().getDepartmentById(Long.parseLong(dep_id));
+            StaffMember mem = Factory.getInstance().getStaffMemberDAO().getStaffMemberById(Long.parseLong(request.getAttribute("id").toString()));
+            Collection<Employee> emps = Factory.getInstance().getEmployeeDAO().getEmployeesByStaffMember(mem);
+            for (Employee emp : emps) {
+                if (emp.getEndTime() != null) continue;
+                Position pos = emp.getPosition();
+                out.println(pos.getName() + "<br>");
+                out.println("Responsibilities: " + pos.getResponsibilities() + "<br>");
+                if (emp.getPosition().getDepartment() != null) {
+                    Department dep = emp.getPosition().getDepartment();
                     out.println("Department:<a href=/res/department_info?id=" + dep.getId() + ">" + dep.getName() + "</a><br>");
                 }
                 out.println("<br>");
+            }
+            out.println("Previous positions: ");
+            for (Employee emp : emps) {
+                if (emp.getEndTime() == null) continue;
+                Position pos = emp.getPosition();
+                out.println(pos.getName() + "<br>");
+                out.println("Responsibilities: " + pos.getResponsibilities() + "<br>");
+                if (emp.getPosition().getDepartment() != null) {
+                    Department dep = emp.getPosition().getDepartment();
+                    out.println("Department:<a href=/res/department_info?id=" + dep.getId() + ">" + dep.getName() + "</a><br>");
+                }
+                out.println("<br>");
+
             }
         %>
         <%
