@@ -5,7 +5,7 @@
     </head>
 
     <body>
-        <center> Choose staff member;
+        <center> Choose staff member <br>
         <%
             StaffMemberDAO dao = Factory.getInstance().getStaffMemberDAO();
             Position pos = new Position();
@@ -17,7 +17,7 @@
             Collection<StaffMember> members = dao.getAllStaffMembers();
             for (StaffMember mem : members) {
                 if (request.getAttribute("position").equals("director")) {
-                    out.println("<a href=department_edit?" + (request.getAttribute("head_id") == null ? "" : "head_id=" + request.getAttribute("head_id") + "&") + "id=" + request.getAttribute("dep_id") +  "&director_id=" + mem.getId() + ">" + mem + "</a><br>");
+                    out.println("<a href=department_edit?" + (request.getAttribute("head_id") == null ? "" : "head_id=" + request.getAttribute("head_id") + "&") + "id=" + request.getAttribute("dep_id") +  "&director_id=" + mem.getId() + ">" + mem.getName() + "</a><br>");
                 } else {
                     boolean good = true;
 
@@ -27,11 +27,11 @@
                             break;
                         }
                     }
-                    if (good) out.println("<a href=department_info?pos_id=" + request.getAttribute("pos_id") + "&mem_id=" + mem.getId() + "&id=" + request.getAttribute("dep_id") + ">" + mem + "</a><br>");
+                    if (good) out.println("<a href=department_info?pos_id=" + request.getAttribute("pos_id") + "&mem_id=" + mem.getId() + "&id=" + request.getAttribute("dep_id") + ">" + mem.getName() + "</a><br>");
                 }
             }
         %>
-        <p><a href="department_info?id=${dep_id}&director_id=${director_id}&head_id=${head_id}">Return</a></p>
+        <p><a href="department_info?id=${dep_id}">Return</a></p>
 
     </body>
 </html>

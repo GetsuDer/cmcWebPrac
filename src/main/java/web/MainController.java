@@ -72,6 +72,41 @@ public class MainController {
        return "department_edit";
    }
    
+   @RequestMapping(value="/deleteOldEmployee", method = RequestMethod.GET)
+   public String deleteOldEmployee(@RequestParam(name="id") String id, @RequestParam(name="dep_id") String dep_id, @RequestParam(name="director_id") String director_id, @RequestParam(name="back") String back, ModelMap model) throws SQLException {
+       EmployeeDAO dao = Factory.getInstance().getEmployeeDAO();
+       Employee emp = dao.getEmployeeById(Long.parseLong(id));
+       dao.deleteEmployee(emp);
+       model.addAttribute("dep_id", dep_id);
+       model.addAttribute("id", id);
+       model.addAttribute("back", back);
+       model.addAttribute("director_id", director_id);
+       return "redirect:staff_info";
+   }
+
+   @RequestMapping(value="/editOldEmployee", method = RequestMethod.GET)
+   public String editOldEmployee(@RequestParam(name="id") String id, @RequestParam(name="workStart") String workStart, @RequestParam(name="dep_id") String dep_id, @RequestParam(name="director_id") String director_id, @RequestParam(name="back") String back, @RequestParam(name="workEnd") String workEnd, ModelMap model) throws SQLException {
+       EmployeeDAO dao = Factory.getInstance().getEmployeeDAO();
+       Employee emp = dao.getEmployeeById(Long.parseLong(id));
+       SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+       if (!workStart.equals("")) {
+           try {
+               emp.setStartTime(format.parse(workStart));
+           } catch (ParseException e) {}
+       }
+       if (!workEnd.equals("")) {
+           try {
+               emp.setEndTime(format.parse(workEnd));
+           } catch (ParseException e) {}
+       }
+       dao.updateEmployee(emp);
+       model.addAttribute("dep_id", dep_id);
+       model.addAttribute("director_id", director_id);
+       model.addAttribute("id", id);
+       model.addAttribute("back", back);
+       return "redirect:staff_info";
+   }
+
    @RequestMapping(value="/staff_assignment", method = RequestMethod.GET)
    public String staffAssignment(@RequestParam(name="dep_id") String dep_id, @RequestParam(name="position") String position, @RequestParam(name="pos_id", required=false) String pos_id, ModelMap model) {
        model.addAttribute("dep_id", dep_id);
@@ -88,7 +123,7 @@ public class MainController {
         model.addAttribute("id", dep_id);
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy"); 
         for (Employee emp : emps) {
-            if (emp.getStaffMember().getId().toString().equals(mem_id)) {
+            if (emp.getEndTime() == null && emp.getStaffMember().getId().toString().equals(mem_id)) {
                 try {
                     emp.setEndTime(format.parse(workEnd));
                 } catch (ParseException e) {
@@ -107,11 +142,11 @@ public class MainController {
        Position pos = Factory.getInstance().getPositionDAO().getPositionById(Long.parseLong(pos_id));
        StaffMember mem = Factory.getInstance().getStaffMemberDAO().getStaffMemberById(Long.parseLong(mem_id));
 
-         model.addAttribute("id", pos.getDepartment().getId());
+       model.addAttribute("id", pos.getDepartment().getId());
        EmployeeDAO dao = Factory.getInstance().getEmployeeDAO();
        Collection<Employee> emps = dao.getEmployeesByPosition(pos);
        for (Employee emp : emps) {
-           if (emp.getStaffMember().getId() == mem.getId()) {
+           if (emp.getEndTime() == null && emp.getStaffMember().getId() == mem.getId()) {
                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                try {
                    emp.setStartTime(format.parse(workStart));

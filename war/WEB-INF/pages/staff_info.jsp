@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" import="java.io.*, logic.*, DAO.*, java.util.Collection, java.util.ArrayList"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" import="java.io.*, logic.*, DAO.*, java.util.Collection, java.util.ArrayList, java.text.SimpleDateFormat, java.util.Date"%>
 
 <html>
     <head>
@@ -27,6 +27,7 @@
                 out.println("<br>");
             }
             out.println("Previous positions: ");
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
             for (Employee emp : emps) {
                 if (emp.getEndTime() == null) continue;
                 Position pos = emp.getPosition();
@@ -36,9 +37,11 @@
                     Department dep = emp.getPosition().getDepartment();
                     out.println("Department:<a href=/res/department_info?id=" + dep.getId() + ">" + dep.getName() + "</a><br>");
                 }
-                out.println("<br>");
+                out.println("<form method=\"get\" action=\"/res/editOldEmployee\"> <input type=\"hidden\" name=\"id\" value=\"" + emp.getId() + "\"> <input type=\"text\" name=\"workStart\" value=\"" + (emp.getStartTime() == null ? "" : format.format(emp.getStartTime())) + "\"><input type=\"text\" name=\"workEnd\" value=\"" + (emp.getEndTime() == null ? "" : format.format(emp.getEndTime())) + "\"> <input type=\"submit\" value=\"confirm\"> <input type=\"hidden\" name=\"dep_id\" value=\"" + request.getAttribute("dep_id") + "\"> <input type=\"hidden\" name=\"director_id\" value=\"" + request.getAttribute("director_id") + "\"> <input type=\"hidden\" name=\"back\" value=\"" + request.getAttribute("back") + "\"></form>");
+                out.println("<form method=\"get\" action=\"/res/deleteOldEmployee\"> <input type=\"hidden\" name=\"id\" value=\"" + emp.getId() + "\"> <input type=\"submit\" value=\"delete\"> <input type=\"hidden\" name=\"dep_id\" value=\"" + request.getAttribute("dep_id") + "\"> <input type=\"hidden\" name=\"director_id\" value=\"" + request.getAttribute("director_id") + "\"> <input type=\"hidden\" name=\"back\" value=\"" + request.getAttribute("back") + "\"></form> <br>");
 
             }
+            out.println("<br>");
         %>
         <%
             if (request.getAttribute("back").equals("staff")) {
