@@ -1,4 +1,5 @@
 *.swp
+target
 Bin/*
 TestsRes/
 war/WEB-INF/classes/*
