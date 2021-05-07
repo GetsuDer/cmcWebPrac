@@ -15,9 +15,29 @@ import org.springframework.test.context.ContextConfiguration;
 
 public class MainControllerTest {
     @Test
-    public void mainTest() throws IOException, SAXException {
+    public void indexContentTest() throws IOException, SAXException {
         WebConversation wc = new WebConversation();
         WebResponse resp = wc.getResponse("http://dragon:8080/res/");
-        assertEquals("", "");
+        assertEquals("Main page", resp.getTitle());
+        WebLink[] links = resp.getLinks();
+        assertEquals(links.length, 2);
+        assertEquals(links[0].getText(), "Departments");
+        assertEquals(links[1].getText(), "Staff Members");
+        assertEquals(links[0].getURLString(), "departments");
+        assertEquals(links[1].getURLString(), "staff");
    }
+   
+   @Test
+   public void indexLinksTest() throws IOException, SAXException {
+        WebConversation wc = new WebConversation();
+        WebResponse resp = wc.getResponse("http://dragon:8080/res/");
+        WebLink[] links = resp.getLinks();
+        
+        WebResponse deps = links[0].click();
+        assertEquals("Departments page", deps.getTitle());
+        WebResponse staff = links[1].click();
+        assertEquals("Staff members page", staff.getTitle());
+        
+   }
+   
 }

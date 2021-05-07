@@ -70,6 +70,12 @@
                 <include name="**/*.properties" />
             </fileset>
         </copy>
+        <copy todir="war/WEB-INF/classes">
+            <fileset dir="src/main/resources">
+                <include name="**/*.xml" />
+                <include name="**/*.properties" />
+            </fileset>
+        </copy>
         <copy todir="${dstLib}" flatten="true">
             <fileset dir="lib">
                 <include name="*.jar" />
@@ -104,7 +110,7 @@
                 <fileset dir="${dstDir}/" includes="*"/>
                 <pathelement path="src/main/resources"/>
             </classpath>
-            <xmlfileset dir="${dstDir}" includes="testng.xml"/>
+            <xmlfileset dir="war/WEB-INF" includes="testng.xml"/>
         </testng>
     </target>
 
