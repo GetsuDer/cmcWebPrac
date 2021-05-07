@@ -1,12 +1,9 @@
 # Web Practicum, part III
 ## What is done
-Now available:
-    main page
-    list of departments and staff members
-    part of info of departments
-    partial department change
-    part of info of staff member
-    partial department change
+    Application is ready, tests are in process
+
+## Testing
+    "ant webtest" - run webtests
 
 ## How to see the results
     ant glassfish_start

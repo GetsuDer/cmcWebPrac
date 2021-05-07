@@ -6,10 +6,12 @@
         <property name="dstLib" value="war/WEB-INF/lib" />
         <property name="docDir" value="Documentation" />
         <property name="testDir" value="src/test" />
+        <property name="webtestDir" value="src/webtest" />
         <property name="testDstDir" value="TestsRes" />
         <mkdir dir="${dstDir}"/>
         <mkdir dir="${dstLib}"/>
         <mkdir dir="${testDstDir}"/>
+        <mkdir dir="${testDstDir}/webtest"/>
     </target>
 
     <target name="clean" depends="path">
@@ -24,9 +26,16 @@
         </fileset>
     </path>
 
+    <path id="webtestpath">
+        <fileset dir="war/WEB-INF/lib">
+            <include name="*.jar"/>
+        </fileset>
+        <pathelement path="war/WEB-INF/classes"/>
+    </path>
+
     <target name="build" depends="path,copy-resources">
         <echo> Compile java files </echo>
-        <javac srcdir="${srcDir}:${testDir}" 
+        <javac srcdir="${srcDir}:${testDir}:${webtestDir}" 
             destdir="${dstDir}"
             includeantruntime="false"
             classpathref="classpath">     
@@ -34,6 +43,7 @@
             <compilerarg value="-Xlint:unchecked"/>
             <compilerarg value="-Xdiags:verbose"/>
         </javac>
+        <jar basedir="war/WEB-INF/classes" destfile="war/WEB-INF/lib/res.jar"/>
     </target>
 
     <target name="run" depends="build">
@@ -54,7 +64,7 @@
 
 
     <target name="copy-resources">
-        <copy todir="${dstDir}">
+        <copy todir="war/WEB-INF">
             <fileset dir="src/main/resources">
                 <include name="**/*.xml" />
                 <include name="**/*.properties" />
@@ -96,6 +106,24 @@
             </classpath>
             <xmlfileset dir="${dstDir}" includes="testng.xml"/>
         </testng>
+    </target>
+
+    <target name="webtest" depends="db_remove,db_create,db_init,deploy">
+        <junit printsummary="yes">
+            <formatter type="plain"/>
+            <classpath refid="webtestpath"/>
+            <test name="webtest.MainControllerTest"/>
+            <!--batchtest fork="yes" todir="TestsRes/webtest">
+                <fileset dir="src/webtest">
+                    <include name="*Test.java" />
+                </fileset>
+            </batchtest-->
+        </junit>
+        <move todir="${testDstDir}/webtest">
+            <fileset dir=".">
+                <include name="TEST*"/>
+            </fileset>
+        </move>
     </target>
 
     <target name="db_create">
