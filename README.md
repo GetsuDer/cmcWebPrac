@@ -4,11 +4,15 @@
 
 ## Testing
     "ant webtest" - run webtests
+Test scenarious
+ - content tests - checks page content
+ - links tests - checks page links
+ - form tests - checks form filling and sending
 
 ## How to see the results
     ant glassfish_start
     ant deploy
-    see localhost:8080/res/
+    see http://127.0.0.1:8080/res
 
 ## More Ant commands
 "ant deploy" - deploy war

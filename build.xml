@@ -114,17 +114,16 @@
         </testng>
     </target>
 
-    <target name="webtest" depends="db_remove,db_create,db_init,deploy">
+    <target name="webtest" depends="db_remove,db_init,deploy">
         <junit printsummary="yes">
             <formatter type="plain"/>
             <classpath refid="webtestpath"/>
             <test name="webtest.MainControllerTest"/>
-            <!--batchtest fork="yes" todir="TestsRes/webtest">
-                <fileset dir="src/webtest">
-                    <include name="*Test.java" />
-                </fileset>
-            </batchtest-->
         </junit>
+        <exec executable="/bin/sh" dir=".">
+            <arg value="-c"/>
+            <arg value="cat TEST*"/>
+        </exec>
         <move todir="${testDstDir}/webtest">
             <fileset dir=".">
                 <include name="TEST*"/>
