@@ -114,8 +114,8 @@
         </testng>
     </target>
 
-    <target name="webtest" depends="db_remove,db_init,deploy">
-        <junit printsummary="yes">
+    <target name="webtest" depends="db_remove,db_init">
+        <junit printsummary="yes" fork="yes">
             <formatter type="plain"/>
             <classpath refid="webtestpath"/>
             <test name="webtest.MainControllerTest"/>

@@ -7,7 +7,7 @@
     <body>
         <p> <a href="departments">Departments</a> </p>
 
-        <form method="get" action="/res/confirm_department">
+        <form method="get" name="add" action="/res/confirm_department">
             <input type="hidden" name="id" value="${id}">
             <input type="hidden" name="head_id" value="${head_id}">
             
@@ -22,7 +22,7 @@
                 }
             %>
 
-            <input type="submit" value="Confirm department">
+            <input type="submit" name="submit" value="Confirm department">
 
         </form>
     </body>
