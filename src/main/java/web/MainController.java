@@ -45,7 +45,12 @@ public class MainController {
            Department dep = Factory.getInstance().getDepartmentDAO().getDepartmentById(Long.parseLong(id));
            model.addAttribute("id", id);
            if (head_id == null) {
-               head_id = dep.getId().toString();
+               Department head_dep = dep.getHeadDepartment();
+               if (head_dep == null) {
+                   head_id = "-1";   
+               } else {
+                   head_id = head_dep.getId().toString();
+               }
            }
            if (head_id.equals("-1")) {
                model.addAttribute("head", "");
@@ -54,6 +59,7 @@ public class MainController {
            }
            model.addAttribute("name", (dep.getName() == null) ? "" : dep.getName());
            model.addAttribute("head_id", head_id);
+           
            if (director_id.equals("-1")) {
                model.addAttribute("director", "");
                model.addAttribute("director_id", "-1");
@@ -108,9 +114,11 @@ public class MainController {
    }
 
    @RequestMapping(value="/staff_assignment", method = RequestMethod.GET)
-   public String staffAssignment(@RequestParam(name="dep_id") String dep_id, @RequestParam(name="position") String position, @RequestParam(name="pos_id", required=false) String pos_id, ModelMap model) {
+   public String staffAssignment(@RequestParam(name="dep_id") String dep_id, @RequestParam(name="head_id", required=false) String head_id, @RequestParam(name="director_id", required=false) String director_id, @RequestParam(name="position") String position, @RequestParam(name="pos_id", required=false) String pos_id, ModelMap model) {
        model.addAttribute("dep_id", dep_id);
        model.addAttribute("position", position);
+       model.addAttribute("head_id", head_id == null ? "-1" : head_id);
+       model.addAttribute("director_id", director_id == null ? "-1" : director_id);
        if (pos_id != null) model.addAttribute("pos_id", pos_id);
        return "staff_assignment";
    }

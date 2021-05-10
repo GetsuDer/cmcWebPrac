@@ -122,16 +122,35 @@ public class MainControllerTest {
         assertTrue(added);
    }
 
- /*  @Test
+   @Test
+   public void addDepartmentNoTest() throws IOException, SAXException, SQLException {
+        WebConversation wc = new WebConversation();
+        WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+        int deps_number = resp.getLinks().length;
+
+        WebForm form = resp.getFormWithName("add");
+        resp = wc.getResponse(form.getRequest(form.getSubmitButton("add")));
+
+        WebLink link = resp.getLinks()[0];
+        assertEquals(link.getText(), "Departments");
+        assertEquals(link.getURLString(), "departments");
+
+        resp = wc.getResponse(resp.getLinks()[0].getRequest());
+        assertEquals(resp.getURL().getPath(), "/res/departments");
+        assertEquals(deps_number, resp.getLinks().length);
+   }
+
+
+   @Test
    public void addDirectorTest() throws IOException, SAXException, SQLException {
         WebConversation wc = new WebConversation();
         WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
         WebForm form = resp.getFormWithName("add");
-        resp = form.submit();
+        resp = wc.getResponse(form.getRequest(form.getSubmitButton("add")));
         
         form = resp.getFormWithName("add");
         form.setParameter("name", "addDirectorTestName");
-        resp = form.submit();
+        resp = wc.getResponse(form.getRequest(form.getSubmitButton("add")));
         
         WebLink links[] = resp.getLinks();
         int ind = -1;
@@ -147,22 +166,26 @@ public class MainControllerTest {
         }
 
         assertTrue(ind != -1);
-        resp = links[ind].click();
+        resp = wc.getResponse(links[ind].getRequest());
 // department info
         links = resp.getLinks();
-        resp = links[links.length - 1].click();
+        resp = wc.getResponse(links[links.length - 1].getRequest());
         //department edit
+        
         assertEquals(resp.getURL().getPath(), "/res/department_edit");
         form = resp.getFormWithName("add");
         assertEquals(form.getParameterValue("name"), "addDirectorTestName");
         links = resp.getLinks();
-        resp = links[1].click(); //staff assignment
+        
+        resp = wc.getResponse(links[1].getRequest()); //staff assignment
         assertEquals(resp.getURL().getPath(), "/res/staff_assignment");
+        
         WebLink mem = resp.getLinks()[0];
-        Long dir_id = Long.parseLong(mem.getParameterValues("mem_id")[0]); //choosen director
-        resp = mem.click(); //department_edit
+        Long dir_id = Long.parseLong(mem.getParameterValues("director_id")[0]); //choosen director
+
+        resp = wc.getResponse(mem.getRequest()); //department_edit
         form = resp.getFormWithName("add");
-        resp = form.submit();
+        resp = wc.getResponse(form.getRequest(form.getSubmitButton("submit")));  
         //departments
         
         links = resp.getLinks();
@@ -177,8 +200,69 @@ public class MainControllerTest {
                 break;
             }
         }
-        assertTrue(exists);        
+        assertTrue(exists);       
    }
-*/
+   
+   @Test
+   public void addHeadDepartmentTest() throws IOException, SAXException, SQLException {
+        WebConversation wc = new WebConversation();
+        WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+        WebForm form = resp.getFormWithName("add");
+        resp = wc.getResponse(form.getRequest(form.getSubmitButton("add")));
+
+        form = resp.getFormWithName("add");
+        form.setParameter("name", "addHeadDepartmentTestName");
+        resp = wc.getResponse(form.getRequest(form.getSubmitButton("add")));
+
+        WebLink links[] = resp.getLinks();
+        int ind = -1;
+        DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
+        Department dep = null;
+        for (int i = 1; i < links.length; i++) {
+            String id = links[i].getParameterValues("id")[0];
+            dep = dao.getDepartmentById(Long.parseLong(id));
+            if (dep.getName() != null && dep.getName().equals("addHeadDepartmentTestName")) {
+                ind = i;
+                break;
+            }
+        }
+
+        assertTrue(ind != -1);
+        resp = wc.getResponse(links[ind].getRequest());
+// department info
+        links = resp.getLinks();
+        resp = wc.getResponse(links[links.length - 1].getRequest());
+        //department edit
+
+        assertEquals(resp.getURL().getPath(), "/res/department_edit");
+        form = resp.getFormWithName("add");
+        links = resp.getLinks();
+
+        resp = wc.getResponse(links[3].getRequest()); //department assignment
+        assertEquals(resp.getURL().getPath(), "/res/department_assignment");
+
+        WebLink head = resp.getLinks()[0];
+        Long head_id = Long.parseLong(head.getParameterValues("head_id")[0]); //choosen head department
+
+        resp = wc.getResponse(head.getRequest()); //department_edit
+        form = resp.getFormWithName("add");
+        resp = wc.getResponse(form.getRequest(form.getSubmitButton("submit")));
+        //departments
+
+        links = resp.getLinks();
+        boolean exists = false;
+        for (int i = 1; i < links.length; i++) {
+            String id = links[i].getParameterValues("id")[0];
+            dep = dao.getDepartmentById(Long.parseLong(id));
+            if (dep.getName() != null && dep.getName().equals("addHeadDepartmentTestName")) {
+                assertTrue(dep.getHeadDepartment() != null);
+                assertEquals(dep.getHeadDepartment().getId(), head_id);
+                exists = true;
+                break;
+            }
+        }
+        assertTrue(exists);
+   }
+
    
 }
