@@ -20,6 +20,7 @@ import DAO.Factory;
 
 import java.sql.SQLException;
 import java.lang.Math;
+import java.util.Collection;
 
 public class MainControllerTest {
     @Test
@@ -350,5 +351,88 @@ public class MainControllerTest {
        assertEquals(resp.getURL().getPath(), "/res/department_info");
 
    }
+   
+   @Test
+   public void seeSubDepartments() throws IOException, SAXException, SQLException {
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
+       Department dep = null;
+       int ind = -1;
+       WebLink links[] = resp.getLinks();
+       Collection<Department> subs = null;
+       for (int i = 1; i < links.length; i++) {
+            String id = links[i].getParameterValues("id")[0];
+            dep = dao.getDepartmentById(Long.parseLong(id));
+            subs = dao.getSubDepartments(dep);
+            if (subs.size() > 0) {
+                ind = i;
+                break;
+            }
+       }
+
+       assertTrue(ind != -1);
+       
+       resp = wc.getResponse(links[ind].getRequest());
+       int subDepsStart = (dep.getDirector() == null ? 0 : 1) + (dep.getHeadDepartment() == null ? 0 : 1);
+       links = resp.getLinks();
+       for (int i = 0; i < subs.size(); i++) {
+           String id = links[i + subDepsStart].getParameterValues("id")[0];
+           Department sub = dao.getDepartmentById(Long.parseLong(id));
+           boolean contained = false;
+           for (Department d : subs) {
+               if (d.getId() == sub.getId()) {
+                   contained = true;
+                   break;
+               }
+           }
+           assertTrue(contained);
+       }
+
+   }
+
+   @Test
+   public void seeDepartmentPositions() throws IOException, SAXException, SQLException {
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
+       PositionDAO posDao = Factory.getInstance().getPositionDAO();
+       Department dep = null;
+       int ind = -1;
+       WebLink links[] = resp.getLinks();
+       Collection<Position> poss = null;
+       for (int i = 1; i < links.length; i++) {
+            String id = links[i].getParameterValues("id")[0];
+            dep = dao.getDepartmentById(Long.parseLong(id));
+            poss = posDao.getPositionsByDepartment(dep);
+            if (poss.size() > 0) {
+                ind = i;
+                break;
+            }
+       }
+
+       assertTrue(ind != -1);
+
+       resp = wc.getResponse(links[ind].getRequest());
+       Collection<Department> subs = dao.getSubDepartments(dep);
+       int posShift = (dep.getDirector() == null ? 0 : 1) + (dep.getHeadDepartment() == null ? 0 : 1) + subs.size();
+       
+       links = resp.getLinks();
+       for (int i = 0; i < poss.size(); i++) {
+           String id = links[i + posShift].getParameterValues("id")[0];
+           Position pos = posDao.getPositionById(Long.parseLong(id));
+           posShift += pos.getSize();
+           boolean contained = false;
+           for (Position p : poss) {
+               if (p.getId() == pos.getId()) {
+                   contained = true;
+                   break;
+               }
+           }
+           assertTrue(contained);
+       }
+
+   }
+
 
 }

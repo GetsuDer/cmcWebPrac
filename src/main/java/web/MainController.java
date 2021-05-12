@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.Date;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -82,9 +83,9 @@ public class MainController {
    public String deleteOldEmployee(@RequestParam(name="id") String id, @RequestParam(name="dep_id") String dep_id, @RequestParam(name="director_id") String director_id, @RequestParam(name="back") String back, ModelMap model) throws SQLException {
        EmployeeDAO dao = Factory.getInstance().getEmployeeDAO();
        Employee emp = dao.getEmployeeById(Long.parseLong(id));
+       model.addAttribute("id", emp.getStaffMember().getId().toString());
        dao.deleteEmployee(emp);
        model.addAttribute("dep_id", dep_id);
-       model.addAttribute("id", id);
        model.addAttribute("back", back);
        model.addAttribute("director_id", director_id);
        return "redirect:staff_info";
@@ -108,7 +109,7 @@ public class MainController {
        dao.updateEmployee(emp);
        model.addAttribute("dep_id", dep_id);
        model.addAttribute("director_id", director_id);
-       model.addAttribute("id", id);
+       model.addAttribute("id", emp.getStaffMember().getId().toString());
        model.addAttribute("back", back);
        return "redirect:staff_info";
    }
@@ -135,7 +136,8 @@ public class MainController {
                 try {
                     emp.setEndTime(format.parse(workEnd));
                 } catch (ParseException e) {
-
+                    Date cur_date = new Date();
+                    emp.setEndTime(cur_date);
                 }
                 dao.updateEmployee(emp);
                 break;
