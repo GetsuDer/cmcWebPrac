@@ -263,6 +263,92 @@ public class MainControllerTest {
         }
         assertTrue(exists);
    }
+   @Test
+   public void directorInfo() throws IOException, SAXException, SQLException {
+        WebConversation wc = new WebConversation();
+        WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+        
+        WebLink links[] = resp.getLinks();
+        DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
+        Department dep = null;
+        int ind = -1;
+        for (int i = 1; i < links.length; i++) {
+            String id = links[i].getParameterValues("id")[0];
+            dep = dao.getDepartmentById(Long.parseLong(id));
+            if (dep.getDirector() != null) {
+                ind = i;
+                break;
+            }
+        }
+        assertTrue(ind != -1);
+        resp = wc.getResponse(links[ind].getRequest());
+        
+        assertEquals(resp.getURL().getPath(), "/res/department_info");
+        WebLink dir = resp.getLinks()[0];
+        assertEquals(dir.getParameterValues("id")[0], dep.getDirector().getId().toString());
 
+        resp = wc.getResponse(dir.getRequest());
+        assertEquals(resp.getURL().getPath(), "/res/staff_info");
+        
+        links = resp.getLinks();
+        assertEquals(links[links.length - 1].getParameterValues("id")[0], dep.getId().toString());
+        
+        resp = wc.getResponse(links[links.length - 1].getRequest());
+        assertEquals(resp.getURL().getPath(), "/res/department_info");
+
+   }
+
+   @Test
+   public void deleteDepartment() throws IOException, SAXException, SQLException {
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+
+       WebLink link = resp.getLinks()[1];
+       String dep_id = link.getParameterValues("id")[0];
+
+       resp = wc.getResponse(link.getRequest());
+       assertEquals(resp.getURL().getPath(), "/res/department_info");
+
+       WebForm del = resp.getFormWithName("delete");
+       resp = wc.getResponse(del.getRequest());
+
+       assertEquals(resp.getURL().getPath(), "/res/departments");
+       WebLink links[] = resp.getLinks();
+       for (int i = 1; i < links.length; i++) {
+           assertTrue(!dep_id.equals(links[i].getParameterValues("id")[0]));
+       }        
+   }
    
+   @Test
+   public void headDepartmentInfo() throws IOException, SAXException, SQLException {
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       
+       DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
+       Department dep = null;
+
+       int ind = -1;
+       WebLink links[] = resp.getLinks();
+       for (int i = 1; i < links.length; i++) {
+            String id = links[i].getParameterValues("id")[0];
+            dep = dao.getDepartmentById(Long.parseLong(id));
+            if (dep.getHeadDepartment() != null) {
+                ind = i;
+                break;
+            }
+       }
+
+       assertTrue(ind != -1);
+
+       resp = wc.getResponse(links[ind].getRequest());
+       assertEquals(resp.getURL().getPath(), "/res/department_info");
+       
+       WebLink head = resp.getLinks()[dep.getDirector() == null ? 0 : 1];
+       assertEquals(head.getParameterValues("id")[0], dep.getHeadDepartment().getId().toString());
+
+       resp = wc.getResponse(head.getRequest());
+       assertEquals(resp.getURL().getPath(), "/res/department_info");
+
+   }
+
 }

@@ -278,7 +278,7 @@ public class MainController {
        DepartmentDAO departmentDAO = Factory.getInstance().getDepartmentDAO();
        Department dep = departmentDAO.getDepartmentById(Long.parseLong(id));
        departmentDAO.deleteDepartment(dep);
-       return "departments";
+       return "redirect:departments";
    }
 
    @RequestMapping(value="/position_edit", method = RequestMethod.GET)
