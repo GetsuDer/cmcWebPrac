@@ -717,20 +717,131 @@ public class MainControllerTest {
        
 
    }
-/*
+
    @Test
    public void notAddPosition() throws IOException, SAXException, SQLException {
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebLink links[] = resp.getLinks();
+       
+       String dep_id = links[1].getParameterValues("id")[0];
+       DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
+       Department dep = dao.getDepartmentById(Long.parseLong(dep_id));
+       PositionDAO posDao = Factory.getInstance().getPositionDAO();
+       Collection<Position> oldPos = posDao.getPositionsByDepartment(dep); 
+       
+       resp = wc.getResponse(links[1].getRequest());
+       WebForm form = resp.getFormWithName("addPosition");
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("add")));
+       
+       links = resp.getLinks();
+       resp = wc.getResponse(links[0].getRequest());
+
+       assertEquals(resp.getURL().getPath(), "/res/department_info");
+
+       dep = dao.getDepartmentById(Long.parseLong(dep_id));
+       Collection<Position> newPos = posDao.getPositionsByDepartment(dep);
+
+       assertEquals(newPos.size(), oldPos.size());
+       for (Position pos : newPos) {
+           boolean exists = false;
+           for (Position other : oldPos) {
+               if (other.getId() == pos.getId()) {
+                   exists = true;
+                   break;
+               }
+           }
+           assertTrue(exists);
+       }
    }
 
    @Test
-   public void addAndDeletePosition() throws IOException, SAXException, SQLException {
+   public void addAndDeletePosition() throws IOException, SAXException, SQLException {     
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebLink links[] = resp.getLinks();
+       
+       String dep_id = links[1].getParameterValues("id")[0];
+       DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
+       Department dep = dao.getDepartmentById(Long.parseLong(dep_id));
+       PositionDAO posDao = Factory.getInstance().getPositionDAO();
+       Collection<Position> oldPos = posDao.getPositionsByDepartment(dep); 
+       
+       resp = wc.getResponse(links[1].getRequest());
+       WebForm form = resp.getFormWithName("addPosition");
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("add")));
+       
+       form = resp.getFormWithName("delete");
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("delete")));
+
+       assertEquals(resp.getURL().getPath(), "/res/department_info");
+
+       dep = dao.getDepartmentById(Long.parseLong(dep_id));
+       Collection<Position> newPos = posDao.getPositionsByDepartment(dep);
+
+       assertEquals(newPos.size(), oldPos.size());
+       for (Position pos : newPos) {
+           boolean exists = false;
+           for (Position other : oldPos) {
+               if (other.getId() == pos.getId()) {
+                   exists = true;
+                   break;
+               }
+           }
+           assertTrue(exists);
+       }
+
    }
 
    @Test
-   public void editPosition() throws IOException, SAXException, SQLException {
+   public void editPosition() throws IOException, SAXException, SQLException {      
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
+       PositionDAO posDao = Factory.getInstance().getPositionDAO();
+       StaffMemberDAO memDao = Factory.getInstance().getStaffMemberDAO();
+       Department dep = null;
+       int ind = -1;
+       WebLink links[] = resp.getLinks();
+       
+       Collection<Position> poss = null;
+       for (int i = 1; i < links.length; i++) {
+            String id = links[i].getParameterValues("id")[0];
+            dep = dao.getDepartmentById(Long.parseLong(id));
+            poss = posDao.getPositionsByDepartment(dep);
+            if (poss.size() > 0) {
+                ind = i;
+                break;
+            }
+       }
 
+       assertTrue(ind != -1);
+
+       resp = wc.getResponse(links[ind].getRequest()); 
+       
+       links = resp.getLinks();       
+       Collection<Department> subs = dao.getSubDepartments(dep);
+       int posShift = (dep.getDirector() == null ? 0 : 1) + (dep.getHeadDepartment() == null ? 0 : 1) + subs.size();
+
+       String pos_id = links[posShift].getParameterValues("id")[0];
+       Position pos = posDao.getPositionById(Long.parseLong(pos_id));
+
+       resp = wc.getResponse(links[posShift].getRequest());
+       
+       WebForm form = resp.getFormWithName("edit");
+       form.setParameter("name", "editPositionTestName");
+       form.setParameter("size", "20");
+       form.setParameter("duties", "editPositionTestDuties");
+       
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("confirm")));
+
+       Position newPos = posDao.getPositionById(Long.parseLong(pos_id));
+       assertEquals(newPos.getName(), "editPositionTestName");
+       assertEquals(newPos.getSize(), 20);
+       assertEquals(newPos.getResponsibilities(), "editPositionTestDuties");
+       
    }
-
+/*
    @Test
    public void notEditPosition() throws IOException, SAXException, SQLException {
    
