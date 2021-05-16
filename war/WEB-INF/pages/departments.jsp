@@ -11,9 +11,9 @@
             <input type="submit" name="add" value="Add department">
         </form>
         </p>
-        <form method="get" action="/res/filter_departments">
+        <form method="get" name="filter" action="/res/filter_departments">
             Name:<input type="text" name="filter_name" value="${filter_name}">
-            <input type="submit" value="Filter">
+            <input type="submit" name="filter" value="Filter">
         </form>
         </h1>
         <%

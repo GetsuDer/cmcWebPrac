@@ -21,6 +21,7 @@ import DAO.Factory;
 import java.sql.SQLException;
 import java.lang.Math;
 import java.util.Collection;
+import java.util.ArrayList;
 
 public class MainControllerTest {
     @Test
@@ -203,7 +204,7 @@ public class MainControllerTest {
         }
         assertTrue(exists);       
    }
-   
+  
    @Test
    public void addHeadDepartmentTest() throws IOException, SAXException, SQLException {
         WebConversation wc = new WebConversation();
@@ -264,6 +265,7 @@ public class MainControllerTest {
         }
         assertTrue(exists);
    }
+   
    @Test
    public void seeDirectorInfo() throws IOException, SAXException, SQLException {
         WebConversation wc = new WebConversation();
@@ -320,7 +322,7 @@ public class MainControllerTest {
        }        
    }
    
-  @Test
+   @Test
    public void seeHeadDepartmentInfo() throws IOException, SAXException, SQLException {
        WebConversation wc = new WebConversation();
        WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
@@ -441,6 +443,7 @@ public class MainControllerTest {
        DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
        PositionDAO posDao = Factory.getInstance().getPositionDAO();
        StaffMemberDAO memDao = Factory.getInstance().getStaffMemberDAO();
+       EmployeeDAO empDao = Factory.getInstance().getEmployeeDAO();
        Department dep = null;
        int ind = -1;
        WebLink links[] = resp.getLinks();
@@ -470,7 +473,13 @@ public class MainControllerTest {
            String id = links[posShift].getParameterValues("id")[0];
            Position pos = posDao.getPositionById(Long.parseLong(id));
            assertEquals(pos.getDepartment().getId(), dep.getId());
-           Collection<StaffMember> mems = memDao.getStaffMembersByPosition(pos);
+           Collection<Employee> emps = empDao.getEmployeesByPosition(pos);
+           Collection<StaffMember> mems = new ArrayList<StaffMember>();
+           for (Employee e : emps) {
+               if (e.getEndTime() == null) {
+                   mems.add(e.getStaffMember());
+               }
+           }
            String rightURL = "/res/staff_info";
            for (int j = 0; j < mems.size(); j++) {
                assertEquals(links[posShift + 1 + j].getURLString().substring(0, rightURL.length()), rightURL);
@@ -491,7 +500,6 @@ public class MainControllerTest {
            posShift += 1 + posDao.getPositionById(Long.parseLong(id)).getSize();
        }
    }
-
 
    @Test
    public void hireWorkerOnPosition() throws IOException, SAXException, SQLException {
@@ -638,5 +646,105 @@ public class MainControllerTest {
        }
 
    }
+
+   @Test
+   public void filterDepartments() throws IOException, SAXException, SQLException {
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+
+       WebForm form = resp.getFormWithName("filter");
+       form.setParameter("filter_name", "dep");
+
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("filter")));
+
+       WebLink links[] = resp.getLinks();
+       DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
+       Department dep = null;
+       for (int i = 1; i < links.length; i++) {
+            String id = links[i].getParameterValues("id")[0];
+            dep = dao.getDepartmentById(Long.parseLong(id));
+            assertTrue(dep.getName() != null && dep.getName().contains("dep"));
+       }
+
+       Collection<Department> deps = dao.getAllDepartments();
+       int right_deps = 0;
+       for (Department d : deps) {
+           if (d.getName() != null && d.getName().contains("dep")) {
+               right_deps++;
+           }
+       }
+       assertEquals(right_deps, links.length - 1);
+
+   }
+
+   @Test
+   public void addPosition() throws IOException, SAXException, SQLException {
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebLink links[] = resp.getLinks();
+
+       Department dep = null;
+       String dep_id = links[1].getParameterValues("id")[0];
+       resp = wc.getResponse(links[1].getRequest());
+
+       WebForm form = resp.getFormWithName("addPosition");
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("add")));
+
+       assertEquals(resp.getURL().getPath(), "/res/position_edit");
+       form = resp.getFormWithName("edit");
+
+       form.setParameter("name", "addPositionTestName");
+       form.setParameter("size", "1");
+       form.setParameter("duties", "addPositionDuties");
+
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("confirm")));
+       DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
+       PositionDAO posDao = Factory.getInstance().getPositionDAO();
+
+       dep = dao.getDepartmentById(Long.parseLong(dep_id));
+       Collection<Position> poss = posDao.getPositionsByDepartment(dep);
+
+       boolean exists = false;
+       for (Position pos : poss) {
+           if (pos.getName() != null && pos.getName().equals("addPositionTestName") 
+                   && pos.getSize() == 1 && pos.getResponsibilities().equals("addPositionDuties")) {
+               exists = true;
+               break;
+           }
+       }
+       assertTrue(exists);
+
+       
+
+   }
+/*
+   @Test
+   public void notAddPosition() throws IOException, SAXException, SQLException {
+   }
+
+   @Test
+   public void addAndDeletePosition() throws IOException, SAXException, SQLException {
+   }
+
+   @Test
+   public void editPosition() throws IOException, SAXException, SQLException {
+
+   }
+
+   @Test
+   public void notEditPosition() throws IOException, SAXException, SQLException {
+   
+   }
+
+   @Test
+   public void deletePosition() throws IOException, SAXException, SQLException {
+   
+   }
+
+   @Test
+   public void setWorkerStartTime() throws IOException, SAXException, SQLException {
+
+   }
+*/
 
 }

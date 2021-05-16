@@ -41,7 +41,9 @@ public class PositionDAOImpl implements PositionDAO {
         Session session = null;
         Position position = null;
         session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.beginTransaction();
         position = (Position) session.load(Position.class, position_id);
+        session.getTransaction().commit();
         if (session != null && session.isOpen()) {
             session.close();
         }

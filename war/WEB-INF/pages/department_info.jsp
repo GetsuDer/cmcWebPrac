@@ -62,10 +62,10 @@
             }
         
         %>
-        <p><form method="get" action="/res/position_edit">
+        <p><form method="get" name="addPosition" action="/res/position_edit">
             <input type="hidden" name="id" value="-1">
             <input type="hidden" name="dep_id" value="${id}">
-            <input type="submit" value="add position">
+            <input type="submit" name="add" value="add position">
         </form>
         <a href="/res/departments">Return</a>
         <a href="/res/department_edit?id=${id}&director_id=${director_id}&head_id=${head_id}">Edit</a>

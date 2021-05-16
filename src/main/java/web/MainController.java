@@ -319,12 +319,16 @@ public class MainController {
            pos = dao.getPositionById(Long.parseLong(id));
        }
        if (name.equals("")) name = null;
-       if (size.equals("")) size = "0";
+       if (size.equals("") || size.substring(0, 1).equals("-")) size = "0";
        if (duties.equals("")) duties = null;
        pos.setName(name);
-       Collection<StaffMember> workers = Factory.getInstance().getStaffMemberDAO().getStaffMembersByPosition(pos);
-       Long new_size = Long.parseLong(size);
-       if (new_size >= workers.size()) pos.setSize(new_size);
+       if (!id.equals("-1")) {
+           Collection<StaffMember> workers = Factory.getInstance().getStaffMemberDAO().getStaffMembersByPosition(pos);
+           Long new_size = Long.parseLong(size);
+           if (new_size >= workers.size()) pos.setSize(new_size);
+       } else {
+           pos.setSize(Long.parseLong(size));
+       }
        pos.setResponsibilities(duties);
        if (pos.getDepartment() == null) {
            pos.setDepartment(Factory.getInstance().getDepartmentDAO().getDepartmentById(Long.parseLong(dep_id)));
