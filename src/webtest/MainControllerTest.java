@@ -320,7 +320,7 @@ public class MainControllerTest {
        }        
    }
    
-   @Test
+  @Test
    public void seeHeadDepartmentInfo() throws IOException, SAXException, SQLException {
        WebConversation wc = new WebConversation();
        WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
@@ -572,7 +572,71 @@ public class MainControllerTest {
        }       
 
 
-   }
+  }
 
+   @Test
+   public void fireWorkerFromPosition() throws IOException, SAXException, SQLException {
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
+       PositionDAO posDao = Factory.getInstance().getPositionDAO();
+       StaffMemberDAO memDao = Factory.getInstance().getStaffMemberDAO();
+       Department dep = null;
+       Position pos = null;
+       int ind = -1;
+       WebLink links[] = resp.getLinks();
+       
+       Collection<Position> poss = null;
+       Collection<StaffMember> mems = null;
+       for (int i = 1; i < links.length; i++) {
+            String id = links[i].getParameterValues("id")[0];
+            dep = dao.getDepartmentById(Long.parseLong(id));
+            poss = posDao.getPositionsByDepartment(dep);
+            for (Position p : poss) {
+                mems = memDao.getStaffMembersByPosition(p);
+                if (mems.size() > 0) {
+                    pos = p;
+                    ind = i;
+                    break;
+                }
+            }
+            if (ind != -1) break;
+       }
+
+       assertTrue(ind != -1);
+       
+       resp = wc.getResponse(links[ind].getRequest());
+
+       links = resp.getLinks();       
+       Collection<Department> subs = dao.getSubDepartments(dep);
+       int workerLink = -1;
+       int posShift = (dep.getDirector() == null ? 0 : 1) + (dep.getHeadDepartment() == null ? 0 : 1) + subs.size();
+       
+       WebForm forms[] = resp.getForms();
+       int formShift = 0;
+
+       for (int i = 0; i < poss.size(); i++) {
+           String id = links[posShift].getParameterValues("id")[0];
+           if (id.equals(pos.getId().toString())) {
+               workerLink = posShift + 1;
+               break;
+           } else { // to next position
+               posShift += 1 + posDao.getPositionById(Long.parseLong(id)).getSize();
+               formShift += memDao.getStaffMembersByPosition(posDao.getPositionById(Long.parseLong(id))).size() * 2;
+           }
+       }
+
+       assertTrue(workerLink != -1);
+       String mem_id = links[workerLink].getParameterValues("id")[0];
+       StaffMember mem = memDao.getStaffMemberById(Long.parseLong(mem_id));
+       
+       resp = wc.getResponse(forms[formShift + 1].getRequest(forms[formShift + 1].getSubmitButton("remove")));
+
+       Collection<Position> newPoss = posDao.getCurrentPositionsByStaffMember(mem);
+       for (Position p : newPoss) {
+           assertTrue(p.getId() != pos.getId());
+       }
+
+   }
 
 }

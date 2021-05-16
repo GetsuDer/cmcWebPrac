@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS Positions (
 	position_id serial PRIMARY KEY,
     position_name text,
     responsibilities text,
-    department int references Departments(department_id) ON DELETE SET NULL ON UPDATE CASCADE,
+    department int references Departments(department_id) ON DELETE CASCADE ON UPDATE CASCADE,
     size int
 );
     
