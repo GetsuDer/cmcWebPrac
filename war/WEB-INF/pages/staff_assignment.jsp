@@ -8,6 +8,7 @@
         <center> Choose staff member <br>
         <%
             StaffMemberDAO dao = Factory.getInstance().getStaffMemberDAO();
+            EmployeeDAO empDao = Factory.getInstance().getEmployeeDAO();
             Position pos = new Position();
             Collection<StaffMember> already_works = new HashSet<StaffMember>();
             if (request.getAttribute("pos_id") != null) {
@@ -21,9 +22,17 @@
                 } else {
                     boolean good = true;
 
+                    Collection<Employee> emps = empDao.getEmployeesByStaffMember(mem);
                     for (StaffMember bad_mem : already_works) {
                         if (bad_mem.getId() == mem.getId()) {
-                            good = false;
+                            for (Employee emp : emps) {
+                                if (emp.getPosition().getId().toString().equals(request.getAttribute("pos_id"))) {
+                                    if (emp.getEndTime() == null) {
+                                        good = false;
+                                        break;
+                                    }
+                                }
+                            }
                             break;
                         }
                     }

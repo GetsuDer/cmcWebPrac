@@ -265,7 +265,7 @@ public class MainControllerTest {
         assertTrue(exists);
    }
    @Test
-   public void directorInfo() throws IOException, SAXException, SQLException {
+   public void seeDirectorInfo() throws IOException, SAXException, SQLException {
         WebConversation wc = new WebConversation();
         WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
         
@@ -321,7 +321,7 @@ public class MainControllerTest {
    }
    
    @Test
-   public void headDepartmentInfo() throws IOException, SAXException, SQLException {
+   public void seeHeadDepartmentInfo() throws IOException, SAXException, SQLException {
        WebConversation wc = new WebConversation();
        WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
        
@@ -431,6 +431,146 @@ public class MainControllerTest {
            }
            assertTrue(contained);
        }
+
+   }
+  
+   @Test 
+   public void seeWorkersOnPosition() throws IOException, SAXException, SQLException {
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
+       PositionDAO posDao = Factory.getInstance().getPositionDAO();
+       StaffMemberDAO memDao = Factory.getInstance().getStaffMemberDAO();
+       Department dep = null;
+       int ind = -1;
+       WebLink links[] = resp.getLinks();
+       Collection<Position> poss = null;
+       for (int i = 1; i < links.length; i++) {
+            String id = links[i].getParameterValues("id")[0];
+            dep = dao.getDepartmentById(Long.parseLong(id));
+            poss = posDao.getPositionsByDepartment(dep);
+            for (Position p : poss) {
+                Collection<StaffMember> mems = memDao.getStaffMembersByPosition(p);
+                if (mems.size() != 0) {
+                    ind = i;
+                    break;
+                }
+            }
+            if (ind != -1) break;
+       }
+
+       assertTrue(ind != -1);
+       
+       resp = wc.getResponse(links[ind].getRequest());
+       links = resp.getLinks();       
+       
+       Collection<Department> subs = dao.getSubDepartments(dep);
+       int posShift = (dep.getDirector() == null ? 0 : 1) + (dep.getHeadDepartment() == null ? 0 : 1) + subs.size();
+       for (int i = 0; i < poss.size(); i++) {
+           String id = links[posShift].getParameterValues("id")[0];
+           Position pos = posDao.getPositionById(Long.parseLong(id));
+           assertEquals(pos.getDepartment().getId(), dep.getId());
+           Collection<StaffMember> mems = memDao.getStaffMembersByPosition(pos);
+           String rightURL = "/res/staff_info";
+           for (int j = 0; j < mems.size(); j++) {
+               assertEquals(links[posShift + 1 + j].getURLString().substring(0, rightURL.length()), rightURL);
+               String mem_id = links[posShift + 1 + j].getParameterValues("id")[0];
+               boolean rightMem = false;
+               for (StaffMember mem : mems) {
+                   if (mem.getId().toString().equals(mem_id)) {
+                       rightMem = true;
+                       break;
+                   }
+               }
+               assertTrue(rightMem);
+           }
+           rightURL = "/res/staff_assignment";
+           for (int j = 0; j < pos.getSize() - mems.size(); j++) {
+               assertEquals(links[posShift + 1 + mems.size() + j].getURLString().substring(0, rightURL.length()), rightURL);
+           } 
+           posShift += 1 + posDao.getPositionById(Long.parseLong(id)).getSize();
+       }
+   }
+
+
+   @Test
+   public void hireWorkerOnPosition() throws IOException, SAXException, SQLException {
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
+       PositionDAO posDao = Factory.getInstance().getPositionDAO();
+       StaffMemberDAO memDao = Factory.getInstance().getStaffMemberDAO();
+       Department dep = null;
+       Position pos = null;
+       int ind = -1;
+       WebLink links[] = resp.getLinks();
+       Collection<Position> poss = null;
+       Collection<StaffMember> mems = null;
+       for (int i = 1; i < links.length; i++) {
+            String id = links[i].getParameterValues("id")[0];
+            dep = dao.getDepartmentById(Long.parseLong(id));
+            poss = posDao.getPositionsByDepartment(dep);
+            for (Position p : poss) {
+                mems = memDao.getStaffMembersByPosition(p);
+                if (mems.size() < p.getSize()) {
+                    pos = p;
+                    ind = i;
+                    break;
+                }
+            }
+            if (ind != -1) break;
+       }
+
+       assertTrue(ind != -1);
+       
+       resp = wc.getResponse(links[ind].getRequest());
+       //department info
+
+       links = resp.getLinks();       
+       Collection<Department> subs = dao.getSubDepartments(dep);
+       int workerLink = -1;
+       int posShift = (dep.getDirector() == null ? 0 : 1) + (dep.getHeadDepartment() == null ? 0 : 1) + subs.size();
+       
+       for (int i = 0; i < poss.size(); i++) {
+           String id = links[posShift].getParameterValues("id")[0];
+           if (id.equals(pos.getId().toString())) {
+               posShift += mems.size() + 1;
+               workerLink = posShift;
+               break;
+           } else { // to next position
+               posShift += 1 + posDao.getPositionById(Long.parseLong(id)).getSize();
+           }
+       }
+
+       assertTrue(workerLink != -1);
+       String rightURL = "/res/staff_assignment";
+       assertEquals(links[workerLink].getURLString().substring(0, rightURL.length()), rightURL);
+       assertEquals(links[workerLink].getParameterValues("pos_id")[0], pos.getId().toString());
+
+       resp = wc.getResponse(links[workerLink].getRequest());
+       //staff assignment
+
+       WebLink mem = resp.getLinks()[0];
+       String mem_id = mem.getParameterValues("mem_id")[0];
+       resp = wc.getResponse(mem.getRequest()); //member hired
+
+       
+       Collection<StaffMember> newMems = memDao.getStaffMembersByPosition(pos);
+       assertEquals(newMems.size(), mems.size() + 1);
+       for (StaffMember m : newMems) {
+           boolean founded = false;
+           for (StaffMember m1 : mems) {
+               if (m.getId() == m1.getId()) {
+                   founded = true;
+                   break;
+               }
+           }
+           if (!founded && m.getId().toString().equals(mem_id)) {
+               founded = true;
+           }
+           assertTrue(founded);
+       }       
+
 
    }
 
