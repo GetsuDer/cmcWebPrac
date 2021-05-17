@@ -719,6 +719,45 @@ public class MainControllerTest {
    }
 
    @Test
+   public void addPositionWithNegativeSize() throws IOException, SAXException, SQLException {
+     WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebLink links[] = resp.getLinks();
+
+       Department dep = null;
+       String dep_id = links[1].getParameterValues("id")[0];
+       resp = wc.getResponse(links[1].getRequest());
+
+       WebForm form = resp.getFormWithName("addPosition");
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("add")));
+
+       assertEquals(resp.getURL().getPath(), "/res/position_edit");
+       form = resp.getFormWithName("edit");
+
+       form.setParameter("name", "addPositionTestName");
+       form.setParameter("size", "-1");
+       form.setParameter("duties", "addPositionDuties");
+
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("confirm")));
+       DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
+       PositionDAO posDao = Factory.getInstance().getPositionDAO();
+
+       dep = dao.getDepartmentById(Long.parseLong(dep_id));
+       Collection<Position> poss = posDao.getPositionsByDepartment(dep);
+
+       boolean exists = false;
+       for (Position pos : poss) {
+           if (pos.getName() != null && pos.getName().equals("addPositionTestName")
+                   && pos.getSize() == 0 && pos.getResponsibilities().equals("addPositionDuties")) {
+               exists = true;
+               break;
+           }
+       }
+       assertTrue(exists);
+   }
+
+
+   @Test
    public void notAddPosition() throws IOException, SAXException, SQLException {
        WebConversation wc = new WebConversation();
        WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
@@ -840,6 +879,137 @@ public class MainControllerTest {
        assertEquals(newPos.getSize(), 20);
        assertEquals(newPos.getResponsibilities(), "editPositionTestDuties");
        
+   }
+
+   @Test
+   public void editPositionToNegativeSize() throws IOException, SAXException, SQLException { 
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
+       PositionDAO posDao = Factory.getInstance().getPositionDAO();
+       StaffMemberDAO memDao = Factory.getInstance().getStaffMemberDAO();
+       EmployeeDAO empDao = Factory.getInstance().getEmployeeDAO();
+       Department dep = null;
+       int ind = -1;
+       WebLink links[] = resp.getLinks();
+
+       Collection<Position> poss = null;
+       Collection<StaffMember> mems = null;
+       int workers = -1;
+       for (int i = 1; i < links.length; i++) {
+            String id = links[i].getParameterValues("id")[0];
+            dep = dao.getDepartmentById(Long.parseLong(id));
+            poss = posDao.getPositionsByDepartment(dep);
+            if (poss.size() > 0) {
+                Collection<Employee> emps = empDao.getEmployeesByPosition(poss.iterator().next());
+                mems = new ArrayList<StaffMember>();
+                workers = 0;
+                for (Employee e : emps) {
+                    if (e.getEndTime() == null) {
+                        workers++;
+                    }
+                }
+                if (workers == 0) {
+                    ind = i;
+                    break;
+                }
+            }
+       }
+
+       assertTrue(ind != -1);
+
+       resp = wc.getResponse(links[ind].getRequest());
+
+       links = resp.getLinks();
+       Collection<Department> subs = dao.getSubDepartments(dep);
+       int posShift = (dep.getDirector() == null ? 0 : 1) + (dep.getHeadDepartment() == null ? 0 : 1) + subs.size();
+
+       String pos_id = links[posShift].getParameterValues("id")[0];
+       Position pos = posDao.getPositionById(Long.parseLong(pos_id));
+
+       resp = wc.getResponse(links[posShift].getRequest());
+
+       WebForm form = resp.getFormWithName("edit");
+       form.setParameter("name", "editPositionToNegativeSizeTestName");
+       form.setParameter("size", "-5");
+       form.setParameter("duties", "editPositionToNegativeSizeTestDuties");
+
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("confirm")));
+
+       Position newPos = posDao.getPositionById(Long.parseLong(pos_id));
+       assertEquals(newPos.getName(), "editPositionToNegativeSizeTestName");
+       assertEquals(newPos.getSize(), 0);
+       assertEquals(newPos.getResponsibilities(), "editPositionToNegativeSizeTestDuties");
+
+   }
+
+   @Test
+   public void EditPositionToLessSizeThanHiredMembers() throws IOException, SAXException, SQLException {
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
+       PositionDAO posDao = Factory.getInstance().getPositionDAO();
+       StaffMemberDAO memDao = Factory.getInstance().getStaffMemberDAO();
+       EmployeeDAO empDao = Factory.getInstance().getEmployeeDAO();
+
+       Department dep = null;
+       int ind = -1;
+       WebLink links[] = resp.getLinks();
+
+       Collection<Position> poss = null;
+    
+       int workers_number = 0;
+
+       int poss_workers_shift = 0;
+       for (int i = 1; i < links.length; i++) {
+            String id = links[i].getParameterValues("id")[0];
+            dep = dao.getDepartmentById(Long.parseLong(id));
+            poss = posDao.getPositionsByDepartment(dep);
+            if (poss.size() > 0) {
+                poss_workers_shift = 0;
+                for (Position p : poss) {
+                    Collection<Employee> emps = empDao.getEmployeesByPosition(p);
+                    workers_number = 0;
+                    for (Employee e : emps) {
+                        if (e.getEndTime() == null) {
+                            workers_number++;
+                        }
+                    }
+                    if (workers_number > 0) {
+                        ind = i;
+                        break;
+                    }
+                    poss_workers_shift += p.getSize() + 1;
+                }
+            }
+            if (ind != -1) break;
+       }
+
+       assertTrue(ind != -1);
+       assertTrue(workers_number > 0);
+
+       resp = wc.getResponse(links[ind].getRequest());
+
+       links = resp.getLinks();
+       Collection<Department> subs = dao.getSubDepartments(dep);
+       int posShift = (dep.getDirector() == null ? 0 : 1) + (dep.getHeadDepartment() == null ? 0 : 1) + subs.size() + poss_workers_shift;
+
+       String pos_id = links[posShift].getParameterValues("id")[0];
+       Position pos = posDao.getPositionById(Long.parseLong(pos_id));
+
+       resp = wc.getResponse(links[posShift].getRequest());
+
+       WebForm form = resp.getFormWithName("edit");
+       form.setParameter("name", "editPositionToLessSizeTestName");
+       form.setParameter("size", Long.valueOf(workers_number - 1).toString());
+       form.setParameter("duties", "editPositionToLessSizeTestDuties");
+
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("confirm")));
+
+       Position newPos = posDao.getPositionById(Long.parseLong(pos_id));
+       assertEquals(newPos.getName(), "editPositionToLessSizeTestName");
+       assertEquals(newPos.getSize(), pos.getSize());
+       assertEquals(newPos.getResponsibilities(), "editPositionToLessSizeTestDuties");
    }
 
    @Test
