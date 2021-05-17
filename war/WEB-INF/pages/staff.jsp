@@ -11,15 +11,15 @@
             <input type="submit" value="Add staff member"/>
         </form>
         </p>
-        <form method="get" action="/res/filter_staff">
+        <form method="get" name="filter" action="/res/filter_staff">
             Name: <br>
             <input type="text" name="filter_name" value="${filter_name}"><br>
             Address: <br>
             <input type="text" name="filter_address" value="${filter_address}"><br>
-            Date of employment: (later than)<br>
+            Date of employment: (later than, format dd/mm/yyyy)<br>
             <input type="text" name="filter_workStart" value="${filter_workStart}"><br>
             
-            <input type="submit" value="Filter">
+            <input type="submit" name="filter" value="Filter">
         </form>
         <%
             Collection<StaffMember> members = Factory.getInstance().getStaffMemberDAO().getAllStaffMembers();

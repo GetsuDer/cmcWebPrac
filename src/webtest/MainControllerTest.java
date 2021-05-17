@@ -25,6 +25,7 @@ import java.util.ArrayList;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.text.ParseException;
 
 public class MainControllerTest {
     @Test
@@ -1450,27 +1451,109 @@ public class MainControllerTest {
         }
    }
 
-   /*
+   
    @Test
    public void filterStaffMembersByNameTest() throws IOException, SAXException, SQLException {
-   
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/staff");     
+       
+       StaffMemberDAO dao = Factory.getInstance().getStaffMemberDAO();
+       WebForm form = resp.getFormWithName("filter");
+       
+       form.setParameter("filter_name", "Ivan");
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("filter")));
+
+       WebLink links[] = resp.getLinks();
+       for (int i = 1; i < links.length; i++) {
+            String id = links[i].getParameterValues("id")[0];
+            StaffMember mem = dao.getStaffMemberById(Long.parseLong(id));
+            assertTrue(mem.getName() != null);
+            assertTrue(mem.getName().contains("Ivan"));
+       }
    }
 
    @Test
    public void filterStaffMembersAddressTest() throws IOException, SAXException, SQLException {
-   
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/staff");     
+       
+       StaffMemberDAO dao = Factory.getInstance().getStaffMemberDAO();
+       WebForm form = resp.getFormWithName("filter");
+       
+       form.setParameter("filter_address", "Address");
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("filter")));
+
+       WebLink links[] = resp.getLinks();
+       for (int i = 1; i < links.length; i++) {
+            String id = links[i].getParameterValues("id")[0];
+            StaffMember mem = dao.getStaffMemberById(Long.parseLong(id));
+            assertTrue(mem.getAddress() != null);
+            assertTrue(mem.getAddress().contains("Address"));
+       }
+ 
    }
 
    @Test
    public void filterStaffMembersByEmploymentDateTest() throws IOException, SAXException, SQLException {
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/staff");     
+       
+       StaffMemberDAO dao = Factory.getInstance().getStaffMemberDAO();
+       WebForm form = resp.getFormWithName("filter");
+       
+       SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+       Date testDate = null;
+       try {
+           testDate = format.parse("01/01/2009");
+       } catch (ParseException e) {}
+
+       form.setParameter("filter_workStart", format.format(testDate));
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("filter")));
+
+       WebLink links[] = resp.getLinks();
+       for (int i = 1; i < links.length; i++) {
+            String id = links[i].getParameterValues("id")[0];
+            StaffMember mem = dao.getStaffMemberById(Long.parseLong(id));
+            assertTrue(mem.getWorkStart() != null);
+            assertTrue(mem.getWorkStart().after(testDate));
+       }
    
    }
 
    @Test
    public void filterStaffMembersByAllParamsTest() throws IOException, SAXException, SQLException {
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/staff");     
+       
+       StaffMemberDAO dao = Factory.getInstance().getStaffMemberDAO();
+       WebForm form = resp.getFormWithName("filter");
+       
+       SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+       Date testDate = null;
+       try {
+           testDate = format.parse("01/01/2009");
+       } catch (ParseException e) {}
+
+       form.setParameter("filter_workStart", format.format(testDate));
+       form.setParameter("filter_name", "Ivan");
+       form.setParameter("filter_address", "Address");
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("filter")));
+
+       WebLink links[] = resp.getLinks();
+       for (int i = 1; i < links.length; i++) {
+            String id = links[i].getParameterValues("id")[0];
+            StaffMember mem = dao.getStaffMemberById(Long.parseLong(id));
+            assertTrue(mem.getWorkStart() != null);
+            assertTrue(mem.getName() != null);
+            assertTrue(mem.getAddress() != null);
+            assertTrue(mem.getName().contains("Ivan"));
+            assertTrue(mem.getAddress().contains("Address"));
+            assertTrue(mem.getWorkStart().after(testDate));
+       }
+ 
    
    }
-
+/*
    @Test
    public void addStaffMemberTest() throws IOException, SAXException, SQLException {
    
