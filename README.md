@@ -2,6 +2,8 @@
 
 ## Testing
     "ant webtest" - run webtests
+
+![alt text](https://github.com/GetsuDer/cmcWebPrac/blob/main/Documentation/testResults.png)
 ### Test scenarious
 mainLinksTest - click links on main page
 addDepartmentTest - adding department
@@ -46,10 +48,6 @@ seeStaffPositionDepartmentTest - go on link of staff position department
 editStaffMemberWorkTimeTest - change history position values and confirm
 editStaffMemberWorkTimeTest - change history position values on wrong ones and confirm
 deleteStaffMemberHistoryPositionTest - press delete button on history member position
-
-
-
-
 
 
 ## How to see the results
