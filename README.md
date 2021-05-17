@@ -6,47 +6,88 @@
 ![alt text](https://github.com/GetsuDer/cmcWebPrac/blob/main/Documentation/testResults.png)
 ### Test scenarious
 mainLinksTest - click links on main page
+
 addDepartmentTest - adding department
+
 addEmptyDepartmentTest - adding department with default values
+
 addDepartmentNoTest - return from adding department page
+
 addDirectorTest - hire director for department
+
 seeDepartmentInfoTest - go to department info page
+
 addHeadDepartmentTest - change head department
+
 seeDirectorInfo - go to staff info page from department page
+
 deleteDepartment - press Delete button on department info page
+
 seeHeadDepartmentInfo - go to head department info page
+
 hireWorkerOnPosition - choose staff member for position
+
 fireWorkerFromPosition - press remove button for staff member on position
+
 filterDepartments - enter filter value and press Filter button
+
 addPosition - press Add position button and choose values and confirm position
 addPositionWithNegativeSize - as previous, but size value is choosed incorrect (setted on zero instead)
+
 notAddPosition - return from position edit page
+
 addAndDeletePosition - press Delete button during adding position
+
 editPosition - press Edit position button anf change values
+
 editPositionToNegativeSize - as previous, but with incorrect size value
+
 editPositionToLessSizeThanHiredMembers - as previous, but try to reduce position size
+
 notEditPosition - press Back button on position edit page
+
 deletePosition - press Delete button on position edit page
+
 setWorkerStartTime - enter value for worker start time and confiem it
+
 setWorkerStartTimeWrong - as right, but wrong
+
 fireWorkerWithOtherDate - enter value for fire time and confirm
+
 fireWorkerWithOtherDateWrong - as previous, but wrong
+
 filterStaffMembersByNameTest - enter filter name value on staff page and filter
+
 filterStaffMembersAddressesTest - enter filter value on staff page and filter
+
 filterStaffMembersBySEmploymentDateTest - enter filter value on staff page and filter
+
 filterStaffMembersByAllParamsTest - threee previous in the same time
+
 addStaffMemberTest - press Add member button, enter values and confirm
+
 addStaffMemberWithWrongWorkStartTest - press Add member button, enter values with incorrect date and confirm
+
 addEmptyStaffMember - add default member
+
 noAddStaffMemberTest - return from adding member page
+
 seeStaffMemberInfoTest - go to staff info page
+
 returnFromStaffInfoTest - return from staff info page
+
 deleteStaffMemberTest - press delete button on staff info page
+
 editStaffMemberTest - press Edit button on staff info page, change values and confirm
+
 noEditStaffMemberTest - as previous, but instead confirming return to info page
+
 seeStaffPositionDepartmentTest - go on link of staff position department
+
 editStaffMemberWorkTimeTest - change history position values and confirm
+
 editStaffMemberWorkTimeTest - change history position values on wrong ones and confirm
+
 deleteStaffMemberHistoryPositionTest - press delete button on history member position
 
 
