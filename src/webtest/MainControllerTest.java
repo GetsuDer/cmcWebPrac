@@ -52,11 +52,35 @@ public class MainControllerTest {
         assertEquals(wc.getResponse("http://127.0.0.1:8080/res/staff").getURL().getPath(), staff.getURL().getPath());
         
    }
+
+   @Test
+   public void seeAlldepartmentsTest() throws IOException, SAXException, SQLException {
+        WebConversation wc = new WebConversation();
+        WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");     
+  
+        DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
+        Collection<Department> deps = dao.getAllDepartments();
+
+        WebLink links[] = resp.getLinks();
+        assertEquals(links.length - 1, deps.size());
+        for (int i = 1; i < links.length; i++) {
+            String id = links[i].getParameterValues("id")[0];
+            Department dep = dao.getDepartmentById(Long.parseLong(id));
+            boolean exists = false;
+            for (Department d : deps) {
+               if (d.getId() == dep.getId()) {
+                  exists = true;
+                  break;
+               }
+            } 
+            assertTrue(exists);
+        }
+   }
    
    @Test
    public void departmentsContentTest() throws IOException, SAXException {
         WebConversation wc = new WebConversation();
-        WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+        WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
         assertEquals("Departments page", resp.getTitle());
         WebLink links[] = resp.getLinks();
         assertEquals(links[0].getText(), "Main");
@@ -70,7 +94,7 @@ public class MainControllerTest {
    @Test
    public void addDepartmentTest() throws IOException, SAXException, SQLException {
         WebConversation wc = new WebConversation();
-        WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+        WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
         WebForm form = resp.getFormWithName("add");
         resp = wc.getResponse(form.getRequest(form.getSubmitButton("add")));
         
@@ -103,7 +127,7 @@ public class MainControllerTest {
    @Test
    public void addEmptyDepartmentTest() throws IOException, SAXException, SQLException {
         WebConversation wc = new WebConversation();
-        WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+        WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
         WebForm form = resp.getFormWithName("add");
         resp = wc.getResponse(form.getRequest(form.getSubmitButton("add")));
         
@@ -130,7 +154,7 @@ public class MainControllerTest {
    @Test
    public void addDepartmentNoTest() throws IOException, SAXException, SQLException {
         WebConversation wc = new WebConversation();
-        WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+        WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
         int deps_number = resp.getLinks().length;
 
         WebForm form = resp.getFormWithName("add");
@@ -149,7 +173,7 @@ public class MainControllerTest {
    @Test
    public void addDirectorTest() throws IOException, SAXException, SQLException {
         WebConversation wc = new WebConversation();
-        WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+        WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
         WebForm form = resp.getFormWithName("add");
         resp = wc.getResponse(form.getRequest(form.getSubmitButton("add")));
         
@@ -211,7 +235,7 @@ public class MainControllerTest {
    @Test
    public void addHeadDepartmentTest() throws IOException, SAXException, SQLException {
         WebConversation wc = new WebConversation();
-        WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+        WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
         WebForm form = resp.getFormWithName("add");
         resp = wc.getResponse(form.getRequest(form.getSubmitButton("add")));
 
@@ -272,7 +296,7 @@ public class MainControllerTest {
    @Test
    public void seeDirectorInfo() throws IOException, SAXException, SQLException {
         WebConversation wc = new WebConversation();
-        WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+        WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
         
         WebLink links[] = resp.getLinks();
         DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
@@ -307,7 +331,7 @@ public class MainControllerTest {
    @Test
    public void deleteDepartment() throws IOException, SAXException, SQLException {
        WebConversation wc = new WebConversation();
-       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
 
        WebLink link = resp.getLinks()[1];
        String dep_id = link.getParameterValues("id")[0];
@@ -328,7 +352,7 @@ public class MainControllerTest {
    @Test
    public void seeHeadDepartmentInfo() throws IOException, SAXException, SQLException {
        WebConversation wc = new WebConversation();
-       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
        
        DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
        Department dep = null;
@@ -360,7 +384,7 @@ public class MainControllerTest {
    @Test
    public void seeSubDepartments() throws IOException, SAXException, SQLException {
        WebConversation wc = new WebConversation();
-       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
        DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
        Department dep = null;
        int ind = -1;
@@ -399,7 +423,7 @@ public class MainControllerTest {
    @Test
    public void seeDepartmentPositions() throws IOException, SAXException, SQLException {
        WebConversation wc = new WebConversation();
-       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
        DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
        PositionDAO posDao = Factory.getInstance().getPositionDAO();
        Department dep = null;
@@ -442,7 +466,7 @@ public class MainControllerTest {
    @Test 
    public void seeWorkersOnPosition() throws IOException, SAXException, SQLException {
        WebConversation wc = new WebConversation();
-       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
        DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
        PositionDAO posDao = Factory.getInstance().getPositionDAO();
        StaffMemberDAO memDao = Factory.getInstance().getStaffMemberDAO();
@@ -507,7 +531,7 @@ public class MainControllerTest {
    @Test
    public void hireWorkerOnPosition() throws IOException, SAXException, SQLException {
        WebConversation wc = new WebConversation();
-       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
        DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
        PositionDAO posDao = Factory.getInstance().getPositionDAO();
        StaffMemberDAO memDao = Factory.getInstance().getStaffMemberDAO();
@@ -588,7 +612,7 @@ public class MainControllerTest {
    @Test
    public void fireWorkerFromPosition() throws IOException, SAXException, SQLException {
        WebConversation wc = new WebConversation();
-       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
        DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
        PositionDAO posDao = Factory.getInstance().getPositionDAO();
        StaffMemberDAO memDao = Factory.getInstance().getStaffMemberDAO();
@@ -653,7 +677,7 @@ public class MainControllerTest {
    @Test
    public void filterDepartments() throws IOException, SAXException, SQLException {
        WebConversation wc = new WebConversation();
-       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
 
        WebForm form = resp.getFormWithName("filter");
        form.setParameter("filter_name", "dep");
@@ -683,7 +707,7 @@ public class MainControllerTest {
    @Test
    public void addPosition() throws IOException, SAXException, SQLException {
        WebConversation wc = new WebConversation();
-       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
        WebLink links[] = resp.getLinks();
 
        Department dep = null;
@@ -724,7 +748,7 @@ public class MainControllerTest {
    @Test
    public void addPositionWithNegativeSize() throws IOException, SAXException, SQLException {
      WebConversation wc = new WebConversation();
-       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
        WebLink links[] = resp.getLinks();
 
        Department dep = null;
@@ -763,7 +787,7 @@ public class MainControllerTest {
    @Test
    public void notAddPosition() throws IOException, SAXException, SQLException {
        WebConversation wc = new WebConversation();
-       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
        WebLink links[] = resp.getLinks();
        
        String dep_id = links[1].getParameterValues("id")[0];
@@ -800,7 +824,7 @@ public class MainControllerTest {
    @Test
    public void addAndDeletePosition() throws IOException, SAXException, SQLException {     
        WebConversation wc = new WebConversation();
-       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
        WebLink links[] = resp.getLinks();
        
        String dep_id = links[1].getParameterValues("id")[0];
@@ -838,7 +862,7 @@ public class MainControllerTest {
    @Test
    public void editPosition() throws IOException, SAXException, SQLException {      
        WebConversation wc = new WebConversation();
-       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
        DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
        PositionDAO posDao = Factory.getInstance().getPositionDAO();
        StaffMemberDAO memDao = Factory.getInstance().getStaffMemberDAO();
@@ -887,7 +911,7 @@ public class MainControllerTest {
    @Test
    public void editPositionToNegativeSize() throws IOException, SAXException, SQLException { 
        WebConversation wc = new WebConversation();
-       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
        DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
        PositionDAO posDao = Factory.getInstance().getPositionDAO();
        StaffMemberDAO memDao = Factory.getInstance().getStaffMemberDAO();
@@ -949,7 +973,7 @@ public class MainControllerTest {
    @Test
    public void EditPositionToLessSizeThanHiredMembers() throws IOException, SAXException, SQLException {
        WebConversation wc = new WebConversation();
-       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
        DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
        PositionDAO posDao = Factory.getInstance().getPositionDAO();
        StaffMemberDAO memDao = Factory.getInstance().getStaffMemberDAO();
@@ -1019,7 +1043,7 @@ public class MainControllerTest {
    @Test
    public void notEditPosition() throws IOException, SAXException, SQLException {
        WebConversation wc = new WebConversation();
-       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
        DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
        PositionDAO posDao = Factory.getInstance().getPositionDAO();
        StaffMemberDAO memDao = Factory.getInstance().getStaffMemberDAO();
@@ -1064,7 +1088,7 @@ public class MainControllerTest {
    @Test
    public void deletePosition() throws IOException, SAXException, SQLException {
        WebConversation wc = new WebConversation();
-       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
        DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
        PositionDAO posDao = Factory.getInstance().getPositionDAO();
        StaffMemberDAO memDao = Factory.getInstance().getStaffMemberDAO();
@@ -1109,7 +1133,7 @@ public class MainControllerTest {
    @Test
    public void setWorkerStartTime() throws IOException, SAXException, SQLException {
        WebConversation wc = new WebConversation();
-       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
        
        DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
        EmployeeDAO empDao = Factory.getInstance().getEmployeeDAO();
@@ -1183,7 +1207,7 @@ public class MainControllerTest {
    @Test
    public void setWorkerStartTimeWrong() throws IOException, SAXException, SQLException {
        WebConversation wc = new WebConversation();
-       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
        
        DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
        EmployeeDAO empDao = Factory.getInstance().getEmployeeDAO();
@@ -1256,7 +1280,7 @@ public class MainControllerTest {
    @Test
    public void fireWorkerWithOtherDate() throws IOException, SAXException, SQLException {
        WebConversation wc = new WebConversation();
-       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
        
        DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
        EmployeeDAO empDao = Factory.getInstance().getEmployeeDAO();
@@ -1330,7 +1354,7 @@ public class MainControllerTest {
    @Test
    public void fireWorkerWithOtherDateWrong() throws IOException, SAXException, SQLException {
        WebConversation wc = new WebConversation();
-       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
        
        DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
        EmployeeDAO empDao = Factory.getInstance().getEmployeeDAO();
@@ -1402,5 +1426,113 @@ public class MainControllerTest {
    
    }
 
+   @Test
+   public void seeAllStaffMembersTest() throws IOException, SAXException, SQLException {
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/staff");     
+  
+       StaffMemberDAO dao = Factory.getInstance().getStaffMemberDAO();
+       Collection<StaffMember> mems = dao.getAllStaffMembers();
+       
+       WebLink links[] = resp.getLinks();
+       assertEquals(links.length - 1, mems.size());
+       for (int i = 1; i < links.length; i++) {
+            String id = links[i].getParameterValues("id")[0];
+            StaffMember mem = dao.getStaffMemberById(Long.parseLong(id));
+            boolean exists = false;
+            for (StaffMember m : mems) {
+               if (m.getId() == mem.getId()) {
+                  exists = true;
+                  break;
+               }
+            } 
+            assertTrue(exists);
+        }
+   }
+
+   /*
+   @Test
+   public void filterStaffMembersByNameTest() throws IOException, SAXException, SQLException {
+   
+   }
+
+   @Test
+   public void filterStaffMembersAddressTest() throws IOException, SAXException, SQLException {
+   
+   }
+
+   @Test
+   public void filterStaffMembersByEmploymentDateTest() throws IOException, SAXException, SQLException {
+   
+   }
+
+   @Test
+   public void filterStaffMembersByAllParamsTest() throws IOException, SAXException, SQLException {
+   
+   }
+
+   @Test
+   public void addStaffMemberTest() throws IOException, SAXException, SQLException {
+   
+   }
+
+   @Test
+   public void addEmptyStaffMemberTest() throws IOException, SAXException, SQLException {
+   
+   }
+
+   @Test
+   public void noAddStaffMemberTest() throws IOException, SAXException, SQLException {
+   
+   }
+
+   @Test
+   public void seeStaffMemberInfoTest() throws IOException, SAXException, SQLException {
+   
+   }
+
+   @Test
+   public void returnFromStaffMemberInfoTest() throws IOException, SAXException, SQLException {
+
+   }
+
+   @Test
+   public void deleteStaffMemberTest() throws IOException, SAXException, SQLException {
+   
+   }
+
+   @Test
+   public void editStaffMemberTest() throws IOException, SAXException, SQLException {
+   
+   }
+
+   @Test
+   public void noEditStaffMemberTest() throws IOException, SAXException, SQLException {
+   
+   }
+
+   @Test
+   public void seeStaffPositionDepartmentTest() throws IOException, SAXException, SQLException {
+   
+   }
+   
+   @Test
+   public void editStaffMemberWorkTimeTest() throws IOException, SAXException, SQLException {
+   
+   }
+
+   @Test
+   public void editStaffMemberWorkTimeWrongTest() throws IOException, SAXException, SQLException {
+
+   }
+
+   @Test
+   public void deleteStaffMemberHistoryPositionTest() throws IOException, SAXException, SQLException {
+   
+   }
+
+   
+
+      */
 
 }
