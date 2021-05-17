@@ -52,7 +52,7 @@
                     current_workers++;
                     StaffMember mem = emp.getStaffMember();
                     out.println("<a href=/res/staff_info?back=dep&director_id=" + request.getAttribute("director_id") + "&id=" + mem.getId().toString() + "&dep_id=" + request.getAttribute("id") + ">" + mem.getName() + "</a><br>");
-                    out.println("<form method=\"get\" action=\"/res/setWorkStart\"> <input type=\"hidden\" name=\"pos_id\" value=" + pos_id + "> <input type=\"hidden\" name=\"mem_id\" value=" + mem.getId() + "><input type=\"text\" name=\"workStart\" value=" + (emp.getStartTime() == null ? "" : format.format(emp.getStartTime())) + "> <input type=\"submit\" value=\"set work start\"></form>");
+                    out.println("<form method=\"get\" action=\"/res/setWorkStart\"> <input type=\"hidden\" name=\"pos_id\" value=" + pos_id + "> <input type=\"hidden\" name=\"mem_id\" value=" + mem.getId() + "><input type=\"text\" name=\"workStart\" value=" + (emp.getStartTime() == null ? "" : format.format(emp.getStartTime())) + "> <input type=\"submit\" name=\"setWorkStart\" value=\"set work start\"></form>");
                     out.println("<form method=\"get\" action=\"/res/remove_worker\"> <input type=\"text\" name=\"workEnd\" value=" + format.format(cur_date) + "> <input type=\"submit\" name=\"remove\" value=\"remove\"> <input type=\"hidden\" name=\"pos_id\" value=" + pos_id + "> <input type=\"hidden\" name=\"mem_id\" value=" + mem.getId().toString() + "> <input type=\"hidden\" name=\"dep_id\" value=" + request.getAttribute("id") + "></form>");
                 }
                 for (int i = 0; i < position.getSize() - current_workers; i++) {

@@ -65,7 +65,7 @@ public class Main {
             positionDAO.addPosition(pos2);
             Position pos3 = new Position("pos3", "smth", dep1, Long.parseLong("1"));
             positionDAO.addPosition(pos3);
-            Position pos4 = new Position("pos4", "smth", dep2, Long.parseLong("1"));
+            Position pos4 = new Position("pos4", "smth", dep2, Long.parseLong("5"));
             positionDAO.addPosition(pos4);
             Position pos5 = new Position("pos5", "smth", dep3, Long.parseLong("1"));
             positionDAO.addPosition(pos5);
@@ -84,6 +84,12 @@ public class Main {
             employeeDAO.addEmployee(emp4);
             Employee emp5 = new Employee(pos5, member5, format.parse("2012-4-29"), null);
             employeeDAO.addEmployee(emp5);
+            Employee emp6 = new Employee(pos4, member1, format.parse("2012-4-29"), null);
+            employeeDAO.addEmployee(emp6);
+            Employee emp7 = new Employee(pos4, member11, format.parse("2012-4-29"), null);
+            employeeDAO.addEmployee(emp7);
+            Employee emp8 = new Employee(pos4, member10, format.parse("2012-4-29"), null);
+            employeeDAO.addEmployee(emp8);
         
         }
     }

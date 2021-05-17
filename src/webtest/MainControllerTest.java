@@ -23,6 +23,9 @@ import java.lang.Math;
 import java.util.Collection;
 import java.util.ArrayList;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class MainControllerTest {
     @Test
     public void mainContentTest() throws IOException, SAXException {
@@ -963,6 +966,7 @@ public class MainControllerTest {
        int poss_workers_shift = 0;
        for (int i = 1; i < links.length; i++) {
             String id = links[i].getParameterValues("id")[0];
+
             dep = dao.getDepartmentById(Long.parseLong(id));
             poss = posDao.getPositionsByDepartment(dep);
             if (poss.size() > 0) {
@@ -1101,11 +1105,302 @@ public class MainControllerTest {
        }
    
    }
-/*
+
    @Test
    public void setWorkerStartTime() throws IOException, SAXException, SQLException {
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       
+       DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
+       EmployeeDAO empDao = Factory.getInstance().getEmployeeDAO();
+       PositionDAO posDao = Factory.getInstance().getPositionDAO();
+       StaffMemberDAO memDao = Factory.getInstance().getStaffMemberDAO();
+       
+       int ind = -1;
+       Department dep = null;
+       WebLink links[] = resp.getLinks();
+       
+       int form_shift = 0;
+       int pos_shift = 0;
+       Collection<Position> poss = null;
+       for (int i = 1; i < links.length; i++) {
+            String id = links[i].getParameterValues("id")[0];
+            dep = dao.getDepartmentById(Long.parseLong(id));
+            poss = posDao.getPositionsByDepartment(dep);
+            pos_shift = 0;
+            for (Position p : poss) {
+                int works = 0;
+                Collection<Employee> emps = empDao.getEmployeesByPosition(p);
+                for (Employee e : emps) {
+                    if (e.getEndTime() == null) {
+                        works++;
+                    }
+                }
+                if (works > 0) {
+                    ind = i;
+                    break;
+                } else {
+                    pos_shift += 1 + p.getSize();
+                }
+
+            }
+            if (ind != -1) break;
+       }
+
+       assertTrue(ind != -1);
+       resp = wc.getResponse(links[ind].getRequest());
+       links = resp.getLinks();
+       Collection<Department> subs = dao.getSubDepartments(dep);
+       pos_shift += (dep.getDirector() == null ? 0 : 1) + (dep.getHeadDepartment() == null ? 0 : 1) + subs.size() + 1;
+
+       String rightURL = "/res/staff_info";
+       assertEquals(links[pos_shift].getURLString().substring(0, rightURL.length()), rightURL);
+
+       String mem_id = links[pos_shift].getParameterValues("id")[0];
+       StaffMember mem = memDao.getStaffMemberById(Long.parseLong(mem_id));
+
+       String pos_id = links[pos_shift - 1].getParameterValues("id")[0];
+       Position pos = posDao.getPositionById(Long.parseLong(pos_id));
+
+       Collection<Employee> emps = empDao.getEmployeesByPosition(pos);
+       Employee emp = null;
+       for (Employee e : emps) {
+           if (e.getStaffMember().getId() == mem.getId()) {
+               emp = e;
+           }
+       }
+
+       WebForm form = resp.getForms()[0];
+       form.setParameter("workStart", "13/01/6666");
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("setWorkStart")));
+
+       SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+       Employee newEmp = empDao.getEmployeeById(emp.getId());
+       assertEquals(format.format(newEmp.getStartTime()), "13/01/6666");
 
    }
-*/
+
+   @Test
+   public void setWorkerStartTimeWrong() throws IOException, SAXException, SQLException {
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       
+       DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
+       EmployeeDAO empDao = Factory.getInstance().getEmployeeDAO();
+       PositionDAO posDao = Factory.getInstance().getPositionDAO();
+       StaffMemberDAO memDao = Factory.getInstance().getStaffMemberDAO();
+       
+       int ind = -1;
+       Department dep = null;
+       WebLink links[] = resp.getLinks();
+       
+       int form_shift = 0;
+       int pos_shift = 0;
+       Collection<Position> poss = null;
+       for (int i = 1; i < links.length; i++) {
+            String id = links[i].getParameterValues("id")[0];
+            dep = dao.getDepartmentById(Long.parseLong(id));
+            poss = posDao.getPositionsByDepartment(dep);
+            pos_shift = 0;
+            for (Position p : poss) {
+                int works = 0;
+                Collection<Employee> emps = empDao.getEmployeesByPosition(p);
+                for (Employee e : emps) {
+                    if (e.getEndTime() == null) {
+                        works++;
+                    }
+                }
+                if (works > 0) {
+                    ind = i;
+                    break;
+                } else {
+                    pos_shift += 1 + p.getSize();
+                }
+
+            }
+            if (ind != -1) break;
+       }
+
+       assertTrue(ind != -1);
+       resp = wc.getResponse(links[ind].getRequest());
+       links = resp.getLinks();
+       Collection<Department> subs = dao.getSubDepartments(dep);
+       pos_shift += (dep.getDirector() == null ? 0 : 1) + (dep.getHeadDepartment() == null ? 0 : 1) + subs.size() + 1;
+
+       String rightURL = "/res/staff_info";
+       assertEquals(links[pos_shift].getURLString().substring(0, rightURL.length()), rightURL);
+
+       String mem_id = links[pos_shift].getParameterValues("id")[0];
+       StaffMember mem = memDao.getStaffMemberById(Long.parseLong(mem_id));
+
+       String pos_id = links[pos_shift - 1].getParameterValues("id")[0];
+       Position pos = posDao.getPositionById(Long.parseLong(pos_id));
+
+       Collection<Employee> emps = empDao.getEmployeesByPosition(pos);
+       Employee emp = null;
+       for (Employee e : emps) {
+           if (e.getStaffMember().getId() == mem.getId()) {
+               emp = e;
+           }
+       }
+
+       WebForm form = resp.getForms()[0];
+       form.setParameter("workStart", "13/00/6666");
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("setWorkStart")));
+
+       Employee newEmp = empDao.getEmployeeById(emp.getId());
+       assertEquals(newEmp.getStartTime(), emp.getStartTime());
+ 
+   }
+
+   @Test
+   public void fireWorkerWithOtherDate() throws IOException, SAXException, SQLException {
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       
+       DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
+       EmployeeDAO empDao = Factory.getInstance().getEmployeeDAO();
+       PositionDAO posDao = Factory.getInstance().getPositionDAO();
+       StaffMemberDAO memDao = Factory.getInstance().getStaffMemberDAO();
+       
+       int ind = -1;
+       Department dep = null;
+       WebLink links[] = resp.getLinks();
+       
+       int form_shift = 0;
+       int pos_shift = 0;
+       Collection<Position> poss = null;
+       for (int i = 1; i < links.length; i++) {
+            String id = links[i].getParameterValues("id")[0];
+            dep = dao.getDepartmentById(Long.parseLong(id));
+            poss = posDao.getPositionsByDepartment(dep);
+            pos_shift = 0;
+            for (Position p : poss) {
+                int works = 0;
+                Collection<Employee> emps = empDao.getEmployeesByPosition(p);
+                for (Employee e : emps) {
+                    if (e.getEndTime() == null) {
+                        works++;
+                    }
+                }
+                if (works > 0) {
+                    ind = i;
+                    break;
+                } else {
+                    pos_shift += 1 + p.getSize();
+                }
+
+            }
+            if (ind != -1) break;
+       }
+
+       assertTrue(ind != -1);
+       resp = wc.getResponse(links[ind].getRequest());
+       links = resp.getLinks();
+       Collection<Department> subs = dao.getSubDepartments(dep);
+       pos_shift += (dep.getDirector() == null ? 0 : 1) + (dep.getHeadDepartment() == null ? 0 : 1) + subs.size() + 1;
+
+       String rightURL = "/res/staff_info";
+       assertEquals(links[pos_shift].getURLString().substring(0, rightURL.length()), rightURL);
+
+       String mem_id = links[pos_shift].getParameterValues("id")[0];
+       StaffMember mem = memDao.getStaffMemberById(Long.parseLong(mem_id));
+
+       String pos_id = links[pos_shift - 1].getParameterValues("id")[0];
+       Position pos = posDao.getPositionById(Long.parseLong(pos_id));
+
+       Collection<Employee> emps = empDao.getEmployeesByPosition(pos);
+       Employee emp = null;
+       for (Employee e : emps) {
+           if (e.getStaffMember().getId() == mem.getId()) {
+               emp = e;
+           }
+       }
+
+       WebForm form = resp.getForms()[1];
+       form.setParameter("workEnd", "13/01/6666");
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("remove")));
+
+       Employee newEmp = empDao.getEmployeeById(emp.getId());
+       SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+       assertEquals(format.format(newEmp.getEndTime()), "13/01/6666");
+ 
+   }
+
+   @Test
+   public void fireWorkerWithOtherDateWrong() throws IOException, SAXException, SQLException {
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://dragon:8080/res/departments");
+       
+       DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
+       EmployeeDAO empDao = Factory.getInstance().getEmployeeDAO();
+       PositionDAO posDao = Factory.getInstance().getPositionDAO();
+       StaffMemberDAO memDao = Factory.getInstance().getStaffMemberDAO();
+       
+       int ind = -1;
+       Department dep = null;
+       WebLink links[] = resp.getLinks();
+       
+       int form_shift = 0;
+       int pos_shift = 0;
+       Collection<Position> poss = null;
+       for (int i = 1; i < links.length; i++) {
+            String id = links[i].getParameterValues("id")[0];
+            dep = dao.getDepartmentById(Long.parseLong(id));
+            poss = posDao.getPositionsByDepartment(dep);
+            pos_shift = 0;
+            for (Position p : poss) {
+                int works = 0;
+                Collection<Employee> emps = empDao.getEmployeesByPosition(p);
+                for (Employee e : emps) {
+                    if (e.getEndTime() == null) {
+                        works++;
+                    }
+                }
+                if (works > 0) {
+                    ind = i;
+                    break;
+                } else {
+                    pos_shift += 1 + p.getSize();
+                }
+
+            }
+            if (ind != -1) break;
+       }
+
+       assertTrue(ind != -1);
+       resp = wc.getResponse(links[ind].getRequest());
+       links = resp.getLinks();
+       Collection<Department> subs = dao.getSubDepartments(dep);
+       pos_shift += (dep.getDirector() == null ? 0 : 1) + (dep.getHeadDepartment() == null ? 0 : 1) + subs.size() + 1;
+
+       String rightURL = "/res/staff_info";
+       assertEquals(links[pos_shift].getURLString().substring(0, rightURL.length()), rightURL);
+
+       String mem_id = links[pos_shift].getParameterValues("id")[0];
+       StaffMember mem = memDao.getStaffMemberById(Long.parseLong(mem_id));
+
+       String pos_id = links[pos_shift - 1].getParameterValues("id")[0];
+       Position pos = posDao.getPositionById(Long.parseLong(pos_id));
+
+       Collection<Employee> emps = empDao.getEmployeesByPosition(pos);
+       Employee emp = null;
+       for (Employee e : emps) {
+           if (e.getStaffMember().getId() == mem.getId()) {
+               emp = e;
+           }
+       }
+
+       WebForm form = resp.getForms()[1];
+       form.setParameter("workEnd", "13/00/6666");
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("remove")));
+
+       Employee newEmp = empDao.getEmployeeById(emp.getId());
+       Date curDate = new Date();
+       SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+       assertEquals(format.format(newEmp.getEndTime()), format.format(curDate));
+   
+   }
+
 
 }

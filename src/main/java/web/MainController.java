@@ -131,6 +131,7 @@ public class MainController {
         Collection <Employee> emps = dao.getEmployeesByPosition(pos);
         model.addAttribute("id", dep_id);
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy"); 
+        format.setLenient(false);
         for (Employee emp : emps) {
             if (emp.getEndTime() == null && emp.getStaffMember().getId().toString().equals(mem_id)) {
                 try {
@@ -158,10 +159,14 @@ public class MainController {
        for (Employee emp : emps) {
            if (emp.getEndTime() == null && emp.getStaffMember().getId() == mem.getId()) {
                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+               format.setLenient(false);
+               Date newDate = null;
                try {
-                   emp.setStartTime(format.parse(workStart));
+                   newDate = format.parse(workStart);
                } catch (ParseException e) {
+                   newDate = emp.getStartTime();
                }
+               emp.setStartTime(newDate);
                dao.updateEmployee(emp);
                break;
            }
