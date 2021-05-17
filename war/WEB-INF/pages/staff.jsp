@@ -7,8 +7,8 @@
     <body>
         <p> <center> <h1><a href="/res/">Main</a> </h1></p>
         <p> 
-        <form method="get" action="/res/add_staff">
-            <input type="submit" value="Add staff member"/>
+        <form method="get" name="add" action="/res/add_staff">
+            <input type="submit" name="add" value="Add staff member"/>
         </form>
         </p>
         <form method="get" name="filter" action="/res/filter_staff">

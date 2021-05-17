@@ -6,7 +6,7 @@
 
     <body>
         <p> <a href="staff">Staff members</a> </p>
-        <form method="get" action="/res/confirm_staff">
+        <form method="get" name="edit" action="/res/confirm_staff">
             <input type="hidden" name="id" value="${id}">
             Name: <br>
             <input type="text" name="name" value="${name}"> <br>
@@ -20,7 +20,7 @@
             Date of employment: (format: dd/mm/yyyy)<br> 
             <input type="text" name="workStart" value="${workStart}"> <br>
             
-            <input type="submit" name="Confirm staff member">
+            <input type="submit" name="confirm" value="Confirm staff member">
 
         </form>
     </body>

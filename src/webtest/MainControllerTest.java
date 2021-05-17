@@ -1553,22 +1553,123 @@ public class MainControllerTest {
  
    
    }
-/*
+
    @Test
    public void addStaffMemberTest() throws IOException, SAXException, SQLException {
-   
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/staff");     
+       
+       StaffMemberDAO dao = Factory.getInstance().getStaffMemberDAO();
+       WebForm form = resp.getFormWithName("add");
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("add")));
+
+       assertEquals(resp.getURL().getPath(), "/res/staff_edit");
+
+       form = resp.getFormWithName("edit");
+       form.setParameter("name", "addMemberTestName");
+       form.setParameter("address", "addMemberTestAddress");
+       form.setParameter("education", "addMemberTestEducation");
+       form.setParameter("workStart", "01/01/2014");
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("confirm")));
+
+       Collection<StaffMember> mems = dao.getAllStaffMembers();
+       boolean exists = false;
+
+       SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+       for (StaffMember m : mems) {
+            if (m.getName() != null && m.getName().equals("addMemberTestName")) {
+                exists = true;
+                assertEquals(m.getAddress(), "addMemberTestAddress");
+                assertEquals(m.getEducation(), "addMemberTestEducation");
+                assertEquals(format.format(m.getWorkStart()), "01/01/2014");
+            }
+       }
+       assertTrue(exists);
+   }
+
+
+   @Test
+   public void addStaffMemberWithWrongWorkStartTest() throws IOException, SAXException, SQLException {
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/staff");     
+       
+       StaffMemberDAO dao = Factory.getInstance().getStaffMemberDAO();
+       WebForm form = resp.getFormWithName("add");
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("add")));
+
+       assertEquals(resp.getURL().getPath(), "/res/staff_edit");
+
+       form = resp.getFormWithName("edit");
+       form.setParameter("name", "wrongStartNameTest");
+       form.setParameter("workStart", "01/00/2014");
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("confirm")));
+
+       Collection<StaffMember> mems = dao.getAllStaffMembers();
+       boolean exists = false;
+
+       SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+       for (StaffMember m : mems) {
+            if (m.getName() != null && m.getName().equals("wrongStartNameTest")) {
+                exists = true;
+                assertEquals(m.getWorkStart(), null);
+            }
+       }
+       assertTrue(exists);
+ 
    }
 
    @Test
    public void addEmptyStaffMemberTest() throws IOException, SAXException, SQLException {
-   
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/staff");     
+       
+       StaffMemberDAO dao = Factory.getInstance().getStaffMemberDAO();
+       WebForm form = resp.getFormWithName("add");
+       
+       Collection<StaffMember> oldMems = dao.getAllStaffMembers();
+       
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("add")));
+
+       assertEquals(resp.getURL().getPath(), "/res/staff_edit");
+
+       form = resp.getFormWithName("edit");
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("confirm")));
+
+       Collection<StaffMember> mems = dao.getAllStaffMembers();
+       assertTrue(mems.size() - 1 == oldMems.size());
+       
+       boolean exists = false;
+       for (StaffMember m : mems) {
+           if (m.getName() == null && m.getAddress() == null && m.getEducation() == null && m.getWorkStart() == null) {
+               exists = true;
+               break;
+           }
+       }
+       assertTrue(exists);
+
    }
 
    @Test
    public void noAddStaffMemberTest() throws IOException, SAXException, SQLException {
-   
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/staff");     
+       
+       StaffMemberDAO dao = Factory.getInstance().getStaffMemberDAO();
+       WebForm form = resp.getFormWithName("add");
+       
+       Collection<StaffMember> oldMems = dao.getAllStaffMembers();
+       
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("add")));
+       assertEquals(resp.getURL().getPath(), "/res/staff_edit");
+       
+       WebLink link = resp.getLinks()[0];
+       resp = wc.getResponse(link.getRequest());
+
+       Collection<StaffMember> newMems = dao.getAllStaffMembers();
+       assertEquals(oldMems.size(), newMems.size());
    }
 
+/*
    @Test
    public void seeStaffMemberInfoTest() throws IOException, SAXException, SQLException {
    

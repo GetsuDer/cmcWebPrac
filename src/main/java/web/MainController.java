@@ -388,13 +388,18 @@ public class MainController {
        mem.setAddress(address);
        mem.setEducation(education);
        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+       format.setLenient(false);
+       
        if (workStart == null) {
            mem.setWorkStart(null);
        } else {
+           Date current = null;
            try {
-               mem.setWorkStart(format.parse(workStart));
+               current = format.parse(workStart);
            } catch (ParseException e) {
+               current = mem.getWorkStart();
            }
+           mem.setWorkStart(current);
        }
        if (Long.parseLong(id) == -1) {
            memberDAO.addStaffMember(mem);
