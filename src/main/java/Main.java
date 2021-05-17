@@ -69,7 +69,7 @@ public class Main {
             positionDAO.addPosition(pos4);
             Position pos5 = new Position("pos5", "smth", dep3, Long.parseLong("1"));
             positionDAO.addPosition(pos5);
-            Position pos6 = new Position("pos6", "smth", dep4, Long.parseLong("1"));
+            Position pos6 = new Position("pos6", "smth", dep4, Long.parseLong("2"));
             positionDAO.addPosition(pos6);
             Position pos7 = new Position("pos7", "smth", dep5, Long.parseLong("1"));
             positionDAO.addPosition(pos7);
@@ -90,6 +90,8 @@ public class Main {
             employeeDAO.addEmployee(emp7);
             Employee emp8 = new Employee(pos4, member10, format.parse("2012-4-29"), null);
             employeeDAO.addEmployee(emp8);
+            Employee emp9 = new Employee(pos6, member6, format.parse("2012-4-29"), null);
+            employeeDAO.addEmployee(emp9);
         
         }
     }

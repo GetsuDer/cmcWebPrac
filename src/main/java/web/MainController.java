@@ -328,9 +328,15 @@ public class MainController {
        if (duties.equals("")) duties = null;
        pos.setName(name);
        if (!id.equals("-1")) {
-           Collection<StaffMember> workers = Factory.getInstance().getStaffMemberDAO().getStaffMembersByPosition(pos);
+           Collection<Employee> workers = Factory.getInstance().getEmployeeDAO().getEmployeesByPosition(pos);
+           int currentWorkers = 0;
+           for (Employee e : workers) {
+               if (e.getEndTime() == null) {
+                   currentWorkers++;
+               }
+           }
            Long new_size = Long.parseLong(size);
-           if (new_size >= workers.size()) pos.setSize(new_size);
+           if (new_size >= currentWorkers) pos.setSize(new_size);
        } else {
            pos.setSize(Long.parseLong(size));
        }
@@ -360,7 +366,7 @@ public class MainController {
        StaffMemberDAO dao = Factory.getInstance().getStaffMemberDAO();
        StaffMember mem = dao.getStaffMemberById(Long.parseLong(id));
        dao.deleteStaffMember(mem);
-       return "staff";
+       return "redirect:staff";
    }
 
    @RequestMapping(value="/add_staff", method = RequestMethod.GET)

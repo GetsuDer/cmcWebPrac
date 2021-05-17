@@ -51,14 +51,14 @@
             }   
         %>
 
-        <form method="get" action="/res/staff_edit">
+        <form method="get" name="edit" action="/res/staff_edit">
             <input type="hidden" name="id" value="${id}">
-            <input type="submit" value="Edit">
+            <input type="submit" name="edit" value="Edit">
         </form>
 
-        <form method="get" action="/res/delete_staff">
+        <form method="get" name="delete" action="/res/delete_staff">
             <input type="hidden" name="id" value="${id}">
-            <input type="submit" value="Delete">
+            <input type="submit" name="delete" value="Delete">
         </form>
     </body>
 </html>

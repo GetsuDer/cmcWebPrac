@@ -122,7 +122,8 @@ public class Position {
         return "Id: " + id + " \n" + 
                 "Name: " + ((name == null) ? "" : name) + " \n" +
                 "Responsibilities: " + ((responsibilities == null) ? "" : responsibilities) + " \n" +
-                "Department: " + ((department == null) ? "" : department.getId()) + " \n";
+                "Department: " + ((department == null) ? "" : department.getId()) + " \n" + 
+                "Size: " + size + " \n";
     } 
     
     /**

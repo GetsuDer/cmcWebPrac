@@ -5,7 +5,6 @@
     </head>
 
     <body>
-        <p> <a href="staff">Staff members</a> </p>
         <form method="get" name="edit" action="/res/confirm_staff">
             <input type="hidden" name="id" value="${id}">
             Name: <br>
@@ -23,6 +22,14 @@
             <input type="submit" name="confirm" value="Confirm staff member">
 
         </form>
+        
+        <%
+           if (request.getAttribute("id").equals("-1")) {
+               out.println("<a href=\"/res/staff\">Return</a>");
+           } else {
+               out.println("<a href=\"/res/staff_info?id=" + request.getAttribute("id") + "&back=staff\">Return</a>");
+           }
+        %>
     </body>
 </html>
 

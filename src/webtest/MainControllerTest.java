@@ -970,7 +970,6 @@ public class MainControllerTest {
 
        String pos_id = links[posShift].getParameterValues("id")[0];
        Position pos = posDao.getPositionById(Long.parseLong(pos_id));
-
        resp = wc.getResponse(links[posShift].getRequest());
 
        WebForm form = resp.getFormWithName("edit");
@@ -979,7 +978,7 @@ public class MainControllerTest {
        form.setParameter("duties", "editPositionToNegativeSizeTestDuties");
 
        resp = wc.getResponse(form.getRequest(form.getSubmitButton("confirm")));
-
+       
        Position newPos = posDao.getPositionById(Long.parseLong(pos_id));
        assertEquals(newPos.getName(), "editPositionToNegativeSizeTestName");
        assertEquals(newPos.getSize(), 0);
@@ -988,7 +987,7 @@ public class MainControllerTest {
    }
 
    @Test
-   public void EditPositionToLessSizeThanHiredMembers() throws IOException, SAXException, SQLException {
+   public void editPositionToLessSizeThanHiredMembers() throws IOException, SAXException, SQLException {
        WebConversation wc = new WebConversation();
        WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
        DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
@@ -1029,6 +1028,7 @@ public class MainControllerTest {
             }
             if (ind != -1) break;
        }
+
 
        assertTrue(ind != -1);
        assertTrue(workers_number > 0);
@@ -1674,9 +1674,10 @@ public class MainControllerTest {
        resp = wc.getResponse(form.getRequest(form.getSubmitButton("add")));
        assertEquals(resp.getURL().getPath(), "/res/staff_edit");
        
-       WebLink link = resp.getLinks()[0];
-       resp = wc.getResponse(link.getRequest());
+       WebLink links[] = resp.getLinks();
+       resp = wc.getResponse(links[links.length - 1].getRequest());
 
+       assertEquals(resp.getURL().getPath(), "/res/staff");
        Collection<StaffMember> newMems = dao.getAllStaffMembers();
        assertEquals(oldMems.size(), newMems.size());
    }
@@ -1713,23 +1714,89 @@ public class MainControllerTest {
        assertEquals(resp.getURL().getPath(), "/res/staff");
 
    }
-/*
+
    @Test
    public void deleteStaffMemberTest() throws IOException, SAXException, SQLException {
-   
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/staff");     
+       
+       WebLink link = resp.getLinks()[1];
+       StaffMemberDAO dao = Factory.getInstance().getStaffMemberDAO();
+       String mem_id = link.getParameterValues("id")[0];
+       StaffMember mem = dao.getStaffMemberById(Long.parseLong(mem_id));
+
+       resp = wc.getResponse(link.getRequest());
+       
+       WebForm form = resp.getFormWithName("delete");
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("delete")));
+
+       assertEquals(resp.getURL().getPath(), "/res/staff");
+       Collection<StaffMember> mems = dao.getAllStaffMembers();
+       for (StaffMember m : mems) {
+           assertTrue(m.getId() != mem.getId());
+       }
    }
 
    @Test
    public void editStaffMemberTest() throws IOException, SAXException, SQLException {
-   
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/staff");     
+       
+       StaffMemberDAO dao = Factory.getInstance().getStaffMemberDAO();
+       WebLink link = resp.getLinks()[1];
+       String mem_id = link.getParameterValues("id")[0];
+       StaffMember oldMem = dao.getStaffMemberById(Long.parseLong(mem_id));
+
+       resp = wc.getResponse(link.getRequest());
+
+       WebForm form = resp.getFormWithName("edit");
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("edit")));
+       
+       form = resp.getFormWithName("edit");
+       form.setParameter("name", "editStaffNameTest");
+       form.setParameter("address", "editStaffAddressTest");
+       form.setParameter("education", "editStaffEducationTest");
+       form.setParameter("workStart", "21/05/2003");
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("confirm")));
+
+       StaffMember newMem = dao.getStaffMemberById(Long.parseLong(mem_id));  
+       
+       SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+       assertEquals(newMem.getName(), "editStaffNameTest");
+       assertEquals(newMem.getAddress(), "editStaffAddressTest");
+       assertEquals(newMem.getEducation(), "editStaffEducationTest");
+       assertEquals(format.format(newMem.getWorkStart()), "21/05/2003");
    }
 
    @Test
    public void noEditStaffMemberTest() throws IOException, SAXException, SQLException {
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/staff");     
+       StaffMemberDAO dao = Factory.getInstance().getStaffMemberDAO();
+       WebLink link = resp.getLinks()[1];
    
+       String mem_id = link.getParameterValues("id")[0];
+       StaffMember oldMem = dao.getStaffMemberById(Long.parseLong(mem_id));
+       
+       resp = wc.getResponse(link.getRequest());
+       
+       WebForm form = resp.getFormWithName("edit");
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("edit")));
+
+       WebLink links[] = resp.getLinks();
+       resp = wc.getResponse(links[links.length - 1].getRequest());
+
+       assertEquals(resp.getURL().getPath(), "/res/staff_info");
+       StaffMember newMem = dao.getStaffMemberById(Long.parseLong(mem_id));
+    
+       assertEquals(oldMem.getName(), newMem.getName());
+       assertEquals(oldMem.getAddress(), newMem.getAddress());
+       assertEquals(oldMem.getEducation(), newMem.getEducation());
+       assertEquals(oldMem.getWorkStart(), newMem.getWorkStart());
+       
    }
 
-   @Test
+ /*  @Test
    public void seeStaffPositionDepartmentTest() throws IOException, SAXException, SQLException {
    
    }
