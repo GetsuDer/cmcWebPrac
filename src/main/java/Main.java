@@ -92,6 +92,8 @@ public class Main {
             employeeDAO.addEmployee(emp8);
             Employee emp9 = new Employee(pos6, member6, format.parse("2012-4-29"), null);
             employeeDAO.addEmployee(emp9);
+            Employee emp10 = new Employee(pos7, member9, format.parse("2012-4-29"), format.parse("2013-4-4"));
+            employeeDAO.addEmployee(emp10);
         
         }
     }

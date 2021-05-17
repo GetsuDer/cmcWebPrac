@@ -96,15 +96,25 @@ public class MainController {
        EmployeeDAO dao = Factory.getInstance().getEmployeeDAO();
        Employee emp = dao.getEmployeeById(Long.parseLong(id));
        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+       format.setLenient(false);
+       
        if (!workStart.equals("")) {
+           Date newWorkStart = null;
            try {
-               emp.setStartTime(format.parse(workStart));
-           } catch (ParseException e) {}
+               newWorkStart = format.parse(workStart);
+           } catch (ParseException e) {
+               newWorkStart = emp.getStartTime();
+           }
+           emp.setStartTime(newWorkStart);
        }
        if (!workEnd.equals("")) {
+           Date newWorkEnd = null;
            try {
-               emp.setEndTime(format.parse(workEnd));
-           } catch (ParseException e) {}
+               newWorkEnd = format.parse(workEnd);
+           } catch (ParseException e) {
+               newWorkEnd = emp.getEndTime();
+           }
+           emp.setEndTime(newWorkEnd);
        }
        dao.updateEmployee(emp);
        model.addAttribute("dep_id", dep_id);

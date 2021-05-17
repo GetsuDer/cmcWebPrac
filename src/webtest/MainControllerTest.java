@@ -1796,28 +1796,210 @@ public class MainControllerTest {
        
    }
 
- /*  @Test
+   @Test
    public void seeStaffPositionDepartmentTest() throws IOException, SAXException, SQLException {
-   
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/staff");     
+       
+       StaffMemberDAO dao = Factory.getInstance().getStaffMemberDAO();
+       PositionDAO posDao = Factory.getInstance().getPositionDAO();
+       int ind = -1;
+       StaffMember mem = null;
+       WebLink links[] = resp.getLinks();
+       Collection<Position> poss = null;
+       Collection<Position> oldPoss = null;
+       for (int i = 1; i < links.length; i++) {
+           String id = links[i].getParameterValues("id")[0];
+           mem = dao.getStaffMemberById(Long.parseLong(id));
+           poss = posDao.getCurrentPositionsByStaffMember(mem);
+           oldPoss = posDao.getPastPositionsByStaffMember(mem);
+           if (poss.size() + oldPoss.size() > 0) {
+               ind = i;
+               break;
+           }
+       }
+
+       assertTrue(ind != -1);
+
+       resp = wc.getResponse(links[ind].getRequest());
+       links = resp.getLinks();
+
+       for (int i = 0; i < poss.size() + oldPoss.size(); i++) {
+           String pos_id = links[i].getParameterValues("pos_id_for_staff")[0];
+           String dep_id = links[i].getParameterValues("id")[0];
+           Position pos = posDao.getPositionById(Long.parseLong(pos_id));
+           assertEquals(pos.getDepartment().getId().toString(), dep_id);
+           WebResponse toDep = links[i].click();
+           assertEquals(toDep.getURL().getPath(), "/res/department_info");
+       }
    }
    
    @Test
    public void editStaffMemberWorkTimeTest() throws IOException, SAXException, SQLException {
-   
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/staff");     
+       StaffMemberDAO dao = Factory.getInstance().getStaffMemberDAO();
+       EmployeeDAO empDao = Factory.getInstance().getEmployeeDAO();
+       PositionDAO posDao = Factory.getInstance().getPositionDAO();
+       int ind = -1;
+       StaffMember mem = null;
+       WebLink links[] = resp.getLinks();
+       Collection<Position> poss = null;
+       Collection<Position> oldPoss = null;
+       for (int i = 1; i < links.length; i++) {
+           String id = links[i].getParameterValues("id")[0];
+           mem = dao.getStaffMemberById(Long.parseLong(id));
+           oldPoss = posDao.getPastPositionsByStaffMember(mem);
+           poss = posDao.getCurrentPositionsByStaffMember(mem);
+           if (oldPoss.size() > 0) {
+               ind = i;
+               break;
+           }
+       }
+
+       assertTrue(ind != -1);
+
+       String mem_id = links[ind].getParameterValues("id")[0];
+
+       resp = wc.getResponse(links[ind].getRequest());
+      
+       WebLink link = resp.getLinks()[poss.size()];
+       String pos_id = link.getParameterValues("pos_id_for_staff")[0];
+       Position pos = posDao.getPositionById(Long.parseLong(pos_id));
+       
+       Collection<Employee> emps = empDao.getEmployeesByPosition(pos);
+       Employee emp = null;
+       for (Employee e : emps) {
+           if (e.getStaffMember().getId().toString().equals(mem_id)) {
+               emp = e;
+               break;
+           }
+       }
+       assertTrue(emp != null);
+
+
+       WebForm form = resp.getForms()[0];
+       form.setParameter("workStart", "01/02/1234");
+       form.setParameter("workEnd", "12/03/4321");
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("confirm")));
+
+       Employee newEmp = empDao.getEmployeeById(emp.getId());
+       
+       SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+       assertEquals(format.format(newEmp.getStartTime()), "01/02/1234");
+       assertEquals(format.format(newEmp.getEndTime()), "12/03/4321");
+
    }
 
    @Test
    public void editStaffMemberWorkTimeWrongTest() throws IOException, SAXException, SQLException {
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/staff");     
+       StaffMemberDAO dao = Factory.getInstance().getStaffMemberDAO();
+       EmployeeDAO empDao = Factory.getInstance().getEmployeeDAO();
+       PositionDAO posDao = Factory.getInstance().getPositionDAO();
+       int ind = -1;
+       StaffMember mem = null;
+       WebLink links[] = resp.getLinks();
+       Collection<Position> poss = null;
+       Collection<Position> oldPoss = null;
+       for (int i = 1; i < links.length; i++) {
+           String id = links[i].getParameterValues("id")[0];
+           mem = dao.getStaffMemberById(Long.parseLong(id));
+           oldPoss = posDao.getPastPositionsByStaffMember(mem);
+           poss = posDao.getCurrentPositionsByStaffMember(mem);
+           if (oldPoss.size() > 0) {
+               ind = i;
+               break;
+           }
+       }
+
+       assertTrue(ind != -1);
+
+       String mem_id = links[ind].getParameterValues("id")[0];
+
+       resp = wc.getResponse(links[ind].getRequest());
+      
+       WebLink link = resp.getLinks()[poss.size()];
+       String pos_id = link.getParameterValues("pos_id_for_staff")[0];
+       Position pos = posDao.getPositionById(Long.parseLong(pos_id));
+       
+       Collection<Employee> emps = empDao.getEmployeesByPosition(pos);
+       Employee emp = null;
+       for (Employee e : emps) {
+           if (e.getStaffMember().getId().toString().equals(mem_id)) {
+               emp = e;
+               break;
+           }
+       }
+       assertTrue(emp != null);
+
+
+       WebForm form = resp.getForms()[0];
+       form.setParameter("workStart", "00/02/1234");
+       form.setParameter("workEnd", "12/00/4321");
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("confirm")));
+
+       Employee newEmp = empDao.getEmployeeById(emp.getId());
+       
+       assertEquals(newEmp.getStartTime(), emp.getStartTime());
+       assertEquals(newEmp.getEndTime(), emp.getEndTime());
 
    }
 
    @Test
    public void deleteStaffMemberHistoryPositionTest() throws IOException, SAXException, SQLException {
-   
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/staff");     
+       StaffMemberDAO dao = Factory.getInstance().getStaffMemberDAO();
+       EmployeeDAO empDao = Factory.getInstance().getEmployeeDAO();
+       PositionDAO posDao = Factory.getInstance().getPositionDAO();
+       int ind = -1;
+       StaffMember mem = null;
+       WebLink links[] = resp.getLinks();
+       Collection<Position> poss = null;
+       Collection<Position> oldPoss = null;
+       for (int i = 1; i < links.length; i++) {
+           String id = links[i].getParameterValues("id")[0];
+           mem = dao.getStaffMemberById(Long.parseLong(id));
+           oldPoss = posDao.getPastPositionsByStaffMember(mem);
+           poss = posDao.getCurrentPositionsByStaffMember(mem);
+           if (oldPoss.size() > 0) {
+               ind = i;
+               break;
+           }
+       }
+       assertTrue(ind != -1);
+
+       String mem_id = links[ind].getParameterValues("id")[0];
+
+       resp = wc.getResponse(links[ind].getRequest());
+      
+       WebLink link = resp.getLinks()[poss.size()];
+       String pos_id = link.getParameterValues("pos_id_for_staff")[0];
+       Position pos = posDao.getPositionById(Long.parseLong(pos_id));
+       
+       Collection<Employee> emps = empDao.getEmployeesByPosition(pos);
+       Employee emp = null;
+       for (Employee e : emps) {
+           if (e.getStaffMember().getId().toString().equals(mem_id)) {
+               emp = e;
+               break;
+           }
+       }
+       assertTrue(emp != null);
+
+
+       WebForm form = resp.getForms()[1];
+       resp = wc.getResponse(form.getRequest(form.getSubmitButton("delete")));
+
+       Collection<Employee> allEmps = empDao.getAllEmployees();
+       for (Employee e : allEmps) {
+           assertTrue(e.getId() != emp.getId());
+       }
+
    }
 
    
-
-      */
 
 }
