@@ -55,7 +55,7 @@ public class MainControllerTest {
    }
 
    @Test
-   public void seeAlldepartmentsTest() throws IOException, SAXException, SQLException {
+   public void seeAllDepartmentsTest() throws IOException, SAXException, SQLException {
         WebConversation wc = new WebConversation();
         WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");     
   
@@ -232,7 +232,23 @@ public class MainControllerTest {
         }
         assertTrue(exists);       
    }
+ 
+   @Test 
+   public void seeDepartmentInfoTest() throws IOException, SAXException, SQLException {
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/departments");
   
+       WebLink links[] = resp.getLinks();
+       DepartmentDAO dao = Factory.getInstance().getDepartmentDAO();
+       Collection<Department> deps = dao.getAllDepartments();
+       assertEquals(links.length - 1, deps.size());
+       for (int i = 1; i < links.length; i++) {
+            String id = links[i].getParameterValues("id")[0];
+            WebResponse toPage = links[i].click();
+            assertEquals(toPage.getURL().getPath(), "/res/department_info");
+       }
+   }
+
    @Test
    public void addHeadDepartmentTest() throws IOException, SAXException, SQLException {
         WebConversation wc = new WebConversation();
@@ -1029,16 +1045,12 @@ public class MainControllerTest {
        resp = wc.getResponse(links[posShift].getRequest());
 
        WebForm form = resp.getFormWithName("edit");
-       form.setParameter("name", "editPositionToLessSizeTestName");
        form.setParameter("size", Long.valueOf(workers_number - 1).toString());
-       form.setParameter("duties", "editPositionToLessSizeTestDuties");
 
        resp = wc.getResponse(form.getRequest(form.getSubmitButton("confirm")));
 
        Position newPos = posDao.getPositionById(Long.parseLong(pos_id));
-       assertEquals(newPos.getName(), "editPositionToLessSizeTestName");
        assertEquals(newPos.getSize(), pos.getSize());
-       assertEquals(newPos.getResponsibilities(), "editPositionToLessSizeTestDuties");
    }
 
    @Test
@@ -1669,17 +1681,39 @@ public class MainControllerTest {
        assertEquals(oldMems.size(), newMems.size());
    }
 
-/*
+
    @Test
    public void seeStaffMemberInfoTest() throws IOException, SAXException, SQLException {
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/staff");     
+       StaffMemberDAO dao = Factory.getInstance().getStaffMemberDAO();
+       Collection<StaffMember> mems = dao.getAllStaffMembers();
+       WebLink links[] = resp.getLinks();
+       assertEquals(links.length - 1, mems.size());
+       for (int i = 1; i < links.length; i++) {
+           String mem_id = links[i].getParameterValues("id")[0];
+           StaffMember mem = dao.getStaffMemberById(Long.parseLong(mem_id));
+           WebResponse toPage = links[i].click();
+           assertEquals(toPage.getURL().getPath(), "/res/staff_info");
+       }
    
    }
 
    @Test
    public void returnFromStaffMemberInfoTest() throws IOException, SAXException, SQLException {
+       WebConversation wc = new WebConversation();
+       WebResponse resp = wc.getResponse("http://127.0.0.1:8080/res/staff");     
+       
+       WebLink link = resp.getLinks()[0];
+       resp = wc.getResponse(link.getRequest());
+
+       WebLink links[] = resp.getLinks();
+
+       resp = wc.getResponse(links[links.length - 1].getRequest());
+       assertEquals(resp.getURL().getPath(), "/res/staff");
 
    }
-
+/*
    @Test
    public void deleteStaffMemberTest() throws IOException, SAXException, SQLException {
    
